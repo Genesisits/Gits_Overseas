@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>new</title>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}
+         {% if messages %}
+               {% for message in messages %}
+                    <p class = 'suc'><strong>{{ message }}</strong></p>
+               {% endfor %}
+         {% endif %}
+      {% endwith %}
+<form class = "nav" method="POST">
+</form>
+<a href="send">validate</a>
+</body>
+</html>

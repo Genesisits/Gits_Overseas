@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Admin Dashboard</title>
+   <style>
+   h1 {text-align: center;}
+      /* Style for top navigation bar */
+      .topnav {
+
+         background-color: #84E1E1;
+         overflow: hidden;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 10%;
+         width: 100%;
+         z-index: 999;
+      }
+
+      .topnav img {
+         height: 60px;
+         padding: 5px;
+         float: left;
+      }
+
+      .topnav a {
+         float: right;
+         display: block;
+         color: #010a0a;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         font-size: 17px;
+      }
+
+      .topnav a:hover {
+         background-color: #ddd;
+         color: black;
+      }
+
+      /* Style for side navigation bar */
+      .sidenav {
+         height: 100%;
+         width: 200px;
+         position: fixed;
+         z-index: 1;
+         top: 50px;
+         left: 0;
+         background-color: #111;
+         overflow-x: hidden;
+         padding-top: 20px;
+      }
+
+      .sidenav a {
+         padding: 6px 8px 6px 16px;
+         text-decoration: none;
+         font-size: 20px;
+         color: #f0f5f5;
+         display: block;
+      }
+
+      .sidenav a:hover {
+         color: #3333ff;
+      }
+
+      .main {
+         margin-left: 200px;
+         margin-top: 70px;
+         padding: 0px 10px;
+         font-size: 18px;
+         text-align: center;
+      }
+
+   </style>
+</head>
+<body/>
+<!-- Top Navigation Bar -->
+   <div class="topnav">
+      <a href="home">Home</a>
+      <img href="home" src="{{url_for('static', filename='img_1.png')}}"/>
+      <h1>Genesis Overseas </h1>
+
+   </div>
+
+
+   <!-- Side Navigation Bar -
+
+    Main Content -->
+   <head>
+    <title>Register Page</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      form {
+        border: 3px solid #f1f1f1;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+      }
+
+      input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      button[type=submit] {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button[type=submit]:hover {
+        opacity: 0.8;
+      }
+
+    </style>
+  </head>
+  <body>
+   <!-- <form action="" method="POST">
+        <!--
+      <label for="username">Email:</label>
+      <input type="text" id="username" name="email" required><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br><br>
+      <input type="submit" value="login" name="submit" class="login-button button"> -->
+        <form class = "nav" method="POST">
+    <div class="card-container">
+    <h1 class ="login-title main-head">Registration </h1> </br>
+         <label>firstname: </label>
+    <input class="input-box" type="text" class="login-input" name="fullname" placeholder="fullname"  required></br>
+        <label>Password : </label>
+    <input class="input-box" type="password" class="login-input" name="password" placeholder="Password"  required ></br>
+         <label>Confirm Password : </label>
+    <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  required></br>
+        <label for="email">Email: </label>
+    <input class="input-box "type="email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br>
+        <label>Fathername : </label>
+    <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Fathername"  required ></br>
+        <label>Contact : </label>
+    <input class="input-box" type="text" class="login-input" name="contact" placeholder="contact"  required></br>
+        <label>Location : </label>
+    <input class="input-box" type="text" class="login-input" name="location" placeholder="Location"  required></br>
+    <label for="gender">Gender :</label>
+   <select class="input-box" id="Gender" name="gender">
+       <option value="">Select Your Gender</option>
+       <option value="male">MALE</option>
+       <option value="female">FEMALE</option>
+   </select> <br> <br>
+    <label for="qualification">Qualification :</label>
+   <select class="input-box" id="qualification" name="qualification">
+       <option value="">Select Your Qualification</option>
+       <option value="ssc">SSC</option>
+       <option value="undergraduate">Undergraduate</option>
+       <option value="graduate">Graduate</option>
+        <option value="postgraduate">Postgraduate</option>
+   </select> <br> <br>
+    <label for="maritial">Maritial :</label>
+   <select class="input-box" id="maritial" name="maritial">
+       <option value="">Select Your maritial stuatus</option>
+       <option value="single">SINGLE</option>
+       <option value="married">Married</option>
+   </select> <br> <br>
+    <label for="reference">Reference :</label>
+   <select class="input-box" id="reference" name="reference">
+       <option value="">Select your reference</option>
+       <option value="socialmedia">Social Media</option>
+       <option value="friends">Friends</option>
+   </select> <br> <br>
+
+    <input type="submit" name="submit" value="Register" class="register-button button"  required></br>
+        </div>
+    </div>
+    </form>
+  </body>
+</html>
+</body>
+</html>

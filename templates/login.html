@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Admin Dashboard</title>
+   <style>
+   h1 {text-align: center;}
+      /* Style for top navigation bar */
+      .topnav {
+
+         background-color: #84E1E1;
+         overflow: hidden;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 10%;
+         width: 100%;
+         z-index: 999;
+      }
+
+      .topnav img {
+         height: 60px;
+         padding: 5px;
+         float: left;
+      }
+
+      .topnav a {
+         float: right;
+         display: block;
+         color: #010a0a;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         font-size: 17px;
+      }
+
+      .topnav a:hover {
+         background-color: #ddd;
+         color: black;
+      }
+
+      /* Style for side navigation bar */
+      .sidenav {
+         height: 100%;
+         width: 200px;
+         position: fixed;
+         z-index: 1;
+         top: 50px;
+         left: 0;
+         background-color: #111;
+         overflow-x: hidden;
+         padding-top: 20px;
+      }
+
+      .sidenav a {
+         padding: 6px 8px 6px 16px;
+         text-decoration: none;
+         font-size: 20px;
+         color: #f0f5f5;
+         display: block;
+      }
+
+      .sidenav a:hover {
+         color: #3333ff;
+      }
+
+      .main {
+         margin-left: 200px;
+         margin-top: 70px;
+         padding: 0px 10px;
+         font-size: 18px;
+         text-align: center;
+      }
+
+   </style>
+</head>
+<body/>
+<!-- Top Navigation Bar -->
+   <div class="topnav">
+      <a href="home">Home</a>
+      <img href="home" src="{{url_for('static', filename='img_1.png')}}"/>
+      <h1>Genesis Overseas </h1>
+
+   </div>
+
+
+   <!-- Side Navigation Bar -
+
+    Main Content -->
+   <head>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<head>
+    <title>Login Page</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      form {
+        border: 3px solid #f1f1f1;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+      }
+
+      input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      button[type=submit] {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button[type=submit]:hover {
+        opacity: 0.8;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align:center; color:#0000FF">Login Page</h1>
+    <form action="" method="POST">
+      <label for="username">Email:</label>
+      <input type="text" id="username" name="email" required><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br><br>
+      <input type="submit" value="login" name="submit" class="login-button button">
+    </form>
+  </body>
+</html>
+
+
+
+
+</head>
+<body>
+</html>

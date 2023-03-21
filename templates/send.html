@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OTP VALIDATION</title>
+</head>
+<body>
+{% if error %}
+       <p class = "error"><strong>Error:</strong>: {{ error }}</p>
+    {% endif %}
+<form action="/validate" method="POST">
+  <h1>OTP</h1>
+  Enter OTP:<input type="text" name="otp">
+  <input type="submit" value="submit">
+</form>
+
+</body>
+</html>

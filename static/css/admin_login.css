@@ -1,0 +1,30 @@
+.card-container
+{
+width: 400px;
+height: 350px;
+text-align: center;
+background-color: #d1d1d1;
+padding : 10px;
+padding-bottom:10px;
+margin-top: 40px;
+margin-left: 530px;
+}
+.input-box
+{
+height: 24px;
+width:200px;
+border-radius:5px;
+margin: 3px;
+text-align: center
+}
+.button{
+width:65px;
+height:35px;
+border-radius:5px;
+}
+.main-head
+{
+
+color: #00008B;
+
+}
