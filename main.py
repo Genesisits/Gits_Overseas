@@ -366,5 +366,21 @@ def intake():
         cur.close()
     return render_template("intake.html")
 
+@app.route("/delete/<string:email>")
+def delete(email):
+    cur = mysql.connection.cursor()
+    print(email)
+    r = cur.execute("delete from usertable1 where email = %s", (email,))
+    mysql.connection.commit()
+    print(r)
+    if r>0:
+        flash("Deleted successfully")
+        r = cur.execute("select * from usertable")
+        admin = cur.fetchall()
+        print(admin)
+        return render_template("dbfetch.html", result=admin)
+    return render_template("dbfetch.html")
+
+
 if __name__ == "__main__":
     app.run(debug="True")
