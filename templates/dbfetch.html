@@ -146,9 +146,8 @@
         <td> {{ r['gender'] }}</td>
         <td> {{ r['maritial'] }}</td>
         <td> {{ r['reference'] }}</td>
-        <td><a href="edit.php ?rn=$result[name]" onclick='return checkedit()'>Edit</td>
-        <td><a href="update.php ?rn=$result[name]" onclick='return checkupdate()'>update</td>
-        <td><a href="delete.php ?rn=$result[name]" onclick='return checkdelete()'>delete</td>
+        <td> <button ><a href= "update/{{ r['email'] }}" type="submit" >Update</a></button></td>
+        <td> <button ><a href= "delete/{{ r['email'] }}" type="submit" >Delete</a></button></td>
 
 
     </tr>
