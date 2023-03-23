@@ -142,7 +142,11 @@ def register():
         mail.send(msg)
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
+<<<<<<< Updated upstream
         passport = request.form['passport']
+=======
+
+>>>>>>> Stashed changes
         qualification = request.form['qualification']
         location = request.form['location']
         country=request.form['country']
@@ -225,6 +229,13 @@ def admin_login():
         password = request.form['password']
         print(email)
         print(password)
+<<<<<<< Updated upstream
+=======
+        if email == 'admin' and password == 'admin@123':
+            return redirect(url_for("admin_dashboard"))
+        elif email == 'hi' and password == 'admin@123':
+            return redirect(url_for("student"))
+>>>>>>> Stashed changes
         cur = mysql.connection.cursor()
         c = cur.execute('select password,email from admintable where  password = %s and email =%s',(password,email))
         mysql.connection.commit()
@@ -335,6 +346,21 @@ def user():
         return render_template("dbfetch.html",result=re)
     cur.close()
     return render_template("dbfetch.html")
+@app.route("/delete/<string:email>")
+def delete(email):
+    cur = mysql.connection.cursor()
+    print(email)
+    r = cur.execute("delete from usertable1 where email = %s", (email,))
+    mysql.connection.commit()
+    print(r)
+    if r>0:
+        flash("Deleted successfully")
+        r = cur.execute("select * from usertable")
+        admin = cur.fetchall()
+        print(admin)
+        return render_template("dbfetch.html", result=admin)
+    return render_template("dbfetch.html")
+
 
 @app.route("/addbfetch")
 def users():

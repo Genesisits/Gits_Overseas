@@ -94,7 +94,7 @@
    </div>
 
    <!-- Main Content -->
-   <div class="main">
+   <html class="main">
       <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,14 +118,22 @@
         <th>email</th>
         <th>password</th>
         <th>confirmpassword</th>
+<<<<<<< Updated upstream
         <th>passport</th>
+=======
+>>>>>>> Stashed changes
         <th>qualification</th>
         <th>location</th>
         <th>country</th>
         <th>gender</th>
         <th>maritial</th>
         <th>reference</th>
+<<<<<<< Updated upstream
         <th colspan="3" align ="center"> Operations</th>
+=======
+
+        <th colspan="2" align ="center"> Operations</th>
+>>>>>>> Stashed changes
 
 
     </tr>
@@ -134,6 +142,7 @@
     <tr>
 
         <td> {{ r['fullname'] }}</td>
+<<<<<<< Updated upstream
         <td> {{ r['fathername'] }}</td>
         <td> {{ r['contact'] }} </td>
         <td> {{ r['email'] }}</td>
@@ -149,6 +158,22 @@
         <td><a href="edit.php ?rn=$result[name]" onclick='return checkedit()'>Edit</td>
         <td><a href="update.php ?rn=$result[name]" onclick='return checkupdate()'>update</td>
         <td><a href="delete.php ?rn=$result[name]" onclick='return checkdelete()'>delete</td>
+=======
+        <td>{{r['fathername']}}</td>
+        <td> {{ r['contact'] }} </td>
+        <td> {{ r['email'] }}</td>
+        <td> {{ r['password'] }}</td>
+        <td>{{r['confirmpassword']}}</td>
+        <td>{{r['qualification']}}</td>
+        <td>{{r['location']}}</td>
+        <td>{{r['country']}}</td>
+        <td>{{r['gender']}}</td>
+        <td> {{ r['maritial']}}</td>
+        <td>{{r['reference']}}</td>
+
+        <td> <button ><a href= "update/{{ r['email'] }}" type="submit" >Update</a></button></td>
+        <td> <button ><a href= "delete/{{ r['email'] }}" type="submit" >Delete</a></button></td>
+>>>>>>> Stashed changes
 
 
     </tr>
@@ -159,11 +184,4 @@
 
 </body>
 </html>
-
-
-</body>
-
-</body>
-</html>
-
-
+   </html>
