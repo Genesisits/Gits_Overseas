@@ -50,29 +50,59 @@ def adminflash():
 @app.route("/home")
 def home():
     return render_template('overseas.html')
+
 @app.route("/intake")
 def intake():
     return render_template('intake.html')
+
+@app.route("/adintake")
+def adintake():
+    return render_template('adintake.html')
+
 
 @app.route("/country")
 def country():
     return render_template('country.html')
 
-@app.route("/admin_dashboard")
-def admin_dashboard():
-    return render_template("admin_dashboard.html")
+@app.route("/adcountry")
+def adcountry():
+    return render_template('adcountry.html')
+
+@app.route("/admindashboard")
+def admindashboard():
+    return render_template("admindashboard.html")
 
 @app.route("/about")
 def about():
     return render_template("about.html")
 
-@app.route('/superadmin', methods=['GET','POST'])
-def superadmin():
-    return render_template("superadmin.html")
+@app.route('/sregister', methods=['GET','POST'])
+def sregister():
+    if request.method == 'POST':
+        name = request.form['name']
+        password = request.form['password']
+        cur = mysql.connection.cursor()
+        c = cur.execute("insert into superadmintable(name,password) values(%s,%s)",(name,password))
+        mysql.connection.commit()
+        if c>0:
+            flash("Admin Register successfull")
+            return redirect(url_for("superlogin"))
+        else:
+            error = "oops something went wrong"
+            return render_template("superadmin.html",error = error)
+
+        cur.close()
+
+
+    return render_template("sregister.html")
 
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+@app.route("/superadmin")
+def superadmin():
+    return render_template("superadmin.html")
 
 @app.route("/notifications")
 def notifications():
@@ -89,6 +119,7 @@ def universitiesapproved():
 @app.route("/adprofile")
 def adprofile():
     return render_template("adprofile.html")
+
 @app.route("/profile")
 def profile():
     return render_template("profile.html")
@@ -96,6 +127,7 @@ def profile():
 @app.route("/student")
 def student():
     return render_template("student.html")
+
 @app.route("/studentstatus")
 def studentstatus():
     return render_template("studentstatus.html")
@@ -114,13 +146,15 @@ def register():
         mail.send(msg)
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
+        passport = request.form['passport']
+        country = request.form['country']
         qualification = request.form['qualification']
         location = request.form['location']
         gender = request.form['gender']
         maritial = request.form['maritial']
         reference = request.form['reference']
         cur = mysql.connection.cursor()
-        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,confirmpassword,qualification,location,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,confirmpassword,qualification,location,gender,maritial,reference))
+        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference))
         mysql.connection.commit()
         if br > 0 :
             if password == confirmpassword:
@@ -146,14 +180,15 @@ def admin_register():
         mysql.connection.commit()
         if br>0:
             flash("Admin Register successfull")
-            return redirect(url_for("adminflash"))
+            return redirect(url_for("admin_register"))
         else:
             error = "oops something went wrong"
-            return render_template("admin_register.html",error = error)
+            return render_template("admin_register.html")
 
         cur.close()
 
     return render_template("admin_register.html")
+
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -195,10 +230,6 @@ def admin_login():
         password = request.form['password']
         print(email)
         print(password)
-        if email == 'admin' and password == 'admin@123':
-            return redirect(url_for("superadmin"))
-        elif email == 'hi' and password == 'admin@123':
-            return redirect(url_for("student"))
         cur = mysql.connection.cursor()
         c = cur.execute('select password,email from admintable where  password = %s and email =%s',(password,email))
         mysql.connection.commit()
@@ -211,7 +242,7 @@ def admin_login():
             password1 = result['password']
             if username1 == email and password1 == password:
                 flash("successful logged in")
-                return redirect(url_for("admin_register"))
+                return redirect(url_for("admindashboard"))
             else:
                 error = "oops!something went wrong"
                 return render_template("register.html", error=error)
@@ -221,14 +252,46 @@ def admin_login():
     else:
         if 'email' in session:
             email = session["email"]
-            return redirect(url_for('admin_dashboard'))
+            return redirect(url_for('admindashboard'))
         else:
             return render_template('admin_login.html')
 
         cur.close()
     return render_template("admin_login.html")
 
+@app.route('/superlogin', methods=['GET','POST'])
+def superlogin():
+    if request.method == 'POST':
+        name = request.form['name']
+        password = request.form['password']
+        cur = mysql.connection.cursor()
+        c = cur.execute('select password,name from superadmin where  password = %s and name =%s',(password,name))
+        mysql.connection.commit()
+        if c > 0:
+            result = cur.fetchone()
+            print(result)
+            username1 = result['name']
+            session.permanent = True
+            session['name'] = name
+            password1 = result['password']
+            if username1 == name and password1 == password:
+                flash("successful logged in")
+                return redirect(url_for("superadmin"))
+            else:
+                error = "oops!something went wrong"
+                return render_template("superlogin.html", error=error)
+        else:
+            error = "oops something went wrong"
+            return render_template("superlogin.html", error=error)
+    else:
+        if 'name' in session:
+            name = session["name"]
+            return redirect(url_for('superadmin'))
+        else:
+            return render_template('superlogin.html')
 
+        cur.close()
+    return render_template("super_login.html")
 
 
 @app.route("/addadmin",methods=['GET','POST'])
@@ -246,6 +309,11 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
+@app.route("/slogout")
+def slogout():
+    session.clear()
+    return redirect(url_for('home'))
+
 @app.route('/validate',methods=['POST'])
 def validate():
     user_otp = request.form['otp']
@@ -256,6 +324,7 @@ def validate():
         error = "wrong OTP"
         return render_template("send.html", error=error)
     cur
+
 @app.route("/send")
 def send():
     return render_template("send.html")
@@ -271,6 +340,18 @@ def user():
         return render_template("dbfetch.html",result=re)
     cur.close()
     return render_template("dbfetch.html")
+
+@app.route("/addbfetch")
+def users():
+    cur = mysql.connection.cursor()
+    r = cur.execute('select * from usertable')
+    mysql.connection.commit()
+    if r>0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("addbfetch.html",result=re)
+    cur.close()
+    return render_template("addbfetch.html")
 
 if __name__ == "__main__":
     app.run(debug="True")

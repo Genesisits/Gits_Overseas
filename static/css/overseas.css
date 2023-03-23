@@ -7,7 +7,7 @@ font-family: Arial;
 
 .navbar ul{
 list-style:none;
-background:  #d966ff;
+background: #00b300;
 padding: 0;
 margin:0;
 text-align: right;
@@ -30,7 +30,7 @@ font-weight:bold;
 }
 
 .navbar a:hover{
-background:#7DF9FF;
+background:#000000;
 }
 
 .img{
