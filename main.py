@@ -370,7 +370,7 @@ def intake():
 def delete(email):
     cur = mysql.connection.cursor()
     print(email)
-    r = cur.execute("delete from usertable1 where email = %s", (email,))
+    r = cur.execute("delete from usertable where email = %s", (email,))
     mysql.connection.commit()
     print(r)
     if r>0:
