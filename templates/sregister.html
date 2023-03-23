@@ -7,7 +7,7 @@
       /* Style for top navigation bar */
       .topnav {
 
-         background-color: #00cc00;
+         background-color: #ff0000;
          overflow: hidden;
          position: fixed;
          top: 0;
@@ -89,14 +89,19 @@
       <a href="dbfetch">Users</a>
       <a href="intake">Intake</a>
       <a href="country">Country</a>
-        <a href="addadmin">addadmin</a>
-      <a href="logout">Logout</a>
+      <a href="addadmin">Add Admin</a>
+      <a href="slogout">Logout</a>
    </div>
 
    <!-- Main Content -->
    <div class="main">
-      <h1>Welcome to  super Admin Dashboard</h1>
-      <p>Here you can access all your academic information, including your grades, course schedules, and other important resources. Use the links in the side navigation bar to navigate the dashboard and access the different features available to you. If you have any questions or issues, please contact your academic advisor or the IT helpdesk for assistance.</p>
+     <form class="nav", method="POST">
+    <h1 class="login-title">super Admin Register Form</h1></br>
+    <input type="text" class="login-input" name="name" placeholder="Email"></br>
+    <input type="password" class="login-input" name="password" placeholder="password"></br>
+    <input type="submit" name="submit" value="submit" class="login-button"></br>
+
+</form>
    </div>
 
 </body>
