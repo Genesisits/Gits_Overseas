@@ -50,13 +50,6 @@ def adminflash():
 @app.route("/home")
 def home():
     return render_template('overseas.html')
-<<<<<<< Updated upstream
-
-@app.route("/intake")
-def intake():
-    return render_template('intake.html')
-=======
->>>>>>> Stashed changes
 
 @app.route("/adintake")
 def adintake():
@@ -149,12 +142,7 @@ def register():
         mail.send(msg)
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
-<<<<<<< Updated upstream
         passport = request.form['passport']
-        country = request.form['country']
-=======
-        passport=request.form['passport']
->>>>>>> Stashed changes
         qualification = request.form['qualification']
         location = request.form['location']
         country=request.form['country']
@@ -162,11 +150,7 @@ def register():
         maritial = request.form['maritial']
         reference = request.form['reference']
         cur = mysql.connection.cursor()
-<<<<<<< Updated upstream
         br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference))
-=======
-        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,confirmpassword,passport,qualification,location,country,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,confirmpassword,passport,qualification,location,country,gender,maritial,reference))
->>>>>>> Stashed changes
         mysql.connection.commit()
         if br > 0 :
             if password == confirmpassword:
@@ -200,29 +184,6 @@ def admin_register():
         cur.close()
 
     return render_template("admin_register.html")
-
-<<<<<<< Updated upstream
-=======
-@app.route('/sregister', methods=['GET','POST'])
-def sregister():
-    if request.method == 'POST':
-        name = request.form['name']
-        password = request.form['password']
-        cur = mysql.connection.cursor()
-        c = cur.execute("insert into superadmintable(name,password) values(%s,%s)",(name,password))
-        mysql.connection.commit()
-        if c>0:
-            flash("Admin Register successfull")
-            return redirect(url_for("superlogin"))
-        else:
-            error = "oops something went wrong"
-            return render_template("superadmin.html",error = error)
-
-        cur.close()
-
-
-    return render_template("sregister.html")
->>>>>>> Stashed changes
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -299,7 +260,7 @@ def superlogin():
         name = request.form['name']
         password = request.form['password']
         cur = mysql.connection.cursor()
-        c = cur.execute('select password,name from superadmin where  password = %s and name =%s',(password,name))
+        c = cur.execute('select password,name from superadmintable where  password = %s and name =%s',(password,name))
         mysql.connection.commit()
         if c > 0:
             result = cur.fetchone()
@@ -375,7 +336,6 @@ def user():
     cur.close()
     return render_template("dbfetch.html")
 
-<<<<<<< Updated upstream
 @app.route("/addbfetch")
 def users():
     cur = mysql.connection.cursor()
@@ -387,7 +347,7 @@ def users():
         return render_template("addbfetch.html",result=re)
     cur.close()
     return render_template("addbfetch.html")
-=======
+
 @app.route('/intake',methods=['POST','GET'])
 def intake():
     if request.method == "POST":
@@ -405,7 +365,6 @@ def intake():
             return render_template("dbfetch.html", error=error)
         cur.close()
     return render_template("intake.html")
->>>>>>> Stashed changes
 
 if __name__ == "__main__":
     app.run(debug="True")
