@@ -77,7 +77,7 @@
 <!-- Top Navigation Bar -->
    <div class="topnav">
       <a href="home">Home</a>
-      <a href="profile">Profile</a>
+      <a href="adprofile">Profile</a>
       <img href="home" src="{{url_for('static', filename='img_1.png')}}"/>
       <h1>Genesis Overseas </h1>
 
@@ -90,13 +90,23 @@
       <a href="intake">Intake</a>
       <a href="country">Country</a>
       <a href="addadmin">Add Admin</a>
-      <a href="logout">Logout</a>
-   </div>
+      <a href="slogout">Logout</a>
+   </div><br><br>
 
    <!-- Main Content -->
    <div class="main">
+     <form class="nav", method="POST">
+       <label>Country to be search: </label>
+ <input class="input-box" type="text" class="login-input" name="country" placeholder="Country"  required></br><br>
 
+    <input type="submit" name="submit" value="submit" class="login-button"></br>
+
+</form>
    </div>
 
 </body>
 </html>
+
+
+
+
