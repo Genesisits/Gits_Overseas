@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <title>Student Status</title>
+            <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
     <style>
     h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
-
-         background-color: #66b3ff;
+         background-color: #66B3FF;
          overflow: hidden;
          position: fixed;
          top: 0;
@@ -17,28 +16,24 @@
          width: 100%;
          z-index: 999;
       }
-
       .topnav img {
          height: 60px;
          padding: 5px;
          float: left;
       }
-
       .topnav a {
          float: right;
          display: block;
-         color: #010a0a;
+         color: #010A0A;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
          font-size: 17px;
       }
-
       .topnav a:hover {
          background-color: #ddd;
          color: black;
       }
-
       /* Style for side navigation bar */
       .sidenav {
          height: 100%;
@@ -51,19 +46,16 @@
          overflow-x: hidden;
          padding-top: 20px;
       }
-
       .sidenav a {
          padding: 6px 8px 6px 16px;
          text-decoration: none;
          font-size: 20px;
-         color: #f0f5f5;
+         color: #F0F5F5;
          display: block;
       }
-
       .sidenav a:hover {
-         color: #d580ff;
+         color: #D580FF;
       }
-
       .main {
          margin-left: 200px;
          margin-top: 70px;
@@ -74,21 +66,18 @@
       .card{
       text-align:center;
       }
-
    </style>
-
 </head>
 <body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
+        <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
       <a href="home">Home</a>
       <a href="profile">Profile</a>
-      <img href="home" src="{{url_for('static', filename='img.png')}}"/>
       <h1>Genesis Overseas </h1>
-
    </div>
-
-
    <!-- Side Navigation Bar -->
    <div class="sidenav">
       <a href="notifications">Notifications</a>
@@ -97,53 +86,57 @@
        <a href="studentstatus">Student Status</a>
       <a href="logout">Logout</a>
    </div> <br><br>
-
+   <div class="topnav">
+       <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
+      <a href="home">Home</a>
+      <a href="profile">Profile</a>
+      <h1>Genesis Overseas </h1>
+   </div>
+   <!-- Side Navigation Bar -->
+   <div class="sidenav">
+       <a href="edit">Notifications</a>
+      <a href="universitiesapplied">Universities Applied</a>
+      <a href="universitiesapproved">Universities Approved</a>
+      <a href="studentstatus">Status</a>
+      <a href="logout">Logout</a>
+   </div>
    <!-- Main Content -->
-   <div class="main card"> <br>
-       <h2 style="text-align:center;">Student Profile View</h2>
-       <table align="center" border="1">
-  <thead>
+   <div class="main">
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table,th,td{
+        border:1px solid black;
+        border-collapse:collapse;
+        }
+    </style>
+</head>
+<body>
+ <table style="width:100%">
     <tr>
-      <th>Name:</th>
-        <td>saraswathi</td>
-
+        <th>Fullname</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Qualification</th>
+        <th>Passport</th>
     </tr>
-  </thead>
-  <tbody>
+             {% for r in result %}
     <tr>
-      <td>Email:</td>
-        <td>saraswathi@gmail.com</td>
+        <td> {{ r['fullname'] }}</td>
+        <td> {{ r['email'] }}</td>
+        <td> {{ r['contact'] }}</td>
+        <td> {{ r['qualification'] }}</td>
+        <td> {{ r['passport'] }}</td>
+        <td> <button ><a href= "edit" type="submit" >edit</a></button></td>
     </tr>
-  <tr>
-      <td>Phone no:</td>
-      <td>32456789</td>
-    </tr>
-  <tr>
-      <td>Qualification:</td>
-      <td>B.Tech</td>
-    </tr>
-  <tr>
-      <td>Batch:</td>
-      <td>2023-03</td>
-    </tr>
-  <tr>
-      <td>Passport no:</td>
-      <td>34567890</td>
-    </tr>
-  <tr>
-      <td>Passport Validity</td>
-      <td>2030</td>
-    </tr>
-
-
-
-
-  </tbody>
-</table><br><br>
-       <input type="submit" value="Edit" name="submit" class="submit-button"/>
-           </div>
-
-
-
+            {% endfor %}
+ </table><br><br>
+       <td> <button ><a href= "edit" type="submit" >edit</a></button></td>
+</div>
 </body>
 </html>
