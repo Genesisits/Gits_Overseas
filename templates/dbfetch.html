@@ -2,6 +2,8 @@
 <html>
 <head>
    <title>Admin Dashboard</title>
+        <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
+
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
@@ -76,9 +78,11 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
+       <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
       <a href="home">Home</a>
       <a href="adprofile">Profile</a>
-      <img href="home" src="{{url_for('static', filename='img_1.png')}}"/>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -91,10 +95,10 @@
       <a href="country">Country</a>
         <a href="addadmin">Add Admin</a>
       <a href="logout">Logout</a>
-   </div>
+   </div><br>
 
    <!-- Main Content -->
-   <div class="main">
+   <div class="main" id="print-content">
       <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,8 +120,6 @@
         <th>fathername</th>
         <th>contact</th>
         <th>email</th>
-        <th>password</th>
-        <th>confirmpassword</th>
         <th>passport</th>
         <th>qualification</th>
         <th>location</th>
@@ -137,8 +139,6 @@
         <td> {{ r['fathername'] }}</td>
         <td> {{ r['contact'] }} </td>
         <td> {{ r['email'] }}</td>
-        <td> {{ r['password'] }}</td>
-        <td> {{ r['confirmpassword'] }}</td>
         <td> {{ r['passport'] }}</td>
         <td> {{ r['qualification'] }}</td>
         <td> {{ r['location'] }}</td>
@@ -153,16 +153,15 @@
     </tr>
             {% endfor %}
 
-</table>
+</table><br><br>
+
+<button onclick="window.print();" class="noPrint">Print</button>
 
 
+   </div>
 </body>
-</html>
 
 
-</body>
-
-</body>
 </html>
 
 
