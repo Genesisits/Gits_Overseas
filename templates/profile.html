@@ -3,6 +3,8 @@
 <head>
 
     <title>Student Status</title>
+            <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
+
     <style>
     h1 {text-align: center;}
       /* Style for top navigation bar */
@@ -81,9 +83,11 @@
 <body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
+        <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
       <a href="home">Home</a>
       <a href="profile">Profile</a>
-      <img href="home" src="{{url_for('static', filename='img.png')}}"/>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -98,52 +102,74 @@
       <a href="logout">Logout</a>
    </div> <br><br>
 
+   <div class="topnav">
+       <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
+      <a href="home">Home</a>
+      <a href="adprofile">Profile</a>
+      <h1>Genesis Overseas </h1>
+
+   </div>
+
+
+   <!-- Side Navigation Bar -->
+   <div class="sidenav">
+      <a href="dbfetch">Users</a>
+      <a href="intake">Intake</a>
+      <a href="country">Country</a>
+        <a href="addadmin">Add Admin</a>
+      <a href="logout">Logout</a>
+   </div>
+
    <!-- Main Content -->
-   <div class="main card"> <br>
-       <h2 style="text-align:center;">Student Profile View</h2>
-       <table align="center" border="1">
-  <thead>
+   <div class="main">
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table,th,td{
+        border:1px solid black;
+        border-collapse:collapse;
+        }
+
+    </style>
+</head>
+<body>
+
+ <table style="width:100%">
     <tr>
-      <th>Name:</th>
-        <td>saraswathi</td>
+        <th>Fullname</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Qualification</th>
+        <th>Passport</th>
+
 
     </tr>
-  </thead>
-  <tbody>
+
+             {% for r in result %}
     <tr>
-      <td>Email:</td>
-        <td>saraswathi@gmail.com</td>
-    </tr>
-  <tr>
-      <td>Phone no:</td>
-      <td>32456789</td>
-    </tr>
-  <tr>
-      <td>Qualification:</td>
-      <td>B.Tech</td>
-    </tr>
-  <tr>
-      <td>Batch:</td>
-      <td>2023-03</td>
-    </tr>
-  <tr>
-      <td>Passport no:</td>
-      <td>34567890</td>
-    </tr>
-  <tr>
-      <td>Passport Validity</td>
-      <td>2030</td>
-    </tr>
+
+        <td> {{ r['fullname'] }}</td>
+        <td> {{ r['email'] }}</td>
+        <td> {{ r['contact'] }}</td>
+        <td> {{ r['qualification'] }}</td>
+        <td> {{ r['passport'] }}</td>
 
 
+    </tr>
+            {% endfor %}
+ </table><br><br>
+
+       <input type="submit" value="Edit" name="submit" class="submit-button"/> <br><br>
+
+<button onclick="window.print();" class="noPrint">Print</button>
 
 
-  </tbody>
-</table><br><br>
-       <input type="submit" value="Edit" name="submit" class="submit-button"/>
-           </div>
-
-
+</div>
 
 </body>
 </html>
