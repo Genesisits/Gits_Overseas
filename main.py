@@ -20,9 +20,9 @@ app.config["MYSQL_CURSORCLASS"]="DictCursor"
 mysql = MySQL(app)
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "saicharansuraram@gmail.com"
+app.config["MAIL_USERNAME"] = "anib.k57@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "jvvdkefwrvzdqcnz"
+app.config["MAIL_PASSWORD"] = "gteqjnydcyutwbvt"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -137,7 +137,7 @@ def register():
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
-        msg = Message('subject', sender="saicharansuraram@gmail.com", recipients=[email])
+        msg = Message('subject', sender="anib.k57@gmail.com", recipients=[email])
         msg.body = "THIS IS YOUR OTP" + str(otp)
         mail.send(msg)
         password = request.form['password']
