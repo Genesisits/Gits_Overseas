@@ -46,9 +46,7 @@ def home():
     return render_template('overseas.html')
 
 
-@app.route("/adintake")
-def adintake():
-    return render_template('adintake.html')
+
 
 
 
