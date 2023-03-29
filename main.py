@@ -46,12 +46,6 @@ def home():
     return render_template('overseas.html')
 
 
-@app.route("/adintake")
-def adintake():
-    return render_template('adintake.html')
-
-
-
 @app.route("/country",methods= ['GET','POST'])
 def country():
     if request.method == "POST":
@@ -102,9 +96,9 @@ def adprofile():
 @app.route("/profile")
 def profile():
     return render_template("profile.html")
-@app.route("/chat")
-def chat():
-    return render_template("chat.html")
+# @app.route("/chat")
+# def chat():
+#     return render_template("chat.html")
 
 
 @app.route("/student")

@@ -99,14 +99,14 @@
       <a href="logout">Logout</a>
    </div><br><br>
 <div class="main">
-<div class="background" >
+ <div class="background" >
     <form  action = "/update/{{ re[0]['email'] }} " method='POST'>
 
     <div class="container">
     <h1 class="heading"> Update Student Details </h1>
 
        <label>Fullname: </label>
-<<<<<<< HEAD
+
             <input class="login-input" type="text" class="login-input" name="fullname" placeholder="Fullname" value="{{ re[0]['fullname'] }}"> </br>
        <label>Contact: </label>
             <input class="login-input" type="text" class="login-input" name="contact" placeholder="Contact" value="{{ re[0]['contact'] }}"> </br>
@@ -127,7 +127,7 @@
 
        <label>Fathername: </label>
           <input class="login-input" type="text" class="login-input" name="fathername" placeholder="Fathername"  value="{{ re[0]['fathername'] }}"></br>
-=======
+
             <input class="login-input" type="text" class="login-input" name="fullname" placeholder="fullname" value="{{ re[0]['fullname'] }}"> <br></br>
        <label>Contact: </label>
             <input class="login-input" type="text" class="login-input" name="contact" placeholder="contact" value="{{ re[0]['contact'] }}"> <br></br>
@@ -148,7 +148,6 @@
 
        <label>Fathername: </label>
           <input class="login-input" type="text" class="login-input" name="fathername" placeholder="fathername"  value="{{ re[0]['fathername'] }}"><br></br>
->>>>>>> a13f1ce378c4930211a6a327adcb212001fd833f
 
     <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
     {% if error %}
