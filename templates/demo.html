@@ -1,10 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+ <link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}">
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
-<body>
+    <body>
+    <div class="row">
+<div class="col-12">
+        <form action = "/profile" method = "post">
+             </form>
+    <div class="student-profile py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card shadow-sm">
+              <div class="card-header bg-transparent text-center">
+                <img class="profile_img" src="data:image/png;base64,{{ result[0]['image'].decode('ascii') }}" alt="">
+                <h3> {{ result[0]['lastname'] }}</h3>
+              </div>
+              <div class="card-body">
+                <p class="mb-0"><strong class="pr-1">Student ID:</strong>{{ result[0]['registernumber'] }}</p>
+                <p class="mb-0"><strong class="pr-1">Class:</strong>III-BSC MPc</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card shadow-sm">
+              <div class="card-header bg-transparent border-0">
+                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>PERSONAL INFORMATION</h3>
+              </div>
+              <div class="card-body pt-0">
+                <table class="table table-bordered">
+                   <tr>
+                    <th width="30%">first name </th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['firstname'] }}</td>
+                  </tr>
+                   <tr>
+                    <th width="30%">last name</th>
+                    <td width="2%">:</td>
+                    <td>{{ result[0]['lastname'] }}</td>
+                  </tr>
+                   <tr>
+                    <th width="30%">Register no</th>
+                    <td width="2%">:</td>
+                    <td>{{ result[0]['registernumber'] }}</td>
+                  </tr>
+
+                  <tr>
+                    <th width="30%">section</th>
+                    <td width="2%">:</td>
+                    <td>{{ result[0]['section'] }}</td>
+                  </tr>
+
+                  </tr>
+                    <tr>
+                    <th width="30%">phone number</th>
+                    <td width="2%">:</td>
+                    <td>{{ result[0]['phoneno'] }}</td>
+                    </tr>
+                  <tr>
+                    <th width="30%">Email-ID</th>
+                    <td width="2%">:</td>
+                    <td>{{ result[0]['emailid'] }}</td>
+                  </tr>
+                    <tr>
+                    <th width="30%">Date of birth</th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['dob'] }}</td>
+                  </tr>
+                     <tr>
+                    <th width="30%">Gender</th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['gender'] }}</td>
+                  </tr>
+                     <tr>
+                    <th width="30%">Father name</th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['fathername'] }}</td>
+                  </tr>
+                     <tr>
+                    <th width="30%">Father phone number</th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['fatherno'] }}</td>
+                  </tr>
+                     <tr>
+                    <th width="30%">Mother name</th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['mothername'] }}</td>
+                  </tr>
+                     <tr>
+                    <th width="30%"> Mother phone number</th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['motherno'] }}</td>
+                  </tr>
+                     <tr>
+                    <th width="30%">Address</th>
+                    <td width="2%">:</td>
+                    <td> {{ result[0]['address'] }}</td>
+                  </tr>
+
++
+                </table>
+                  </div>
+        </div>
 
 </body>
-</html>
+ </html>
