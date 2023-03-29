@@ -56,13 +56,25 @@ def adintake():
     return render_template('adintake.html')
 
 
-@app.route("/country")
+@app.route("/country",methods=['GET','POST'])
 def country():
+    if request.method == "POST":
+        country = request.form['country']
+        print(country)
+        cur = mysql.connection.cursor()
+        r = cur.execute("select * from usertable where country = %s",(country,))
+        mysql.connection.commit()
+        if r>0:
+            result = cur.fetchall()
+            print(result)
+            return render_template("dbfetch.html", result=result)
+        else:
+            error = "No Student was Found"
+            return render_template("dbfetch.html", error=error)
+        cur.close()
     return render_template('country.html')
 
-@app.route("/adcountry")
-def adcountry():
-    return render_template('adcountry.html')
+
 
 @app.route("/admindashboard")
 def admindashboard():
@@ -72,33 +84,9 @@ def admindashboard():
 def about():
     return render_template("about.html")
 
-@app.route('/sregister', methods=['GET','POST'])
-def sregister():
-    if request.method == 'POST':
-        name = request.form['name']
-        password = request.form['password']
-        cur = mysql.connection.cursor()
-        c = cur.execute("insert into superadmintable(name,password) values(%s,%s)",(name,password))
-        mysql.connection.commit()
-        if c>0:
-            flash("Admin Register successfull")
-            return redirect(url_for("superlogin"))
-        else:
-            error = "oops something went wrong"
-            return render_template("superadmin.html",error = error)
-
-        cur.close()
-
-
-    return render_template("sregister.html")
-
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
-
-@app.route("/superadmin")
-def superadmin():
-    return render_template("superadmin.html")
 
 @app.route("/notifications")
 def notifications():
@@ -119,6 +107,10 @@ def adprofile():
 @app.route("/profile")
 def profile():
     return render_template("profile.html")
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
+
 
 @app.route("/student")
 def student():
@@ -254,49 +246,17 @@ def admin_login():
         cur.close()
     return render_template("admin_login.html")
 
-@app.route('/superlogin', methods=['GET','POST'])
-def superlogin():
-    if request.method == 'POST':
-        name = request.form['name']
-        password = request.form['password']
-        cur = mysql.connection.cursor()
-        c = cur.execute('select password,name from superadmintable where  password = %s and name =%s',(password,name))
-        mysql.connection.commit()
-        if c > 0:
-            result = cur.fetchone()
-            print(result)
-            username1 = result['name']
-            session.permanent = True
-            session['name'] = name
-            password1 = result['password']
-            if username1 == name and password1 == password:
-                flash("successful logged in")
-                return redirect(url_for("superadmin"))
-            else:
-                error = "oops!something went wrong"
-                return render_template("superlogin.html", error=error)
-        else:
-            error = "oops something went wrong"
-            return render_template("superlogin.html", error=error)
-    else:
-        if 'name' in session:
-            name = session["name"]
-            return redirect(url_for('superadmin'))
-        else:
-            return render_template('superlogin.html')
 
-        cur.close()
-    return render_template("super_login.html")
 
 
 @app.route("/addadmin",methods=['GET','POST'])
 def addadmin():
-    if request.method == 'POST':
+    '''if request.method == 'POST':
         password = request.form['password']
         if password == 'admin':
             return redirect(url_for("admin_register"))
         else:
-            return "Wrong password"
+            return "Wrong password"'''
     return render_template('addadmin.html')
 
 @app.route("/logout")
@@ -304,10 +264,6 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-@app.route("/slogout")
-def slogout():
-    session.clear()
-    return redirect(url_for('home'))
 
 @app.route('/validate',methods=['POST'])
 def validate():
@@ -336,17 +292,6 @@ def user():
     cur.close()
     return render_template("dbfetch.html")
 
-@app.route("/addbfetch")
-def users():
-    cur = mysql.connection.cursor()
-    r = cur.execute('select * from usertable')
-    mysql.connection.commit()
-    if r>0:
-        re = cur.fetchall()
-        print(re)
-        return render_template("addbfetch.html",result=re)
-    cur.close()
-    return render_template("addbfetch.html")
 
 @app.route('/intake',methods=['POST','GET'])
 def intake():
@@ -380,6 +325,37 @@ def delete(email):
         print(admin)
         return render_template("dbfetch.html", result=admin)
     return render_template("dbfetch.html")
+
+@app.route("/update/<string:email>", methods=['GET', 'POST'])
+def update(email):
+    if request.method=="POST":
+        fullname = request.form['fullname']
+        contact = request.form['contact']
+        location = request.form['location']
+        qualification = request.form['qualification']
+        maritial = request.form['maritial']
+        country = request.form['country']
+        gender = request.form['gender']
+        passport = request.form['passport']
+        fathername = request.form['fathername']
+        email = request.form['email']
+        cur = mysql.connection.cursor()
+        a = cur.execute(
+            'UPDATE usertable SET fullname = %s ,contact=%s,fathername=%s,gender =%s,location=%s,country=%s,passport=%s,qualification=%s ,maritial=%s where email=%s',
+            [fullname, contact, fathername, gender, location, country, passport, qualification, maritial, email, ])
+        mysql.connection.commit()
+        if a > 0:
+            flash("updated successfully")
+            return redirect(url_for("admindashboard"))
+        else:
+            error = "oops something went wrong"
+            return render_template("update.html", error=error)
+        cur.close()
+    cur2 = mysql.connection.cursor()
+    u = cur2.execute("select * from usertable where email = %s", (email,))
+    re = cur2.fetchall()
+    print(re)
+    return render_template("update.html", re=re)
 
 
 if __name__ == "__main__":
