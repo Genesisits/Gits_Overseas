@@ -10,12 +10,12 @@ app = Flask(__name__)
 app.secret_key = "abc123"
 
 app.secret_key="keyvalue"
-app.config["MYSQL_HOST"]="localhost"
-app.config["MYSQL_USER"]="root"
+app.config["MYSQL_HOST"] = "localhost"
+app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PORT"] = 3306
-app.config["MYSQL_PASSWORD"]=""
+app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
-app.config["MYSQL_CURSORCLASS"]="DictCursor"
+app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
 
@@ -37,26 +37,22 @@ def homep():
 def userflash():
     return render_template("userflash.html")
 
-
-
-
-
 @app.route("/adminflash")
 def adminflash():
     return render_template("adminflash.html")
 
-
-
 @app.route("/home")
 def home():
     return render_template('overseas.html')
+
 
 @app.route("/adintake")
 def adintake():
     return render_template('adintake.html')
 
 
-@app.route("/country",methods=['GET','POST'])
+
+@app.route("/country",methods= ['GET','POST'])
 def country():
     if request.method == "POST":
         country = request.form['country']
@@ -73,7 +69,6 @@ def country():
             return render_template("dbfetch.html", error=error)
         cur.close()
     return render_template('country.html')
-
 
 
 @app.route("/admindashboard")
@@ -123,9 +118,7 @@ def studentstatus():
 @app.route('/register',methods = ['GET','POST'])
 def register():
     if request.method == 'POST':
-
         fullname = request.form['fullname']
-
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
@@ -247,8 +240,6 @@ def admin_login():
     return render_template("admin_login.html")
 
 
-
-
 @app.route("/addadmin",methods=['GET','POST'])
 def addadmin():
     '''if request.method == 'POST':
@@ -262,7 +253,9 @@ def addadmin():
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
+
+
 
 
 @app.route('/validate',methods=['POST'])
@@ -279,6 +272,10 @@ def validate():
 @app.route("/send")
 def send():
     return render_template("send.html")
+
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
 
 @app.route("/dbfetch")
 def user():

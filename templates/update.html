@@ -106,6 +106,7 @@
     <h1 class="heading"> Update Student Details </h1>
 
        <label>Fullname: </label>
+<<<<<<< HEAD
             <input class="login-input" type="text" class="login-input" name="fullname" placeholder="Fullname" value="{{ re[0]['fullname'] }}"> </br>
        <label>Contact: </label>
             <input class="login-input" type="text" class="login-input" name="contact" placeholder="Contact" value="{{ re[0]['contact'] }}"> </br>
@@ -126,6 +127,28 @@
 
        <label>Fathername: </label>
           <input class="login-input" type="text" class="login-input" name="fathername" placeholder="Fathername"  value="{{ re[0]['fathername'] }}"></br>
+=======
+            <input class="login-input" type="text" class="login-input" name="fullname" placeholder="fullname" value="{{ re[0]['fullname'] }}"> <br></br>
+       <label>Contact: </label>
+            <input class="login-input" type="text" class="login-input" name="contact" placeholder="contact" value="{{ re[0]['contact'] }}"> <br></br>
+        <label>Country: </label>
+            <input class="login-input" type="text" class="login-input" name="country" placeholder="select country" value="{{ re[0]['country'] }}"> <br></br>
+     <label>Passport No: </label>
+            <input class="login-input" type="text" class="login-input" name="passport" placeholder="passport no" value="{{ re[0]['passport'] }}"><br> </br>
+     <label>Qualification: </label>
+            <input class="login-input" type="text" class="login-input" name="qualification" placeholder="qualification" value="{{ re[0]['qualification'] }}"> <br></br>
+     <label>Location: </label>
+            <input class="login-input" type="text" class="login-input" name="location" placeholder="location" value="{{ re[0]['location'] }}"><br></br>
+        <label>Maritial: </label>
+            <input class="login-input" type="text" class="login-input" name="maritial" placeholder="maritial"value="{{ re[0]['maritial'] }}"> <br></br>
+       <label>Gender: </label>
+          <input class="login-input" type="text" class="login-input" name="gender" placeholder="gender" value="{{ re[0]['gender'] }}"><br></br>
+       <label>Email: </label>
+          <input class="login-input" type="text" class="login-input" name="email" placeholder="email" value="{{ re[0]['email'] }}"><br></br>
+
+       <label>Fathername: </label>
+          <input class="login-input" type="text" class="login-input" name="fathername" placeholder="fathername"  value="{{ re[0]['fathername'] }}"><br></br>
+>>>>>>> a13f1ce378c4930211a6a327adcb212001fd833f
 
     <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
     {% if error %}
