@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Student Dashboard</title>
-   <style>
-   h1 {text-align: center;}
+
+    <title>Student Status</title>
+    <style>
+    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
 
-         background-color:#66b3ff;
+         background-color: #66b3ff;
          overflow: hidden;
          position: fixed;
          top: 0;
          left: 0;
-         height: 10%;z
+         height: 10%;
          width: 100%;
          z-index: 999;
       }
@@ -60,7 +61,7 @@
       }
 
       .sidenav a:hover {
-         color: #53c653;
+         color: #d580ff;
       }
 
       .main {
@@ -72,11 +73,12 @@
       }
 
    </style>
+
 </head>
-<body/>
+<body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-       <a href="home" style="float: left;">
+        <a href="home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="home">Home</a>
@@ -89,13 +91,25 @@
    <!-- Side Navigation Bar -->
    <div class="sidenav">
 
-      <a href="update">Update Profile</a>
-      <a href="notifications">Notifications</a>
+       <a href="chats">chat</a>
 
-       <a href="">Chat</a>
-     
+      <a href="notifications">Notifications</a>
       <a href="universitiesapplied">Universities Applied</a>
       <a href="universitiesapproved">Universities Approved</a>
-      <a href="studentstatus">Status</a>
+       <a href="studentstatus">Status</a>
       <a href="logout">Logout</a>
    </div>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chats</title>
+</head>
+<body>
+<br>
+<form>  notifications yet to come
+</form>
+<h1> Notifications yet to come</h1>
+
+</body>
+</html>
