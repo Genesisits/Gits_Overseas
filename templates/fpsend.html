@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>send OTP for forgot password</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fpsend.css') }}">
+</head>
+<body>
+{% if error %}
+       <p class = "error"><strong>Error:</strong>: {{ error }}</p>
+    {% endif %}
+
+<form action="/fpvalidate" method="POST">
+    <div class="otp-container con">
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" name="otp" maxlength="6" autocomplete="off"> <br><br>
+    <!--
+  <h1>OTP</h1> <br>
+    <div>Enter OTP:<input type="text" name="otp"> -->
+  <input type="submit" value="submit">
+    </div>
+</form>
+</body>
+</html>
+<!--
+<div class="otp-container">
+  <label for="otp">Enter OTP:</label>
+  <input type="text" id="otp" name="otp" maxlength="6" autocomplete="off">
+</div>  -->
