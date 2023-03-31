@@ -45,6 +45,10 @@ def adminflash():
 def home():
     return render_template('overseas.html')
 
+@app.route("/chats")
+def chats():
+    return render_template('chats.html')
+
 @app.route("/country",methods= ['GET','POST'])
 def country():
     if request.method == "POST":
