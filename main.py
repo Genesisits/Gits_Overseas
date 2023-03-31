@@ -202,6 +202,71 @@ def student():
 def studentstatus():
     return render_template("studentstatus.html")
 
+
+@app.route("/forgotpasswordpage",methods=['GET','POST'])
+def forgotpasswordpage():
+    if request.method == 'POST':
+        email = request.form['email']
+        cur = mysql.connection.cursor()
+        c = cur.execute('select email from usertable where email = %s',(email,))
+        mysql.connection.commit()
+        if c>0:
+            result = cur.fetchone()
+            print(result)
+            email = result['email']
+            session.permanent = True
+            session['email'] = email
+            flash("check for OTP")
+            msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+            msg.body = "THIS IS YOUR OTP FOR FORGOT PASSWORD " + str(otp)
+            mail.send(msg)
+            return redirect(url_for('fpsend'))
+        else:
+            error = "oops something went wrong"
+            return render_template("forgotpasswordpage.html",error = error)
+        cur.close()
+    return render_template("forgotpasswordpage.html")
+
+@app.route("/fpsend")
+def fpsend():
+    return render_template("fpsend.html")
+
+@app.route('/fpvalidate',methods=['POST'])
+def fpvalidate():
+    user_otp = request.form['otp']
+    if otp == int(user_otp):
+        return redirect(url_for("updatepassword"))
+    else:
+        error = "wrong OTP"
+        return render_template("fpsend.html", error=error)
+
+@app.route('/updatepassword',methods=['GET','POST'])
+def updatepassword():
+    if request.method == 'POST':
+        newpassword = request.form['newpassword']
+        confirmpassword = request.form['confirmpassword']
+        email = session['email']
+        if newpassword == confirmpassword:
+            cur = mysql.connection.cursor()
+            a = cur.execute('UPDATE usertable SET password = %s WHERE email = %s', [newpassword, email])
+            mysql.connection.commit()
+
+            if a > 0:
+                flash("password updated successfully")
+                session.clear()
+                return redirect(url_for('home'))
+            else:
+                error = "oops something went wrong"
+                return render_template("updatepassword.html",error = error)
+
+        else:
+            error = "password and confirm password should be same"
+            return render_template("updatepassword.html",error=error)
+        cur.close()
+    return render_template("updatepassword.html")
+
+
+
 @app.route('/register',methods = ['GET','POST'])
 def register():
     if request.method == 'POST':
