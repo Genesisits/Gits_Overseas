@@ -95,6 +95,15 @@ def adprofile():
 
 @app.route("/profile")
 def profile():
+    email=session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute('select * from usertable where email=%s',[email])
+    mysql.connection.commit()
+    if r>0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("profile.html",result=re)
+    cur.close()
     return render_template("profile.html")
 
 @app.route("/student")
