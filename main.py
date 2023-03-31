@@ -2,13 +2,7 @@ from flask import *
 from flask_mail import *
 from flask_mysqldb import MySQL
 from random import *
-
-
-app = Flask(__name__)
-
-# Connect to the database
-
-app.secret_key = "abc123"
+import base64
 
 app = Flask(__name__)
 app.secret_key = "abc123"
@@ -26,9 +20,10 @@ mysql = MySQL(app)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_USERNAME"] = "jayanthkaruparti.CCBPian00101@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "wdhobdfeamlgwthh"
+app.config["MAIL_PASSWORD"] = "vmqytgipaabnagzb"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
+
 mail = Mail(app)
 
 otp = randint(000000,999999)
@@ -42,14 +37,9 @@ def userflash():
     return render_template("userflash.html")
 
 
-
-
-
 @app.route("/adminflash")
 def adminflash():
     return render_template("adminflash.html")
-
-
 
 @app.route("/home")
 def home():
@@ -90,10 +80,7 @@ def sregister():
         else:
             error = "oops something went wrong"
             return render_template("superadmin.html",error = error)
-
         cur.close()
-
-
     return render_template("sregister.html")
 
 @app.route("/contact")
@@ -120,9 +107,10 @@ def universitiesapproved():
 def adprofile():
     return render_template("adprofile.html")
 
+"""
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    return render_template("profile.html") """
 
 @app.route("/student")
 def student():
@@ -132,13 +120,119 @@ def student():
 def studentstatus():
     return render_template("studentstatus.html")
 
-@app.route('/forgotpasswordpage',methods=['GET','POST'])
+"""@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    form = ImageForm()
+    if form.validate_on_submit():
+        image_data = request.files['image'].read()
+        image_name = form.image.data.filename
+        image = Image(name=image_name, data=image_data)
+        db.session.add(image)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('upload.html', form=form) """
+
+"""
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    if request.method == "POST":
+        # Get the image data from the form
+        image = request.form["image"]
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
+        # Connect to the database
+        cur = mysql.connection.cursor()
+        # Execute the SQL query to store the image
+        cur.execute("INSERT INTO images (image) VALUES (%s)", (image_data,))
+        mysql.connection.commit()
+        # Close the cursor
+        cur.close()
+        return "Image uploaded successfully"
+    return render_template("upload.html")
+@app.route("/images", methods=["GET"])
+def images():
+    # Connect to the database
+    cur = mysql.connection.cursor()
+    # Execute the SQL query to retrieve the images
+    cur.execute("SELECT * FROM images")
+    images = cur.fetchall()
+    print(images)
+    # Close the cursor
+    cur.close()
+    # Render the template with the images
+    return render_template("images.html", images=images)
+
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    if request.method == "POST":
+        # Get the image data from the form
+        image = request.form["image"]
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
+        # Connect to the database
+        cur = mysql.connection.cursor()
+        # Execute the SQL query to store the image
+        cur.execute("INSERT INTO images (image) VALUES (%s)", (image_data,))
+        mysql.connection.commit()
+        # Close the cursor
+        cur.close()
+        return "Image uploaded successfully"
+    return render_template("upload.html")"""
+
+@app.route('/profile',methods=['GET','POST'])
+def profile():
+    if request.method == 'POST':
+        email = session["email"]
+        print(email)
+        image = request.form['image']
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO usertable(upload) VALUES(%s) WHERE email = %s",(image_data,email,))
+        mysql.connection.commit()
+        cur.close()
+        return "image uploaded successfully"
+    return render_template("profile.html")
+
+@app.route('/usertable',methods=['GET'])
+def usertable():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * from usertable')
+    mysql.connection.commit()
+    usertable = cur.fetchall()
+    print(usertable)
+    cur.close()
+    return render_template('profile.html')
+
+"""
+@app.route('/fetch',methods=['GET'])
+def fetch():
+    cur = mysql.connection.cursor()
+    cur.execute('select upload from usertable where id = 25')
+    mysql.connection.commit()
+    cur.close()
+    return render_template('image.html')
+
+  
+@app.route('/profile')
+def profile():
+   return render_template('profile.html')
+    
+
+@app.route('/profile', methods = ['POST'])
+def profile():
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save(f.filename)
+      return 'file uploaded successfully'  """
+
+@app.route("/forgotpasswordpage",methods=['GET','POST'])
 def forgotpasswordpage():
     if request.method == 'POST':
         email = request.form['email']
         cur = mysql.connection.cursor()
         c = cur.execute('select email from usertable where email = %s',(email,))
-        mysql.connection.cursor()
+        mysql.connection.commit()
         if c>0:
             result = cur.fetchone()
             print(result)
@@ -147,14 +241,15 @@ def forgotpasswordpage():
             session['email'] = email
             flash("check for OTP")
             msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
-            msg.body = "THIS IS YOUR OTP" + str(otp)
+            msg.body = "THIS IS YOUR OTP FOR FORGOT PASSWORD " + str(otp)
             mail.send(msg)
             return redirect(url_for('fpsend'))
         else:
             error = "oops something went wrong"
-            return render_template("forgotpasswordpage.html",error = 'error')
+            return render_template("forgotpasswordpage.html",error = error)
         cur.close()
     return render_template("forgotpasswordpage.html")
+
 @app.route("/fpsend")
 def fpsend():
     return render_template("fpsend.html")
@@ -181,11 +276,16 @@ def updatepassword():
 
             if a > 0:
                 flash("password updated successfully")
-                return redirect(url_for("login"))
+                session.clear()
+                return redirect(url_for('home'))
             else:
                 error = "oops something went wrong"
                 return render_template("updatepassword.html",error = error)
-            cur.close()
+
+        else:
+            error = "password and confirm password should be same"
+            return render_template("updatepassword.html",error=error)
+        cur.close()
     return render_template("updatepassword.html")
 
 
@@ -253,7 +353,7 @@ def login():
         mysql.connection.commit()
         if b > 0:
             result = cur.fetchone()
-            print(result)
+            """print(result) """
             username1 = result['email']
             session.permanent = True
             session['email'] = email
