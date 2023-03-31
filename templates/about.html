@@ -27,7 +27,8 @@
       .topnav a {
          float: right;
          display: block;
-         color: #010a0a;
+         color: #FFFFFF
+;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
@@ -77,9 +78,13 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
+       <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
       <a href="home">Home</a>
-      <a href="contact">Contact</a>
-      <img href="home" src="{{url_for('static', filename='img_1.png')}}"/>
+      <a href="contact">Contact Us</a>
+       <a href="about">About Us</a>
+
       <h1>Genesis Overseas </h1>
 
    </div>

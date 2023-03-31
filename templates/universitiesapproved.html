@@ -78,9 +78,11 @@
 <body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
+        <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
       <a href="home">Home</a>
       <a href="profile">Profile</a>
-      <img href="home" src="{{url_for('static', filename='img.png')}}"/>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -88,7 +90,10 @@
 
    <!-- Side Navigation Bar -->
    <div class="sidenav">
-       <a href="update">Update Profile</a>
+
+
+       <a href="chat">chat</a>
+
       <a href="notifications">Notifications</a>
       <a href="universitiesapplied">Universities Applied</a>
       <a href="universitiesapproved">Universities Approved</a>

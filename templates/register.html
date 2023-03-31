@@ -12,7 +12,7 @@
          position: fixed;
          top: 0;
          left: 0;
-         height: 10%;
+         height: 13%;
          width: 100%;
          z-index: 999;
       }
@@ -26,7 +26,7 @@
       .topnav a {
          float: right;
          display: block;
-         color: #010a0a;
+         color: #ffffff;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
@@ -76,10 +76,12 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
+        <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
       <a href="home">Home</a>
        <a href="about">About us</a>
        <a href="contact">Contact us</a>
-      <img href="home" src="{{url_for('static', filename='img_1.png')}}"/>
       <h1>Genesis Overseas </h1>
 
    </div><br>
@@ -138,7 +140,7 @@
         <form class = "nav" method="POST">
     <div class="card-container">
     <h1 class ="login-title main-head">Registration </h1> </br>
-         <label>Fullname: </label>
+         <label>Full name: </label>
     <input class="input-box" type="text" class="login-input" name="fullname" placeholder="fullname"  required></br>
         <label>Password : </label>
     <input class="input-box" type="password" class="login-input" name="password" placeholder="Password"  required ></br>
@@ -148,40 +150,42 @@
     <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br>
         <label>Passport No : </label>
     <input class="input-box" type="text" class="login-input" name="passport" placeholder="passport number"  required ></br>
-      <label>Fathername : </label>
+      <label>Father name : </label>
     <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Fathername"  required ></br>
         <label>Contact : </label>
     <input class="input-box" type="text" class="login-input" name="contact" placeholder="contact"  required></br>
         <label>Location : </label>
     <input class="input-box" type="text" class="login-input" name="location" placeholder="Location"  required></br>
         <label>Country Applied for : </label>
-            <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country that you are applied for"  required></br>
+            <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country  Applied for"  required></br>
 
     <label for="gender">Gender :</label>
    <select class="input-box" type="text" id="Gender" name="gender">
        <option value="">Select Your Gender</option>
-       <option value="male">MALE</option>
-       <option value="female">FEMALE</option>
+       <option value="Male">Male</option>
+       <option value="Female">Female</option>
+       <option value="Others">Others</option>
    </select> <br> <br>
     <label for="qualification">Qualification :</label>
    <select class="input-box" id="qualification" name="qualification">
        <option value="">Select Your Qualification</option>
-       <option value="ssc">SSC</option>
-       <option value="undergraduate">Undergraduate</option>
-       <option value="graduate">Graduate</option>
-        <option value="postgraduate">Postgraduate</option>
+       <option value="Ssc">SSC</option>
+       <option value="Undergraduate">Undergraduate</option>
+       <option value="Graduate">Graduate</option>
+        <option value="Postgraduate">Postgraduate</option>
    </select> <br> <br>
     <label for="maritial">Maritial :</label>
    <select class="input-box" id="maritial" name="maritial">
        <option value="">Select Your maritial status</option>
-       <option value="single">SINGLE</option>
-       <option value="married">Married</option>
+       <option value="Single">Single</option>
+       <option value="Married">Married</option>
    </select> <br> <br>
     <label for="reference">Reference :</label>
    <select class="input-box" id="reference" name="reference">
        <option value="">Select your reference</option>
-       <option value="socialmedia">Social Media</option>
-       <option value="friends">Friends</option>
+       <option value="Socialmedia">Social Media</option>
+       <option value="Friends">Friends</option>
+       <option value="others">others</option>
    </select> <br> <br>
 
     <input type="submit" name="submit" value="Register" class="register-button button"  required></br>

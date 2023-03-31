@@ -4,6 +4,10 @@
 
     <title>Student Status</title>
 
+
+            <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
+
+
     <style>
     h1 {text-align: center;}
       /* Style for top navigation bar */
@@ -94,10 +98,11 @@
 
    <!-- Side Navigation Bar -->
    <div class="sidenav">
+       <a href="chat">Chat</a>
       <a href="notifications">Notifications</a>
       <a href="universitiesapplied">Universities Applied</a>
       <a href="universitiesapproved">Universities Approved</a>
-       <a href="studentstatus">Student Status</a>
+       <a href="studentstatus"> Status</a>
       <a href="logout">Logout</a>
    </div> <br><br>
 
@@ -113,13 +118,7 @@
 
 
    <!-- Side Navigation Bar -->
-   <div class="sidenav">
-      <a href="dbfetch">Users</a>
-      <a href="intake">Intake</a>
-      <a href="country">Country</a>
-        <a href="addadmin">Add Admin</a>
-      <a href="logout">Logout</a>
-   </div>
+
 
    <!-- Main Content -->
    <div class="main">
@@ -136,7 +135,9 @@
 
     </style>
 </head>
-</body>
+
+<body>
+
 
  <table style="width:100%">
     <tr>
@@ -148,7 +149,6 @@
 
 
     </tr>
-
              {% for re in result %}
     <tr>
 
@@ -163,8 +163,12 @@
             {% endfor %}
  </table><br><br>
 
+
 <button ><a href= "update/{{ ['email'] }}" type="submit" >Update</a></button></td>
 
+   
+
+       <input type="submit" value="Edit" name="submit" class="submit-button"/> <br><br>
 
 
 
@@ -173,167 +177,3 @@
 
 </body>
 </html>
-<!--<!DOCTYPE html>
-<html>
-<head>
-   <title>Student Dashboard</title>
-        <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
-
-   <style>
-   h1 {text-align: center;}
-      /* Style for top navigation bar */
-      .topnav {
-
-         background-color: #00cc00;
-         overflow: hidden;
-         position: fixed;
-         top: 0;
-         left: 0;
-         height: 10%;
-         width: 100%;
-         z-index: 999;
-      }
-
-      .topnav img {
-         height: 60px;
-         padding: 5px;
-         float: left;
-      }
-
-      .topnav a {
-         float: right;
-         display: block;
-         color: #010a0a;
-         text-align: center;
-         padding: 14px 16px;
-         text-decoration: none;
-         font-size: 17px;
-      }
-
-      .topnav a:hover {
-         background-color: #ddd;
-         color: black;
-      }
-
-      /* Style for side navigation bar */
-      .sidenav {
-         height: 100%;
-         width: 200px;
-         position: fixed;
-         z-index: 1;
-         top: 50px;
-         left: 0;
-         background-color: #111;
-         overflow-x: hidden;
-         padding-top: 20px;
-      }
-
-      .sidenav a {
-         padding: 6px 8px 6px 16px;
-         text-decoration: none;
-         font-size: 20px;
-         color: #f0f5f5;
-         display: block;
-      }
-
-      .sidenav a:hover {
-         color: #3333ff;
-      }
-
-      .main {
-         margin-left: 200px;
-         margin-top: 70px;
-         padding: 0px 10px;
-         font-size: 18px;
-         text-align: center;
-      }
-
-   </style>
-</head>
-<body/>-->
-<!-- Top Navigation Bar -->
-  <!-- <div class="topnav">
-       <a href="home" style="float: left;">
-             <img src="{{url_for('static', filename='img_1.png' )}}" >
-
-     </a>
-      <a href="home">Home</a>
-      <a href="profile">Profile</a>
-      <h1>Genesis Overseas </h1>
-
-   </div>-->
-
-
-   <!-- Side Navigation Bar -->
-   <!--<div class="sidenav">
-       <a href="update">Update Profile</a>
-      <a href="notifications">Notifications</a>
-      <a href="universitiesapplied">Universities Applied</a>
-      <a href="universitiesapproved">Universities Approved</a>
-        <a href="studentstatus">Status</a>
-      <a href="logout">Logout</a>
-   </div><br>-->
-
-   <!-- Main Content -->
-   <!--<div class="main" id="print-content">
-      <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        table,th,td{
-        border:1px solid black;
-        border-collapse:collapse;
-        }
-
-    </style>
-</head>
-<body>
-
- <table style="width:100%">
-    <tr>
-        <th>fullname</th>
-        <th>fathername</th>
-        <th>contact</th>
-        <th>email</th>
-        <th>passport</th>
-        <th>qualification</th>
-        <th>location</th>
-        <th>country</th>
-        <th>gender</th>
-        <th>maritial</th>
-        <th>reference</th>
-        <th colspan="3" align ="center"> Operations</th>
-
-
-    </tr>
-
-             {% for r in result %}
-    <tr>
-
-        <td> {{ r['fullname'] }}</td>
-        <td> {{ r['fathername'] }}</td>
-        <td> {{ r['contact'] }} </td>
-        <td> {{ r['email'] }}</td>
-        <td> {{ r['passport'] }}</td>
-        <td> {{ r['qualification'] }}</td>
-        <td> {{ r['location'] }}</td>
-        <td> {{ r['country'] }}</td>
-        <td> {{ r['gender'] }}</td>
-        <td> {{ r['maritial'] }}</td>
-        <td> {{ r['reference'] }}</td>
-        <td> <button ><a href= "update/{{ r['email'] }}" type="submit" >Update</a></button></td>
-        <td> <button ><a href= "delete/{{ r['email'] }}" type="submit" >Delete</a></button></td>
-
-
-    </tr>
-            {% endfor %}
-
-</table><br><br>
-
-<button onclick="window.print();" class="noPrint">Print</button>
-</div>
-</body>
-</html>-->
-
