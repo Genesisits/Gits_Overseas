@@ -272,10 +272,10 @@ def login():
                 flash("successful logged in")
                 return redirect(url_for("student"))
             else:
-                error = "oops!something went wrong"
+                error = "oops!something went wrong please check email and password"
                 return render_template("login.html", error=error)
         else:
-            error = "oops something went wrong"
+            error = "oops something went wrong please check email and password"
             return render_template("login.html",error=error)
     else:
         if 'email' in session:
