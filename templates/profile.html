@@ -82,15 +82,6 @@
 </head>
 <body>
 <!-- Top Navigation Bar -->
-   <div class="topnav">
-        <a href="home" style="float: left;">
-             <img src="{{url_for('static', filename='img_1.png' )}}" >
-     </a>
-      <a href="home">Home</a>
-      <a href="profile">Profile</a>
-      <h1>Genesis Overseas </h1>
-
-   </div>
 
 
    <!-- Side Navigation Bar -->
@@ -108,7 +99,7 @@
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="home">Home</a>
-      <a href="adprofile">Profile</a>
+      <a href="profile">Profile</a>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -144,14 +135,14 @@
 
     </tr>
 
-             {% for r in result %}
+             {% for re in result %}
     <tr>
 
-        <td> {{ r['fullname'] }}</td>
-        <td> {{ r['email'] }}</td>
-        <td> {{ r['contact'] }}</td>
-        <td> {{ r['qualification'] }}</td>
-        <td> {{ r['passport'] }}</td>
+        <td> {{ re['fullname'] }}</td>
+        <td> {{ re['email'] }}</td>
+        <td> {{ re['contact'] }}</td>
+        <td> {{ re['qualification'] }}</td>
+        <td> {{ re['passport'] }}</td>
 
 
     </tr>
@@ -160,7 +151,6 @@
 
        <input type="submit" value="Edit" name="submit" class="submit-button"/> <br><br>
 
-<button onclick="window.print();" class="noPrint">Print</button>
 
 
 </div>

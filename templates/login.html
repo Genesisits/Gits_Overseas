@@ -27,7 +27,7 @@
       .topnav a {
          float: right;
          display: block;
-         color: #010a0a;
+         color: #ffffff;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
@@ -81,6 +81,8 @@
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="home">Home</a>
+       <a href="about">About Us</a>
+       <a href="contact">Contact Us</a>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -132,7 +134,11 @@
     </style>
   </head>
   <body>
+
     <h1 style="text-align:center; color:#0000FF">Login Page</h1>
+{% if error %}
+       <p class = "error"><strong>Error:</strong>: {{ error }}</p>
+    {% endif %}
     <form action="" method="POST">
       <label for="username">Email:</label>
       <input type="text" id="username" name="email" required><br><br>
@@ -147,5 +153,5 @@
 
 
 </head>
-<body>
+</body>
 </html>

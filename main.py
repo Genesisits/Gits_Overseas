@@ -95,6 +95,15 @@ def adprofile():
 
 @app.route("/profile")
 def profile():
+    email=session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute('select * from usertable where email=%s',[email])
+    mysql.connection.commit()
+    if r>0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("profile.html",result=re)
+    cur.close()
     return render_template("profile.html")
 
 @app.route("/student")
@@ -179,10 +188,10 @@ def login():
                 flash("successful logged in")
                 return redirect(url_for("student"))
             else:
-                error = "oops!something went wrong"
+                error = "oops!something went wrong please check email and password"
                 return render_template("login.html", error=error)
         else:
-            error = "oops something went wrong"
+            error = "oops something went wrong please check email and password"
             return render_template("login.html",error=error)
     else:
         if 'email' in session:
