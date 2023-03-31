@@ -20,9 +20,9 @@ app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 mysql = MySQL(app)
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "anib.k57@gmail.com"
+app.config["MAIL_USERNAME"] = "saicharansuraram@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "gteqjnydcyutwbvt"
+app.config["MAIL_PASSWORD"] = "dygezvhggnruadsi"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -115,7 +115,7 @@ def update(email):
 
     return render_template("update.html",re=re)'''
 
-
+'''
 @app.route("/update/<string:email>", methods=['GET', 'POST'])
 def update(email):
     if request.method=="POST":
@@ -148,7 +148,7 @@ def update(email):
     re = cur2.fetchone()
     print(re)
     return render_template("update.html", re=re)
-
+'''
 
 
 @app.route("/universitiesapplied")
@@ -336,7 +336,7 @@ def addadmin():
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('home'))
 
 
 
