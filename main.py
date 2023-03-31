@@ -77,9 +77,79 @@ def about():
 def contact():
     return render_template("contact.html")
 
+
 @app.route("/notifications")
 def notifications():
     return render_template("notifications.html")
+
+'''@app.route("/update/<string:email>", methods=['GET', 'POST'])
+def update(email):
+    if request.method=="POST":
+        fullname = request.form['fullname']
+        contact = request.form['contact']
+        location = request.form['location']
+        qualification = request.form['qualification']
+        maritial = request.form['maritial']
+        country = request.form['country']
+        gender = request.form['gender']
+        passport = request.form['passport']
+        fathername = request.form['fathername']
+        email = request.form['email']
+        cur = mysql.connection.cursor()
+        a = cur.execute(
+            'UPDATE usertable SET fullname = %s ,contact=%s,fathername=%s,gender =%s,location=%s,country=%s,passport=%s,qualification=%s ,maritial=%s where email=%s',
+            [fullname, contact, fathername, gender, location, country, passport, qualification, maritial, email, ])
+        mysql.connection.commit()
+        if a > 0:
+            flash("updated successfully")
+            return redirect(url_for("msg"))
+        else:
+            error = "oops something went wrong"
+            return render_template("update.html", error=error)
+        cur.close()
+    cur2 = mysql.connection.cursor()
+    u = cur2.execute("select * from usertable where email = %s", (email,))
+    print(u)
+    re = cur2.fetchone()
+    print(re)
+
+    return render_template("update.html",re=re)'''
+
+
+@app.route("/update/<string:email>", methods=['GET', 'POST'])
+def update(email):
+    if request.method=="POST":
+        fullname = request.form['fullname']
+        contact = request.form['contact']
+        location = request.form['location']
+        qualification = request.form['qualification']
+        maritial = request.form['maritial']
+        country = request.form['country']
+        gender = request.form['gender']
+        passport = request.form['passport']
+        fathername = request.form['fathername']
+        email=session['email']
+        print(email)
+        cur = mysql.connection.cursor()
+        a = cur.execute(
+            'UPDATE usertable SET fullname = %s ,contact=%s,fathername=%s,gender =%s,location=%s,country=%s,passport=%s,qualification=%s ,maritial=%s where email=%s',
+            [fullname, contact, fathername, gender, location, country, passport, qualification, maritial, email, ])
+        mysql.connection.commit()
+        if a > 0:
+            flash("updated successfully")
+            return redirect(url_for("admindashboard"))
+        else:
+            error = "oops something went wrong"
+            return render_template("update.html", error=error)
+        cur.close()
+        email = session['email']
+    cur2 = mysql.connection.cursor()
+    u = cur2.execute("select * from usertable where email = %s", (email,))
+    re = cur2.fetchone()
+    print(re)
+    return render_template("update.html", re=re)
+
+
 
 @app.route("/universitiesapplied")
 def universitiesapplied():
@@ -93,9 +163,32 @@ def universitiesapproved():
 def adprofile():
     return render_template("adprofile.html")
 
+'''@app.route("/profile")
+def profile():
+    email=session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute('select * from usertable where email=%s',[email])
+    mysql.connection.commit()
+    if r>0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("profile.html",result=re)
+    cur.close()
+    return render_template("profile.html")'''
 @app.route("/profile")
 def profile():
+    email=session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute('select * from usertable where email=%s',[email])
+    mysql.connection.commit()
+    if r>0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("profile.html",result=re)
+    cur.close()
     return render_template("profile.html")
+
+
 
 @app.route("/student")
 def student():
@@ -347,3 +440,16 @@ def update(email):
 
 if __name__ == "__main__":
     app.run(debug="True")
+
+
+
+
+
+
+
+
+
+
+
+
+

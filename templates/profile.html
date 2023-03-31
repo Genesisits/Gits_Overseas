@@ -3,7 +3,10 @@
 <head>
 
     <title>Student Status</title>
+
+
             <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
+
 
     <style>
     h1 {text-align: center;}
@@ -116,6 +119,7 @@
 
    <!-- Side Navigation Bar -->
 
+
    <!-- Main Content -->
    <div class="main">
       <!DOCTYPE html>
@@ -131,7 +135,9 @@
 
     </style>
 </head>
+
 <body>
+
 
  <table style="width:100%">
     <tr>
@@ -143,24 +149,28 @@
 
 
     </tr>
-
-             {% for r in result %}
+             {% for re in result %}
     <tr>
 
-        <td> {{ r['fullname'] }}</td>
-        <td> {{ r['email'] }}</td>
-        <td> {{ r['contact'] }}</td>
-        <td> {{ r['qualification'] }}</td>
-        <td> {{ r['passport'] }}</td>
+        <td> {{ re['fullname'] }}</td>
+        <td> {{ re['email'] }}</td>
+        <td> {{ re['contact'] }}</td>
+        <td> {{ re['qualification'] }}</td>
+        <td> {{ re['passport'] }}</td>
 
 
     </tr>
             {% endfor %}
  </table><br><br>
 
+
+<button ><a href= "update/{{ ['email'] }}" type="submit" >Update</a></button></td>
+
+   
+
        <input type="submit" value="Edit" name="submit" class="submit-button"/> <br><br>
 
-<button onclick="window.print();" class="noPrint">Print</button>
+
 
 
 </div>
