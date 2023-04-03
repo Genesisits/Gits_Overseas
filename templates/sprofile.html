@@ -2,12 +2,14 @@
 <html>
 <head>
    <title>Student Dashboard</title>
+        <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
+
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
 
-         background-color:#66b3ff;
+         background-color: #66b3ff;
          overflow: hidden;
          position: fixed;
          top: 0;
@@ -60,7 +62,7 @@
       }
 
       .sidenav a:hover {
-         color: #53c653;
+         color: #3333ff;
       }
 
       .main {
@@ -80,7 +82,8 @@
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="home">Home</a>
-      <a href="sprofile">Profile</a>
+       <a href="sprofile">Profile</a>
+
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -88,21 +91,71 @@
 
    <!-- Side Navigation Bar -->
    <div class="sidenav">
-       <a href="chats">chat</a>
-       <a href="notifications">Notifications</a>
+       <a href="chat">Chat</a>
+      <a href="notifications">Notifications</a>
       <a href="universitiesapplied">Universities Applied</a>
       <a href="universitiesapproved">Universities Approved</a>
-      <a href="studentstatus">Status</a>
+        <a href="studentstatus">Status</a>
       <a href="logout">Logout</a>
-   </div>
+   </div><br>
 
    <!-- Main Content -->
-   <div class="main">
-    <label>Working on it  </label>
-    <!--<input class="input-box" type="text" class="login-input" name="universities" placeholder="Universities"  required></br>-->
+   <div class="main" id="print-content">
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table,th,td{
+        border:1px solid black;
+        border-collapse:collapse;
+        }
+
+    </style>
+</head>
+<body>
+
+ <table style="width:100%">
+    <tr>
+        <th>fullname</th>
+        <th>fathername</th>
+        <th>contact</th>
+        <th>email</th>
+        <th>passport</th>
+        <th>location</th>
+        <th colspan="1" align ="center"> Operations</th>
+
+
+
+
+    </tr>
+
+             {% for r in result %}
+    <tr>
+
+        <td> {{ r['fullname'] }}</td>
+        <td> {{ r['fathername'] }}</td>
+        <td> {{ r['contact'] }} </td>
+        <td> {{ r['email'] }}</td>
+        <td> {{ r['passport'] }}</td>
+        <td> {{ r['location'] }}</td>
+        <td><button ><a href= "studentprofile/{{ r['email'] }}" type="submit" >Update</a></button></td>
+
+
+    </tr>
+            {% endfor %}
+
+
+
+     </table><br><br>
+
+
+
    </div>
-
-
-
 </body>
+
+
 </html>
+
+

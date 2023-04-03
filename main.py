@@ -2,6 +2,7 @@ from flask import *
 from flask_mail import *
 from flask_mysqldb import MySQL
 from random import *
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = "abc123"
@@ -16,6 +17,7 @@ app.config["MYSQL_PORT"] = 3306
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=5)
 
 mysql = MySQL(app)
 
@@ -86,73 +88,6 @@ def contact():
 def notifications():
     return render_template("notifications.html")
 
-'''@app.route("/update/<string:email>", methods=['GET', 'POST'])
-def update(email):
-    if request.method=="POST":
-        fullname = request.form['fullname']
-        contact = request.form['contact']
-        location = request.form['location']
-        qualification = request.form['qualification']
-        maritial = request.form['maritial']
-        country = request.form['country']
-        gender = request.form['gender']
-        passport = request.form['passport']
-        fathername = request.form['fathername']
-        email = request.form['email']
-        cur = mysql.connection.cursor()
-        a = cur.execute(
-            'UPDATE usertable SET fullname = %s ,contact=%s,fathername=%s,gender =%s,location=%s,country=%s,passport=%s,qualification=%s ,maritial=%s where email=%s',
-            [fullname, contact, fathername, gender, location, country, passport, qualification, maritial, email, ])
-        mysql.connection.commit()
-        if a > 0:
-            flash("updated successfully")
-            return redirect(url_for("msg"))
-        else:
-            error = "oops something went wrong"
-            return render_template("update.html", error=error)
-        cur.close()
-    cur2 = mysql.connection.cursor()
-    u = cur2.execute("select * from usertable where email = %s", (email,))
-    print(u)
-    re = cur2.fetchone()
-    print(re)
-
-    return render_template("update.html",re=re)'''
-
-'''
-@app.route("/update/<string:email>", methods=['GET', 'POST'])
-def update(email):
-    if request.method=="POST":
-        fullname = request.form['fullname']
-        contact = request.form['contact']
-        location = request.form['location']
-        qualification = request.form['qualification']
-        maritial = request.form['maritial']
-        country = request.form['country']
-        gender = request.form['gender']
-        passport = request.form['passport']
-        fathername = request.form['fathername']
-        email=session['email']
-        print(email)
-        cur = mysql.connection.cursor()
-        a = cur.execute(
-            'UPDATE usertable SET fullname = %s ,contact=%s,fathername=%s,gender =%s,location=%s,country=%s,passport=%s,qualification=%s ,maritial=%s where email=%s',
-            [fullname, contact, fathername, gender, location, country, passport, qualification, maritial, email, ])
-        mysql.connection.commit()
-        if a > 0:
-            flash("updated successfully")
-            return redirect(url_for("admindashboard"))
-        else:
-            error = "oops something went wrong"
-            return render_template("update.html", error=error)
-        cur.close()
-        email = session['email']
-    cur2 = mysql.connection.cursor()
-    u = cur2.execute("select * from usertable where email = %s", (email,))
-    re = cur2.fetchone()
-    print(re)
-    return render_template("update.html", re=re)
-'''
 
 
 @app.route("/universitiesapplied")
@@ -167,21 +102,10 @@ def universitiesapproved():
 def adprofile():
     return render_template("adprofile.html")
 
-'''@app.route("/profile")
-def profile():
-    email=session['email']
-    cur = mysql.connection.cursor()
-    r = cur.execute('select * from usertable where email=%s',[email])
-    mysql.connection.commit()
-    if r>0:
-        re = cur.fetchall()
-        print(re)
-        return render_template("profile.html",result=re)
-    cur.close()
-    return render_template("profile.html")'''
+
 @app.route("/profile")
 def profile():
-    email=session['email']
+    '''email=session['email']
     cur = mysql.connection.cursor()
     r = cur.execute('select * from usertable where email=%s',[email])
     mysql.connection.commit()
@@ -189,7 +113,7 @@ def profile():
         re = cur.fetchall()
         print(re)
         return render_template("profile.html",result=re)
-    cur.close()
+    cur.close()'''
     return render_template("profile.html")
 
 
@@ -287,7 +211,7 @@ def register():
         maritial = request.form['maritial']
         reference = request.form['reference']
         cur = mysql.connection.cursor()
-        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference))
+        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference))
         mysql.connection.commit()
         if br > 0 :
             if password == confirmpassword:
@@ -335,6 +259,7 @@ def login():
             print(result)
             username1 = result['email']
             session.permanent = True
+            app.permanent_session_lifetime = timedelta(minutes=5)
             session['email'] = email
             password1 = result['password']
             if username1 == email and password1 == password:
@@ -505,6 +430,48 @@ def update(email):
     re = cur2.fetchall()
     print(re)
     return render_template("update.html", re=re)
+@app.route("/studentprofile/<string:email>", methods=['GET','POST'])
+def studentprofile(email):
+    if request.method == "POST":
+        fullname = request.form["fullname"]
+        contact = request.form["contact"]
+        email = request.form["email"]
+        location = request.form['location']
+        passport = request.form["passport"]
+        fathername = request.form["fathername"]
+        cur1 = mysql.connection.cursor()
+        r = cur1.execute(
+            "update usertable set fullname = %s,contact = %s, location = %s, country = %s,passport = %s,fathername = %s where email = %s",
+            [fullname, contact, location, country, passport, fathername, email,])
+        mysql.connection.commit()
+        print(r)
+        if r > 0:
+            flash("updated successfully")
+            return redirect(url_for("student"))
+        else:
+            error = "oops something went wrong"
+            return render_template("studentprofile.html", error=error)
+        cur.close()
+    cur2 = mysql.connection.cursor()
+    u = cur2.execute("select * from usertable where email = %s", (email,))
+    re = cur2.fetchall()
+    print(re)
+    return render_template("studentprofile.html",re=re)
+
+@app.route('/sprofile')
+def sprofile():
+    email = session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute('select * from usertable where email=%s', [email])
+    mysql.connection.commit()
+    if r > 0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("sprofile.html", result=re)
+    cur.close()
+    return render_template("sprofile.html")
+
+
 
 
 if __name__ == "__main__":
