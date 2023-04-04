@@ -2,9 +2,7 @@ from flask import *
 from flask_mail import *
 from flask_mysqldb import MySQL
 from random import *
-
-app = Flask(__name__)
-app.secret_key = "abc123"
+import base64
 
 app = Flask(__name__)
 app.secret_key = "abc123"
@@ -12,7 +10,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -20,14 +18,43 @@ app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 mysql = MySQL(app)
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "saicharansuraram@gmail.com"
+app.config["MAIL_USERNAME"] = "jayanthkaruparti.CCBPian00101@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "dygezvhggnruadsi"
+app.config["MAIL_PASSWORD"] = "vmqytgipaabnagzb"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
-
 otp = randint(000000,999999)
+
+"""
+UPLOAD_FOLDER = 'media'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/success', methods=['GET', 'POST'])
+def success():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('download_file', name=filename))
+    return render_template('acknowledgement.html') """
 
 @app.route("/")
 def homep():
@@ -179,7 +206,7 @@ def profile():
         return render_template("profile.html",result=re)
     cur.close()
     return render_template("profile.html")'''
-@app.route("/profile")
+"""@app.route("/profile")
 def profile():
     email=session['email']
     cur = mysql.connection.cursor()
@@ -192,7 +219,7 @@ def profile():
     cur.close()
     return render_template("profile.html")
 
-
+"""
 
 @app.route("/student")
 def student():
@@ -264,12 +291,68 @@ def updatepassword():
             return render_template("updatepassword.html",error=error)
         cur.close()
     return render_template("updatepassword.html")
+"""
+@app.route('/profile', methods = ['POST'])
+def profile():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(f.filename)
+        return render_template("Acknowledgement.html", name = f.filename)
+"""
+@app.route('/uploaddocuments',methods=['GET','POST'])
+def uploaddocuments():
+    return render_template("uploaddocuments.html")
+
+@app.route('/success', methods = ['POST'])
+def success():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(f.filename)
+        return render_template("Acknowledgement.html", name = f.filename)
+    """
+@app.route('/profile',methods=['GET','POST'])
+def profile():
+    if request.method == 'POST':
+        email = session["email"]
+        print(email)
+        image = request.form['image']
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO usertable(images) VALUES(%s)",(image_data,))
+        mysql.connection.commit()
+        cur.close()
+        return "image uploaded successfully"
+    return render_template("profile.html") 
+
+@app.route('/profile',methods=['GET'])
+def profile():
+    cur = mysql.connection.cursor()
+    cur.execute('select * from usertable')
+    mysql.connection.commit()
+    usertable = cur.fetchall()
+    print(usertable)
+    cur.close()
+    return render_template('profile.html',usertable=usertable)"""
+
+@app.route('/profile')
+def profile():
+    email = session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute('select * from usertable where email=%s', [email,])
+    mysql.connection.commit()
+    print(r)
+    result = cur.fetchall()
+    return render_template("profile.html",result=result)
 
 
 
 @app.route('/register',methods = ['GET','POST'])
 def register():
     if request.method == 'POST':
+        image = request.form['image']
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
         fullname = request.form['fullname']
         fathername = request.form['fathername']
         contact = request.form['contact']
@@ -287,7 +370,7 @@ def register():
         maritial = request.form['maritial']
         reference = request.form['reference']
         cur = mysql.connection.cursor()
-        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,confirmpassword,passport,country,qualification,location,gender,maritial,reference))
+        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference,image) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference,image_data,))
         mysql.connection.commit()
         if br > 0 :
             if password == confirmpassword:

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Admin Dashboard</title>
+   <title>Register</title>
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
@@ -104,6 +104,7 @@
         margin: 0 auto;
         padding: 20px;
         background-color: #fff;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       }
 
       input[type=text], input[type=password] {
@@ -131,23 +132,43 @@
     </style>
   </head><br>
   <body>
-   <!-- <form action="" method="POST">
-      <label for="username">Email:</label>
-      <input type="text" id="username" name="email" required><br><br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required><br><br>
-      <input type="submit" value="login" name="submit" class="login-button button"> -->
-        <form class = "nav" method="POST">
-    <div class="card-container">
-    <h1 class ="login-title main-head">Registration </h1> </br>
+
+
+<div style="margin-top:60px;">
+    <form class = "nav"  method="POST">
+        <!-- <label>Upload Image</label>
+        <input type="file" name="image" />
+        <input type = "submit" value="Upload"> <br><br> -->
+        <h1 style="text-align:center;color:#0000ff;">Registration Form</h1>
          <label>Full name: </label>
     <input class="input-box" type="text" class="login-input" name="fullname" placeholder="fullname"  required></br>
         <label>Password : </label>
     <input class="input-box" type="password" class="login-input" name="password" placeholder="Password"  required ></br>
          <label>Confirm Password : </label>
     <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  required></br>
+
         <label>Email : </label>
-    <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br>
+    <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
+      <label for="dob">Date of Birth:</label>
+<input type="date" id="dob" name="dob" required><br><br>
+
+<form action="/upload" method="post">
+    <label>Upload image : </label>
+  <input type="hidden" id="image" name="image">
+  <input type="file" accept="image/*" onchange="uploadImage(this)">
+
+<script>
+  function uploadImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.querySelector("#image").value = e.target.result.split(",")[1];
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script><br><br>
+
         <label>Passport No : </label>
     <input class="input-box" type="text" class="login-input" name="passport" placeholder="passport number"  required ></br>
       <label>Father name : </label>
@@ -191,7 +212,10 @@
     <input type="submit" name="submit" value="Register" class="register-button button"  required></br>
         </div>
     </div>
+</div>
     </form>
+
+   </form>
   </body>
 </html>
 </body>

@@ -7,7 +7,6 @@
    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
-
          background-color: #66b3ff;
          overflow: hidden;
          position: fixed;
@@ -17,13 +16,11 @@
          width: 100%;
          z-index: 999;
       }
-
       .topnav img {
          height: 60px;
          padding: 5px;
          float: left;
       }
-
       .topnav a {
          float: right;
          display: block;
@@ -74,7 +71,7 @@
 
    </style>
 </head>
-<body/>
+<body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
         <a href="home" style="float: left;">
@@ -87,13 +84,12 @@
 
    </div>
 
-
+</body>
    <!-- Side Navigation Bar -
 
     Main Content -->
    <head>
      <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-<head>
     <title>Login Page</title>
     <style>
       body {
@@ -107,6 +103,7 @@
         margin: 0 auto;
         padding: 20px;
         background-color: #fff;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       }
 
       input[type=text], input[type=password] {
@@ -134,24 +131,20 @@
     </style>
   </head>
   <body>
+<div style="margin-top:90px;">
 
-    <h1 style="text-align:center; color:#0000FF">Login Page</h1>
 {% if error %}
        <p class = "error"><strong>Error:</strong>: {{ error }}</p>
     {% endif %}
     <form action="" method="POST">
+        <h1 style="text-align:center; color:#0000FF;">Login Page</h1>
       <label for="username">Email:</label>
       <input type="text" id="username" name="email" required><br><br>
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required><br><br>
       <input type="submit" value="login" name="submit" class="login-button button">
     </form>
+    </div>
   </body>
 </html>
 
-
-
-
-</head>
-</body>
-</html>
