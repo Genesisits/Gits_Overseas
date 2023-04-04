@@ -108,6 +108,10 @@ def adprofile():
 def student():
     return render_template("student.html")
 
+@app.route("/adstudent")
+def adstudent():
+    return render_template("adstudent.html")
+
 @app.route("/studentstatus")
 def studentstatus():
     return render_template("studentstatus.html")
@@ -456,6 +460,44 @@ def profile():
     print(r)
     result = cur.fetchall()
     return render_template("profile.html",result=result)
+
+@app.route("/goto/<string:email>", methods=['GET', 'POST'])
+def goto(email):
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        cur = mysql.connection.cursor()
+        b = cur.execute('select email,password from usertable where email = %s and password = %s ',(email,password))
+        mysql.connection.commit()
+        if b > 0:
+            result = cur.fetchone()
+            print(result)
+            username1 = result['email']
+            session.permanent = True
+            app.permanent_session_lifetime = timedelta(minutes=5)
+            session['email'] = email
+            password1 = result['password']
+            if username1 == email and password1 == password:
+                flash("successful logged in")
+                return redirect(url_for("student"))
+            else:
+                error = "oops!something went wrong please check email and password"
+                return render_template("login.html", error=error)
+
+        else:
+            if 'email' in session:
+                email = session["email"]
+                return redirect(url_for('student'))
+            else:
+                return render_template('login.html')
+            cur.close()
+    cur2 = mysql.connection.cursor()
+    u = cur2.execute("select * from usertable where email = %s", (email,))
+    re = cur2.fetchall()
+    print(re)
+    return render_template("goto.html", re=re)
+    return render_template("goto.html")
+
 
 
 
