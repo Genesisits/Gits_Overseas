@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+   <title>Student Dashboard</title>
+        <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
 
-    <title>Student Status</title>
-
-
-            <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
-
-
-    <style>
-    h1 {text-align: center;}
+   <style>
+   h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
 
@@ -66,7 +62,7 @@
       }
 
       .sidenav a:hover {
-         color: #d580ff;
+         color: #3333ff;
       }
 
       .main {
@@ -76,43 +72,35 @@
          font-size: 18px;
          text-align: center;
       }
-      .card{
-      text-align:center;
-      }
 
    </style>
-
 </head>
-<body>
+<body/>
 <!-- Top Navigation Bar -->
-
-
-   <!-- Side Navigation Bar -->
-   <div class="sidenav">
-       <a href="chats">Chat</a>
-      <a href="notifications">Notifications</a>
-      <a href="universitiesapplied">Universities Applied</a>
-      <a href="universitiesapproved">Universities Approved</a>
-       <a href="studentstatus"> Status</a>
-      <a href="logout">Logout</a>
-   </div> <br><br>
-
    <div class="topnav">
        <a href="home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="home">Home</a>
-      <a href="profile">Profile</a>
+       <a href="profile">Profile</a>
+
       <h1>Genesis Overseas </h1>
 
    </div>
 
 
    <!-- Side Navigation Bar -->
-
+   <div class="sidenav">
+       <a href="chat">Chat</a>
+      <a href="notifications">Notifications</a>
+      <a href="universitiesapplied">Universities Applied</a>
+      <a href="universitiesapproved">Universities Approved</a>
+        <a href="studentstatus">Status</a>
+      <a href="logout">Logout</a>
+   </div><br>
 
    <!-- Main Content -->
-   <div class="main">
+   <div class="main" id="print-content">
       <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,42 +114,39 @@
 
     </style>
 </head>
-
 <body>
 
-
+<!-- <img class="profile_img" src="data:image/jpeg;base64,{{ result[0]['image'].decode('ascii') }}" alt="image"  width="200px">  -->
  <table style="width:100%">
     <tr>
-        <th>Fullname</th>
-        <th>Email</th>
-        <th>Contact</th>
-        <th>Qualification</th>
-        <th>Passport</th>
-
-
+        <th>fullname</th>
+        <th>fathername</th>
+        <th>contact</th>
+        <th>email</th>
+        <th>passport</th>
+        <th>location</th>
+        <th colspan="1" align ="center"> Operations</th>
     </tr>
+             {% for r in result %}
 
-             {% for re in result %}
+     <img src="data:image/png;base64,{{ result[0]['image'].decode('ascii') }}" alt="hi" width ="200 Px">
     <tr>
 
-        <td> {{ re['fullname'] }}</td>
-        <td> {{ re['email'] }}</td>
-        <td> {{ re['contact'] }}</td>
-        <td> {{ re['qualification'] }}</td>
-        <td> {{ re['passport'] }}</td>
+        <td> {{ r['fullname'] }}</td>
+        <td> {{ r['fathername'] }}</td>
+        <td> {{ r['contact'] }} </td>
+        <td> {{ r['email'] }}</td>
+        <td> {{ r['passport'] }}</td>
+        <td> {{ r['location'] }}</td>
+        <td><button ><a href= "studentprofile/{{ r['email'] }}" type="submit" >Update</a></button></td>
 
 
     </tr>
             {% endfor %}
- </table><br><br>
 
-
-<button ><a href= "update/{{ ['email'] }}" type="submit" >Submit</a></button></td>
-
-
-
-
-</div>
-
+     </table><br><br>
+   </div>
 </body>
+
+
 </html>
