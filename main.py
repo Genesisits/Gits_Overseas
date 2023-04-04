@@ -3,6 +3,7 @@ from flask_mail import *
 from flask_mysqldb import MySQL
 from random import *
 from datetime import timedelta
+import base64
 
 app = Flask(__name__)
 app.secret_key = "abc123"
@@ -103,21 +104,6 @@ def adprofile():
     return render_template("adprofile.html")
 
 
-@app.route("/profile")
-def profile():
-    '''email=session['email']
-    cur = mysql.connection.cursor()
-    r = cur.execute('select * from usertable where email=%s',[email])
-    mysql.connection.commit()
-    if r>0:
-        re = cur.fetchall()
-        print(re)
-        return render_template("profile.html",result=re)
-    cur.close()'''
-    return render_template("profile.html")
-
-
-
 @app.route("/student")
 def student():
     return render_template("student.html")
@@ -191,9 +177,13 @@ def updatepassword():
 
 
 
+
 @app.route('/register',methods = ['GET','POST'])
 def register():
     if request.method == 'POST':
+        image = request.form['image']
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
         fullname = request.form['fullname']
         fathername = request.form['fathername']
         contact = request.form['contact']
@@ -211,7 +201,7 @@ def register():
         maritial = request.form['maritial']
         reference = request.form['reference']
         cur = mysql.connection.cursor()
-        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference))
+        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference,image) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference,image_data,))
         mysql.connection.commit()
         if br > 0 :
             if password == confirmpassword:
@@ -225,7 +215,6 @@ def register():
             return render_template("overseas.html",error = error)
         cur.close()
     return render_template("register.html")
-
 
 @app.route("/admin_register",methods=['GET','POST'])
 def admin_register():
@@ -458,18 +447,15 @@ def studentprofile(email):
     print(re)
     return render_template("studentprofile.html",re=re)
 
-@app.route('/sprofile')
-def sprofile():
+@app.route('/profile')
+def profile():
     email = session['email']
     cur = mysql.connection.cursor()
-    r = cur.execute('select * from usertable where email=%s', [email])
+    r = cur.execute('select * from usertable where email=%s', [email,])
     mysql.connection.commit()
-    if r > 0:
-        re = cur.fetchall()
-        print(re)
-        return render_template("sprofile.html", result=re)
-    cur.close()
-    return render_template("sprofile.html")
+    print(r)
+    result = cur.fetchall()
+    return render_template("profile.html",result=result)
 
 
 
