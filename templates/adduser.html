@@ -73,13 +73,13 @@
 
    </style>
 </head>
-</body>
+<body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-        <a href="home" style="float: left;">
+        <a href="admindashboard" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
-      <a href="home">Home</a>
+      <a href="admindashboard">Home</a>
        <a href="about">About us</a>
        <a href="contact">Contact us</a>
       <h1>Genesis Overseas </h1>
@@ -91,7 +91,7 @@
 
     Main Content -->
    <head>
-    <title> Student Register Page</title>
+    <title>Register Page</title>
     <style>
       body {
         background-color: #f2f2f2;
@@ -139,9 +139,9 @@
         <!-- <label>Upload Image</label>
         <input type="file" name="image" />
         <input type = "submit" value="Upload"> <br><br> -->
-        <h1 style="text-align:center;color:#0000ff;"> Student Registration Form</h1>
+        <h1 style="text-align:center;color:#0000ff;">Registration Form</h1>
          <label>Full name: </label>
-    <input class="input-box" type="text" class="login-input" name="fullname" placeholder="Fullname"  required></br>
+    <input class="input-box" type="text" class="login-input" name="fullname" placeholder="fullname"  required></br>
         <label>Password : </label>
     <input class="input-box" type="password" class="login-input" name="password" placeholder="Password"  required ></br>
          <label>Confirm Password : </label>
@@ -150,13 +150,14 @@
         <label>Email : </label>
     <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
       <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" required><br><br>
-        <form action="/upload" method="post">
+<input type="date" id="dob" name="dob" required><br><br>
+
+<form action="/upload" method="post">
     <label>Upload image : </label>
   <input type="hidden" id="image" name="image">
   <input type="file" accept="image/*" onchange="uploadImage(this)">
 
- <script>
+<script>
   function uploadImage(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -169,25 +170,25 @@
 </script><br><br>
 
         <label>Passport No : </label>
-    <input class="input-box" type="text" class="login-input" name="passport" placeholder="Passport Number"  required ></br>
+    <input class="input-box" type="text" class="login-input" name="passport" placeholder="passport number"  required ></br>
       <label>Father name : </label>
-    <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Father Name"  required ></br>
+    <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Fathername"  required ></br>
         <label>Contact : </label>
-    <input class="input-box" type="text" class="login-input" name="contact" placeholder="Mobile.No"  required></br>
+    <input class="input-box" type="text" class="login-input" name="contact" placeholder="contact"  required></br>
         <label>Location : </label>
     <input class="input-box" type="text" class="login-input" name="location" placeholder="Location"  required></br>
         <label>Country Applied for : </label>
             <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country  Applied for"  required></br>
 
     <label for="gender">Gender :</label>
-   <select class="input-box" type="text" id="Gender" name="gender"> required></br>
+   <select class="input-box" type="text" id="Gender" name="gender">
        <option value="">Select Your Gender</option>
        <option value="Male">Male</option>
        <option value="Female">Female</option>
        <option value="Others">Others</option>
    </select> <br> <br>
     <label for="qualification">Qualification :</label>
-   <select class="input-box" id="qualification" name="qualification"> required></br>
+   <select class="input-box" id="qualification" name="qualification">
        <option value="">Select Your Qualification</option>
        <option value="Ssc">SSC</option>
        <option value="Undergraduate">Undergraduate</option>
@@ -195,7 +196,7 @@
         <option value="Postgraduate">Postgraduate</option>
    </select> <br> <br>
     <label for="maritial">Maritial :</label>
-   <select class="input-box" id="maritial" name="maritial"> required></br>
+   <select class="input-box" id="maritial" name="maritial">
        <option value="">Select Your maritial status</option>
        <option value="Single">Single</option>
        <option value="Married">Married</option>
@@ -211,7 +212,7 @@
     <input type="submit" name="submit" value="Register" class="register-button button"  required></br>
         </div>
     </div>
-    </div>
+</div>
     </form>
 
    </form>

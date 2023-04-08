@@ -23,9 +23,9 @@ app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=5)
 mysql = MySQL(app)
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "jayanthkaruparti.CCBPian00101@gmail.com"
+app.config["MAIL_USERNAME"] = "saicharansuraram@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "vmqytgipaabnagzb"
+app.config["MAIL_PASSWORD"] = "unztvsjmxzqserqh"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -200,7 +200,7 @@ def register():
         passport = request.form['passport']
         qualification = request.form['qualification']
         location = request.form['location']
-        country=request.form['country']
+        country = request.form['country']
         gender = request.form['gender']
         maritial = request.form['maritial']
         reference = request.form['reference']
@@ -276,21 +276,21 @@ def login():
 @app.route('/admin_login', methods=['GET','POST'])
 def admin_login():
     if request.method == 'POST':
-        email = request.form['email']
+        name = request.form['name']
         password = request.form['password']
-        print(email)
+        print(name)
         print(password)
         cur = mysql.connection.cursor()
-        c = cur.execute('select password,email from admintable where  password = %s and email =%s',(password,email))
+        c = cur.execute('select password,name from admintable where  password = %s and name =%s',(password,name))
         mysql.connection.commit()
         if c > 0:
             result = cur.fetchone()
             print(result)
-            username1 = result['email']
+            username1 = result['name']
             session.permanent = True
-            session['email'] = email
+            session['name'] = name
             password1 = result['password']
-            if username1 == email and password1 == password:
+            if username1 == name and password1 == password:
                 flash("successful logged in")
                 return redirect(url_for("admindashboard"))
             else:
@@ -300,8 +300,8 @@ def admin_login():
             error = "oops something went wrong"
             return render_template("admin_login.html", error=error)
     else:
-        if 'email' in session:
-            email = session["email"]
+        if 'name' in session:
+            name = session["name"]
             return redirect(url_for('admindashboard'))
         else:
             return render_template('admin_login.html')
@@ -342,6 +342,10 @@ def validate():
 @app.route("/send")
 def send():
     return render_template("send.html")
+
+@app.route("/adduser")
+def adduser():
+    return render_template("adduser.html")
 
 @app.route("/chat")
 def chat():
