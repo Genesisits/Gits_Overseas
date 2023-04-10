@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Student Dashboard</title>
-   <style>
-   h1 {text-align: center;}
+
+    <title>Student Status(working on it)</title>
+    <style>
+    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
 
@@ -60,7 +61,7 @@
       }
 
       .sidenav a:hover {
-         color: #53c653;
+         color: #d580ff;
       }
 
       .main {
@@ -72,11 +73,12 @@
       }
 
    </style>
+
 </head>
-<body/>
+<body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-       <a href="home" style="float: left;">
+        <a href="home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="student">Home</a>
@@ -89,22 +91,39 @@
    <!-- Side Navigation Bar -->
    <div class="sidenav">
 
-       <a href="chats">Chat</a>
-       <a href="upload">Upload</a>
+       <a href="chats">chat</a>
 
-      <!--<a href="notifications">Notifications</a>-->
+     <!-- <a href="notifications">Notifications</a>-->
       <a href="universitiesapplied"> Applied</a>
       <a href="universitiesapproved"> Approved</a>
-      <a href="status">Status</a>
-
+       <a href="status">Status</a>
       <a href="logout">Logout</a>
    </div>
 
    <!-- Main Content -->
-   <div class="main">
-      <h1>Welcome to your Student Dashboard</h1>
-      <p>Here you can access all your academic information, including your grades, course schedules, and other important resources. Use the links in the side navigation bar to navigate the dashboard and access the different features available to you. If you have any questions or issues, please contact your academic advisor or the IT helpdesk for assistance.</p>
+   <div class="main"> <br>
+       <form class="form" action ="" method="POST" name="login">
+        <h1 class="login-title">Student Status(working on it)</h1>
+        financials <input type="text" class="login-input" name="financials" placeholder="financials" autofocus="true"/>
+
+        Biometric<input type="date" class="login-input" name="biometric" placeholder="biometric" autofocus="true"/>
+
+        visa <input type="date" class="login-input" name="visa" placeholder="Password"/>
+           <label for="month">visa:</label>
+
+<label for="month">status:</label>
+<select id="month" name="status">
+  <option value="approved">approved</option>
+  <option value="rejected">rejected</option>
+</select> <br><br>
+
+        <input type="submit" value="Submit" name="submit" class="submit-button"/>
+
+  </form>
    </div>
+
+
+
 
 </body>
 </html>
