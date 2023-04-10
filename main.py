@@ -180,11 +180,10 @@ def updatepassword():
     return render_template("updatepassword.html")
 
 
-
-
-@app.route('/register',methods = ['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        # Get form data
         image = request.form['image']
         image_data = base64.b64decode(image)
         image_data = base64.b64encode(image_data)
@@ -192,9 +191,6 @@ def register():
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
-        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
-        msg.body = "THIS IS YOUR OTP" + str(otp)
-        mail.send(msg)
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
         passport = request.form['passport']
@@ -204,21 +200,29 @@ def register():
         gender = request.form['gender']
         maritial = request.form['maritial']
         reference = request.form['reference']
+
+        # Check if email already exists
         cur = mysql.connection.cursor()
-        br = cur.execute('insert into usertable(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference,image) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',(fullname,fathername,contact,email,password,passport,country,qualification,location,gender,maritial,reference,image_data,))
+        cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
+        user = cur.fetchone()
+        if user:
+            flash('Email address already exists', 'error')
+            return redirect(url_for('register'))
+
+        # Insert user data into database
+        cur.execute(
+            "INSERT INTO usertable (fullname, fathername, contact, email, password, passport, country, qualification, location, gender, maritial, reference, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (fullname, fathername, contact, email, password, passport, country, qualification, location, gender,
+             maritial, reference, image_data,))
         mysql.connection.commit()
-        if br > 0 :
-            if password == confirmpassword:
-                flash("Registration successful check for otp ")
-                return redirect(url_for("userflash"))
-            else:
-                error = "something went wrong"
-                return render_template("register.html",error = error)
-        else:
-            error = "oops something went wrong"
-            return render_template("overseas.html",error = error)
         cur.close()
-    return render_template("register.html")
+
+        # Show success message and redirect
+        flash('Registration successful, check for otp', 'success')
+        return redirect(url_for('userflash'))
+
+    return render_template('register.html')
+
 
 @app.route("/admin_register",methods=['GET','POST'])
 def admin_register():
@@ -252,7 +256,7 @@ def login():
             print(result)
             username1 = result['email']
             session.permanent = True
-            app.permanent_session_lifetime = timedelta(minutes=5)
+            app.permanent_session_lifetime = timedelta(minutes=50)
             session['email'] = email
             password1 = result['password']
             if username1 == email and password1 == password:
