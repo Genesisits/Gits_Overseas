@@ -507,6 +507,38 @@ def goto(email):
     return render_template("goto.html")
 
 
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        pdf_data = file.read()
+        cursor = mysql.connection.cursor()
+        query = "INSERT INTO files (filename, pdf) VALUES (%s, %s)"
+        cursor.execute(query, (file.filename, base64.b64encode(pdf_data)))
+        mysql.connection.commit()
+        cursor.close()
+        return redirect(url_for('view'))
+    return render_template('upload.html')
+@app.route("/view")
+def view():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM files')
+    re = cur.fetchall()
+    cur.close()
+    return render_template("view.html", result=re)
+
+@app.route('/download/<filename>')
+def download_file(filename):
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT pdf FROM files WHERE filename=%s", (filename,))
+    pdf_data = cursor.fetchone()['pdf']
+    pdf_decoded = base64.b64decode(pdf_data)
+    response = make_response(pdf_decoded)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return response
+
+
 
 
 
