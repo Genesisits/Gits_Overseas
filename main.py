@@ -112,9 +112,41 @@ def student():
 def adstudent():
     return render_template("adstudent.html")
 
-@app.route("/studentstatus")
-def studentstatus():
-    return render_template("studentstatus.html")
+@app.route("/status",methods=['GET','POST'])
+def status():
+    email = session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute("select * from studentstatus where email=%s", (email,))
+    print(r)
+    mysql.connection.commit()
+    if r > 0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("status.html",result=re)
+    cur.close()
+    return render_template("status.html")
+
+@app.route('/sfetch',methods=['GET','POST'])
+
+def sfetch():
+    if request.method == 'POST':
+        financials = request.form['financials']
+        biometric = request.form['biometric']
+        visa = request.form['visa']
+        status = request.form['status']
+        email = session['email']
+        cur = mysql.connection.cursor()
+        b = cur.execute("INSERT into studentstatus(financials,biometric,visa,status,email) values(%s,%s,%s,%s,%s)",
+                    (financials, biometric, visa, status, email,))
+        mysql.connection.commit()
+        if b > 0:
+            flash("Hey your adding university is success")
+            return render_template('sfetch.html')
+        else:
+            flash('ERROR:Given month and year are not greater than current month and year.')
+            return render_template('sfetch.html')
+        cur.close()
+    return render_template('sfetch.html')
 
 
 @app.route("/forgotpasswordpage",methods=['GET','POST'])

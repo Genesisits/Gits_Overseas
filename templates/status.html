@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Student Status(working on it)</title>
+    <style>
+    h1 {text-align: center;}
+      /* Style for top navigation bar */
+      .topnav {
+
+         background-color: #66b3ff;
+         overflow: hidden;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 10%;
+         width: 100%;
+         z-index: 999;
+      }
+
+      .topnav img {
+         height: 60px;
+         padding: 5px;
+         float: left;
+      }
+
+      .topnav a {
+         float: right;
+         display: block;
+         color: #010a0a;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         font-size: 17px;
+      }
+
+      .topnav a:hover {
+         background-color: #ddd;
+         color: black;
+      }
+
+      /* Style for side navigation bar */
+      .sidenav {
+         height: 100%;
+         width: 200px;
+         position: fixed;
+         z-index: 1;
+         top: 50px;
+         left: 0;
+         background-color: #111;
+         overflow-x: hidden;
+         padding-top: 20px;
+      }
+
+      .sidenav a {
+         padding: 6px 8px 6px 16px;
+         text-decoration: none;
+         font-size: 20px;
+         color: #f0f5f5;
+         display: block;
+      }
+
+      .sidenav a:hover {
+         color: #d580ff;
+      }
+
+      .main {
+         margin-left: 200px;
+         margin-top: 70px;
+         padding: 0px 10px;
+         font-size: 18px;
+         text-align: center;
+      }
+
+   </style>
+
+</head>
+<body>
+<!-- Top Navigation Bar -->
+   <div class="topnav">
+        <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
+      <a href="student">Home</a>
+      <a href="profile">Profile</a>
+      <h1>Genesis Overseas </h1>
+
+   </div>
+
+
+   <!-- Side Navigation Bar -->
+   <div class="sidenav">
+
+       <a href="chats">chat</a>
+
+     <!-- <a href="notifications">Notifications</a>-->
+      <a href="universitiesapplied"> Applied</a>
+      <a href="universitiesapproved"> Approved</a>
+       <a href="status">Status</a>
+      <a href="logout">Logout</a>
+   </div>
+
+   <!-- Main Content -->
+   <div class="main"> <br>
+       <form class="form" action ="" method="POST" name="login">
+        <h1 class="login-title">Student Status</h1>
+<!--        Financials <input type="text" class="login-input" name="username" placeholder="Username" autofocus="true"/>-->
+
+<!--        Biometric<input type="date" class="login-input" name="email" placeholder="email" autofocus="true"/>-->
+
+<!--        visa <input type="date" class="login-input" name="password" placeholder="Password"/>-->
+<!--           <label for="month">visa:</label>-->
+
+<!--<label for="month">status:</label>-->
+<!--<select id="month" name="status">-->
+<!--  <option value="approved">approved</option>-->
+<!--  <option value="rejected">rejected</option>-->
+<!--</select> <br><br>-->
+
+<!--        <input type="submit" value="Submit" name="submit" class="submit-button"/>-->
+
+<!--  </form>-->
+<!--   </div>-->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table,th,td{
+        border:1px solid black;
+        border-collapse:collapse;
+        }
+
+    </style>
+</head>
+<body>
+<br>
+
+<button ><br>
+        <a href="sfetch">
+            update status<br></br>
+        </a>
+</button></br>
+    <br>
+
+
+
+ <table style="width:100%">
+    <tr>
+        <th>Financials</th>
+        <th>Biometric</th>
+        <th>Visa</th>
+        <th>Status</th>
+
+
+
+    </tr>
+
+             {% for r in result %}
+    <tr>
+
+        <td> {{ r['financials'] }}</td>
+        <td> {{ r['biometric'] }}</td>
+        <td> {{ r['visa'] }} </td>
+        <td> {{ r['status'] }}</td>
+
+
+
+    </tr>
+            {% endfor %}
+
+</table><br><br>
+   </div>
+
+</body>
+</html>
