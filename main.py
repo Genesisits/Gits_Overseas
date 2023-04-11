@@ -91,13 +91,13 @@ def notifications():
 
 
 
-@app.route("/universitiesapplied")
-def universitiesapplied():
-    return render_template("universitiesapplied.html")
+@app.route("/applied")
+def applied():
+    return render_template("applied.html")
 
-@app.route("/universitiesapproved")
-def universitiesapproved():
-    return render_template("universitiesapproved.html")
+@app.route("/approved")
+def approved():
+    return render_template("approved.html")
 
 @app.route("/adprofile")
 def adprofile():
