@@ -91,8 +91,6 @@ def notifications():
     return render_template("notifications.html")
 
 
-
-
 @app.route("/approved")
 def approved():
     email = session['email']
