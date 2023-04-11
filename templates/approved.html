@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Student Dashboard</title>
-   <style>
-   h1 {text-align: center;}
+
+    <title>Student Status</title>
+    <style>
+    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
 
-         background-color:#66b3ff;
+         background-color: #66b3ff;
          overflow: hidden;
          position: fixed;
          top: 0;
@@ -60,7 +61,7 @@
       }
 
       .sidenav a:hover {
-         color: #53c653;
+         color: #d580ff;
       }
 
       .main {
@@ -72,11 +73,12 @@
       }
 
    </style>
+
 </head>
-<body/>
+<body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-       <a href="home" style="float: left;">
+        <a href="home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="student">Home</a>
@@ -88,20 +90,34 @@
 
    <!-- Side Navigation Bar -->
    <div class="sidenav">
+
+
        <a href="chats">Chat</a>
        <a href="upload">Upload</a>
-       <!--<a href="notifications">Notifications</a>-->
-      <a href="universitiesapplied"> Applied</a>
-      <a href="universitiesapproved">Approved</a>
-      <a href="studentstatus">Status</a>
+
+      <!--<a href="notifications">Notifications</a>-->
+      <a href="applied">Applied</a>
+      <a href="approved"> Approved</a>
+       <a href="status">Status</a>
       <a href="logout">Logout</a>
    </div>
 
    <!-- Main Content -->
-   <div class="main">
-    <label>Working on it  </label>
-    <!--<input class="input-box" type="text" class="login-input" name="universities" placeholder="Universities"  required></br>-->
+    <div class="main">
+    <label> Working on it: </label>
+    <!--<input class="input-box" type="text" class="login-input" name="university" placeholder="approved"  required></br>-->
    </div>
+
+
+
+
+
+</select> <br><br>
+
+
+  </form>
+   </div>
+
 
 
 
