@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/universityapplied.css') }}">
    <title>Student Dashboard</title>
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
-
          background-color:#66b3ff;
          overflow: hidden;
          position: fixed;
@@ -70,14 +70,26 @@
          font-size: 18px;
          text-align: center;
       }
+       table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
 
    </style>
 </head>
-<body/>
+<body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
        <a href="home" style="float: left;">
-             <img src="{{url_for('static', filename='img_1.png' )}}" >
+             <img src="{{url_for('static', filename='img_1.png' )}}">
      </a>
       <a href="student">Home</a>
       <a href="profile">Profile</a>
@@ -90,20 +102,55 @@
    <div class="sidenav">
        <a href="chat">Chat</a>
        <a href="upload">Upload</a>
-       <!--<a href="notifications">Notifications</a>-->
-      <a href="applied"> Applied</a>
+      <a href="applied">Applied</a>
       <a href="approved">Approved</a>
       <a href="status">Status</a>
       <a href="logout">Logout</a>
    </div>
 
    <!-- Main Content -->
-   <div class="main">
-    <label>Working on it  </label>
-    <!--<input class="input-box" type="text" class="login-input" name="universities" placeholder="Universities"  required></br>-->
-   </div>
+<div class="main" >
+<a href="adduniversity">
+    <button class="add">Add University</button>
+</a>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for message in messages %}
+                    <li class="flash-message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <h1>Universities Applied</h1>
+    <table>
+      <thead>
+        <tr>
+            <th>university applied</th>
+            <th>location</th>
+            <th>specialization</th>
+            <th>Intake</th>
 
+            <th>Status</th>
+            <th colspan="3" align ="center"> Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in result %}
+        <tr>
+          <td>{{ r ['university_applied'] }}</td>
+          <td>{{ r ['location'] }}</td>
+          <td>{{ r ['specialization'] }}</td>
+            <td>{{ r ['date'] }}</td>
 
-
+            <td>{{ r ['status'] }}</td>
+            <td> <button ><a href= "newedit/{{ r['university_applied'] }}" type="submit" >edit</a></button></td>
+  <!--      <td> <button ><a href= "remove/{{ r['university_applied'] }}" type="submit" >remove</a></button></td>
+        -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
 </body>
 </html>

@@ -105,46 +105,32 @@
 
 
        <a href="chat">chat</a>
-       <a href="upload">upload</a>
-      <a href="applied">Applied</a>
-      <a href="approved">Approved</a>
-       <a href="status">Status</a>
-      <a href="logout">Logout</a>
+
+      <a href="http://127.0.0.1:5000/notifications">Notifications</a>
+      <a href="http://127.0.0.1:5000/universityapplied">Applied</a>
+      <a href="http://127.0.0.1:5000/universityapproved">Approved</a>
+       <a href="http://127.0.0.1:5000/studentstatus">Status</a>
+      <a href="http://127.0.0.1:5000/logout">Logout</a>
    </div>
 
-   <!-- Main Content -->
 <div class="main">
-    <!--<input class="input-box" type="text" class="login-input" name="university" placeholder="approved"  required></br>-->
-<h1>Universities Approved</h1>
-<table>
-      <thead>
-        <tr>
-            <th>university name</th>
-            <th>location</th>
-            <th>specialization</th>
-            <th>intake</th>
+    <form action="/newedit/{{ re[0]['university_applied'] }}" method="POST">
+        <h1>Edit Status</h1>
+        <div class="form-container">
+           <label>University Applied :</label>
+           <input class="login-input" type="text"  id="universityapplied" name="universityapplied" value="{{ re[0]['university_applied'] }}">
+           <label>Status :</label>
+           <select class="input-box" id="status" name="status" value="{{re[0]['status']}}">
+              <option value="">Select your status</option>
+              <option value="Applied">Applied</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+           </select><br><br>
 
-
-        </tr>
-      </thead>
-      <tbody>
-        {% for r in result %}
-        <tr>
-          <td>{{ r ['university_applied'] }}</td>
-          <td>{{ r ['location'] }}</td>
-          <td>{{ r ['specialization'] }}</td>
-            <td>{{ r ['date'] }}</td>
-
-
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
- </div>
-
-
-
-
+           <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
+           <a href="http://127.0.0.1:5000/universityapplied">back</a>
+        </div><br>
+    </form>
+</div>
 </body>
 </html>

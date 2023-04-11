@@ -132,6 +132,19 @@
     </style>
   </head><br>
   <body>
+  <script>
+		function checkEmail() {
+			var email = document.getElementById("email").value;
+			// You can replace this code with your own validation code to check if the email already exists in your database
+			if (email == "example@example.com") {
+				document.getElementById("emailError").innerHTML = "Email already exists";
+				return false;
+			} else {
+				document.getElementById("emailError").innerHTML = "";
+				return true;
+			}
+		}
+	</script>
 
 
 <div style="margin-top:60px;">
