@@ -2,7 +2,7 @@ body{
 margin: 0;
 padding: 0;
 background : #ffffff;
-font-family: Arial;
+font-family: roboto;
 }
 
 .navbar ul{
@@ -49,11 +49,13 @@ margin-top: 5px;
 
 .main-heading{
 padding-top: 0px;
+font-family: roboto;
 font-size:27px;
 font-weight: bold;
 text-align: center;
 color: #000000;
 text-decoration: underline;
+
 }
 
 .container{

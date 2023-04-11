@@ -3,6 +3,7 @@ from flask_mail import *
 from flask_mysqldb import MySQL
 from random import *
 from datetime import timedelta
+import datetime
 import base64
 
 app = Flask(__name__)
@@ -98,6 +99,99 @@ def applied():
 @app.route("/approved")
 def approved():
     return render_template("approved.html")
+
+@app.route("/universityapproved")
+def universityapproved():
+    email = session['email']
+    b = 'Approved'
+    cur = mysql.connection.cursor()
+    r = cur.execute('SELECT university_applied,location,specialization,date FROM universityapplied where email=%s and status=%s',(email,b,))
+    print(r)
+    mysql.connection.commit()
+    if r>0:
+        result = cur.fetchall()
+        print(result)
+        return render_template("approved.html",result=result)
+    else:
+        flash('no unversities are approved')
+        return render_template("approved.html")
+    cur.close()
+    return render_template("approved.html")
+
+@app.route("/newedit/<string:university_applied>", methods=['GET','POST'])
+def newedit(university_applied):
+    if request.method == "POST":
+        universityapplied = request.form['universityapplied']
+        print(universityapplied)
+        status = request.form['status']
+        cur = mysql.connection.cursor()
+        z = cur.execute('UPDATE universityapplied SET university_applied = %s , status = %s  WHERE university_applied = %s',[ universityapplied,status,university_applied])
+        mysql.connection.commit()
+        if z > 0:
+            flash("updated successfully")
+            return redirect(url_for("universityapplied"))
+        else:
+            error = "oops something went wrong"
+            return render_template("newedit.html", error=error)
+        cur.close()
+
+    cur2 = mysql.connection.cursor()
+    u = cur2.execute("select * from universityapplied where university_applied = %s", (university_applied,))
+    mysql.connection.commit()
+    re = cur2.fetchall()
+    print(re)
+    cur2.close()
+    return render_template("newedit.html",re=re)
+
+@app.route("/adduniversity",methods=['GET','POST'])
+def adduniversity():
+    today = datetime.date.today()
+    return render_template('adduniversity.html', today=today)
+
+
+@app.route("/sadduniversity",methods=['GET','POST'])
+def sadduniversity():
+    if request.method == 'POST':
+        universityapplied = request.form['universityapplied']
+        location = request.form['location']
+        specialization = request.form['specialization']
+        status = request.form['status']
+        email = session['email']
+        date = request.form['date']
+        today = datetime.date.today()
+        selected_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+        if selected_date < today - datetime.timedelta(days=1):
+            return "Please select a date that is equal to or greater than today."
+
+        cur = mysql.connection.cursor()
+        b = cur.execute("insert into universityapplied(university_applied,location,specialization,status,email,date) values(%s,%s,%s,%s,%s,%s)",
+                (universityapplied, location, specialization,status, email,date,))
+        mysql.connection.commit()
+
+        if b>0:
+            flash("Hey your adding university is success")
+            return render_template('adduniversity.html',today=today)
+        else:
+            flash('ERROR:Given month and year are not greater than current month and year.')
+            return render_template('adduniversity.html')
+        cur.close()
+
+    return render_template('adduniversity.html',today=today)
+
+
+@app.route('/universityapplied')
+def universityapplied():
+    email = session['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute("select * from universityapplied where email=%s", (email,))
+    print(r)
+    mysql.connection.commit()
+    if r > 0:
+        re = cur.fetchall()
+        print(re)
+        return render_template("applied.html",result=re)
+    cur.close()
+    return render_template("applied.html")
 
 @app.route("/adprofile")
 def adprofile():
@@ -546,20 +640,25 @@ def goto(email):
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
+        email = session['email']
         pdf_data = file.read()
         cursor = mysql.connection.cursor()
-        query = "INSERT INTO files (filename, pdf) VALUES (%s, %s)"
-        cursor.execute(query, (file.filename, base64.b64encode(pdf_data)))
+        query = "INSERT INTO files (filename, pdf,email) VALUES (%s,%s,%s)"
+        cursor.execute(query, (file.filename, base64.b64encode(pdf_data),email,))
         mysql.connection.commit()
         cursor.close()
         return redirect(url_for('view'))
     return render_template('upload.html')
+
 @app.route("/view")
 def view():
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM files')
-    re = cur.fetchall()
-    cur.close()
+    email = session['email']
+    cursor = mysql.connection.cursor()
+    r = cursor.execute('select * from files where email=%s', [email,])
+    mysql.connection.commit()
+    print(r)
+    re = cursor.fetchall()
+    cursor.close()
     return render_template("view.html", result=re)
 
 @app.route('/download/<filename>')

@@ -93,9 +93,9 @@
        <a href="upload">Upload</a>
 
       <!--<a href="notifications">Notifications</a>-->
-      <a href="universitiesapplied"> Applied</a>
-      <a href="universitiesapproved"> Approved</a>
-      <a href="studentstatus">Status</a>
+      <a href="applied"> Applied</a>
+      <a href="approved"> Approved</a>
+      <a href="status">Status</a>
        <a href="logout">Logout</a>
    </div><br>
 
@@ -120,6 +120,7 @@
  <table style="width:100%">
     <tr>
         <th>Filename</th>
+        <th>Email</th>
         <th>Download</th>
     </tr>
      </thead>
@@ -129,6 +130,7 @@
 
 				<tr>
                     <td>{{ re.filename }}</td>
+                    <td>{{ re.email }}</td>
                     <td><a href="/download/{{ re.filename }}">Download</a></td>
 				</tr>
 			{% endfor %}
