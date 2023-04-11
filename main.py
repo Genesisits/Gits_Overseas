@@ -91,17 +91,12 @@ def notifications():
     return render_template("notifications.html")
 
 
-
-
-
-
-
 @app.route("/approved")
 def approved():
     email = session['email']
     b = 'Approved'
     cur = mysql.connection.cursor()
-    r = cur.execute('SELECT university_applied,location,specialization,date FROM universityapplied where email=%s and status=%s',(email,b,))
+    r = cur.execute('SELECT university_applied,country,specialization,date FROM universityapplied where email=%s and status=%s',(email,b,))
     print(r)
     mysql.connection.commit()
     if r>0:
@@ -149,7 +144,7 @@ def adduniversity():
 def sadduniversity():
     if request.method == 'POST':
         universityapplied = request.form['universityapplied']
-        location = request.form['location']
+        country = request.form['country']
         specialization = request.form['specialization']
         status = request.form['status']
         email = session['email']
@@ -160,8 +155,12 @@ def sadduniversity():
             return "Please select a date that is equal to or greater than today."
 
         cur = mysql.connection.cursor()
-        b = cur.execute("insert into universityapplied(university_applied,location,specialization,status,email,date) values(%s,%s,%s,%s,%s,%s)",
-                (universityapplied, location, specialization,status, email,date,))
+        cur.execute("SELECT * FROM universityapplied WHERE university_applied = %s", (universityapplied,))
+        user = cur.fetchone()
+        if user:
+            flash('university already exists', 'error')
+            return redirect(url_for('adduniversity'))
+        b = cur.execute("insert into universityapplied(university_applied,country,specialization,status,email,date) values(%s,%s,%s,%s,%s,%s)",(universityapplied, country, specialization,status, email,date,))
         mysql.connection.commit()
 
         if b>0:
@@ -520,10 +519,11 @@ def delete(email):
     print(r)
     if r>0:
         flash("Deleted successfully")
+        return redirect(url_for("admindashboard"))
         r = cur.execute("select * from usertable")
         admin = cur.fetchall()
         print(admin)
-        return render_template("dbfetch.html", result=admin)
+        return render_template("admindashboard.html", result=admin)
     return render_template("dbfetch.html")
 
 @app.route("/update/<string:email>", methods=['GET', 'POST'])
