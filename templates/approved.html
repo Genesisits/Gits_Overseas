@@ -104,8 +104,8 @@
    <div class="sidenav">
 
 
-       <a href="chat">chat</a>
-       <a href="upload">upload</a>
+       <a href="chat">Chat</a>
+       <a href="upload">Upload</a>
       <a href="applied">Applied</a>
       <a href="approved">Approved</a>
        <a href="status">Status</a>
@@ -120,7 +120,7 @@
       <thead>
         <tr>
             <th>university name</th>
-            <th>location</th>
+            <th>country</th>
             <th>specialization</th>
             <th>intake</th>
 
@@ -131,7 +131,7 @@
         {% for r in result %}
         <tr>
           <td>{{ r ['university_applied'] }}</td>
-          <td>{{ r ['location'] }}</td>
+          <td>{{ r ['country'] }}</td>
           <td>{{ r ['specialization'] }}</td>
             <td>{{ r ['date'] }}</td>
 

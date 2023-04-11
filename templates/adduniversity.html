@@ -1,39 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <style>
-    .input-container {
+   <title>Student Dashboard</title>
+   <style>
+   h1 {text-align: center;}
+      /* Style for top navigation bar */
+      .topnav {
+         background-color: #66B3FF;
+         overflow: hidden;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 10%;
+         width: 100%;
+         z-index: 999;
+      }
+      .topnav img {
+         height: 60px;
+         padding: 5px;
+         float: left;
+      }
+      .topnav a {
+         float: right;
+         display: block;
+         color: #010A0A;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         font-size: 17px;
+      }
+      .topnav a:hover {
+         background-color: #ddd;
+         color: black;
+      }
+      /* Style for side navigation bar */
+      .sidenav {
+         height: 100%;
+         width: 200px;
+         position: fixed;
+         z-index: 1;
+         top: 50px;
+         left: 0;
+         background-color: #111;
+         overflow-x: hidden;
+         padding-top: 20px;
+      }
+      .sidenav a {
+         padding: 6px 8px 6px 16px;
+         text-decoration: none;
+         font-size: 20px;
+         color: #F0F5F5;
+         display: block;
+      }
+      .sidenav a:hover {
+         color: #53C653;
+      }
+      .main {
+         margin-left: 200px;
+         margin-top: 70px;
+         padding: 0px 10px;
+         font-size: 18px;
+         text-align: center;
+      }
+      .input-container {
       display: flex; /* Use flexbox */
     }
-
     .input-container input {
       flex: 1; /* Allow inputs to grow and take up equal space */
       margin-right: 10px; /* Add some spacing between inputs */
     }
-  </style>
-    <meta charset="UTF-8">
-    <title>Title</title>
-     <link rel="stylesheet" href="{{ url_for('static', filename='css/adduniversity.css') }}">
+   </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adduniversity.css') }}">
 </head>
 <body>
-<div class="popup">
+<!-- Top Navigation Bar -->
+   <div class="topnav">
+       <a href="home" style="float: left;">
+             <img src="{{url_for('static', filename='img_1.png' )}}" >
+     </a>
+      <a href="student">Home</a>
+      <a href="profile">Profile</a>
+      <h1>Genesis Overseas </h1>
+   </div>
+   <!-- Side Navigation Bar -->
+   <div class="sidenav">
+       <a href="chat">Chat</a>
+       <a href="upload">Upload</a>
+      <!--<a href="notifications">Notifications</a>-->
+      <a href="applied"> Applied</a>
+      <a href="approved"> Approved</a>
+      <a href="status">Status</a>
+      <a href="logout">Logout</a>
+   </div>
+   <!-- Main Content -->
+   <div class="main">
+     <div class="nav">
     <form action="/sadduniversity" method="post">
         <h1>Add University</h1>
        <div class="form-container">
            <label>University Applied :</label>
            <input type="text" id="universityapplied" name="universityapplied" required >
-
-           <label>Location :</label>
-           <input type="text" id="location" name="location" required >
-
+           <label>Country :</label>
+           <input type="text" id="country" name="country" required >
            <label>Specialization :</label>
            <input type="text" id="specialization" name="specialization" required >
-
            <h5>Ensure that the month and year you will enter are equal to or greater than the current month and year to prevent errors.</h5>
-
           <label for="date-input">Select applied date:</label>
           <input type="date" id="date-input" name="date" min="{{ today.strftime('%Y-%m-%d') }}" required>
-
            <label>Status :</label>
            <select class="input-box" id="status" name="status" required>
               <option value="">Select your status</option>
@@ -41,9 +114,8 @@
               <option value="Approved">Approved</option>
               <option value="Rejected">Rejected</option>
            </select><br><br>
-
            <button type="submit">submit</button>
-           <a href="universityapplied">back</a>
+<!--           <a href="applied">back</a>-->
        </div><br>
     </form>
     {% with messages = get_flashed_messages() %}
@@ -56,6 +128,6 @@
         {% endif %}
     {% endwith %}
     </div>
-
+   </div>
 </body>
 </html>
