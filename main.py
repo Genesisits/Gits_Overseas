@@ -48,9 +48,9 @@ def adminflash():
 def home():
     return render_template('overseas.html')
 
-@app.route("/chats")
-def chats():
-    return render_template('chats.html')
+@app.route("/chat")
+def chat():
+    return render_template('chat.html')
 
 @app.route("/country",methods= ['GET','POST'])
 def country():
@@ -163,7 +163,7 @@ def forgotpasswordpage():
             session.permanent = True
             session['email'] = email
             flash("check for OTP")
-            msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+            msg = Message('subject', sender="saicharansuraram@gmail", recipients=[email])
             msg.body = "THIS IS YOUR OTP FOR FORGOT PASSWORD " + str(otp)
             mail.send(msg)
             return redirect(url_for('fpsend'))
@@ -223,6 +223,9 @@ def register():
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
+        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+        msg.body = "THIS IS YOUR OTP" + str(otp)
+        mail.send(msg)
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
         passport = request.form['passport']
@@ -383,9 +386,9 @@ def send():
 def adduser():
     return render_template("adduser.html")
 
-@app.route("/chat")
+'''@app.route("/chat")
 def chat():
-    return render_template("chat.html")
+    return render_template("chat.html")'''
 
 @app.route("/dbfetch")
 def user():

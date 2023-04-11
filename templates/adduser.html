@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Register</title>
+   <title>Admin Dashboard</title>
+        <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
+
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
@@ -12,7 +14,7 @@
          position: fixed;
          top: 0;
          left: 0;
-         height: 13%;
+         height: 10%;
          width: 100%;
          z-index: 999;
       }
@@ -26,7 +28,7 @@
       .topnav a {
          float: right;
          display: block;
-         color: #ffffff;
+         color: #010a0a;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
@@ -139,7 +141,7 @@
         <!-- <label>Upload Image</label>
         <input type="file" name="image" />
         <input type = "submit" value="Upload"> <br><br> -->
-        <h1 style="text-align:center;color:#0000ff;">Registration Form</h1>
+        <h1 style="text-align:center;color:#0000ff;"> Student Registration Form</h1>
          <label>Full name: </label>
     <input class="input-box" type="text" class="login-input" name="fullname" placeholder="fullname"  required></br>
         <label>Password : </label>
