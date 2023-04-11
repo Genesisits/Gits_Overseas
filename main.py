@@ -92,16 +92,12 @@ def notifications():
 
 
 
-@app.route("/applied")
-def applied():
-    return render_template("applied.html")
+
+
+
 
 @app.route("/approved")
 def approved():
-    return render_template("approved.html")
-
-@app.route("/universityapproved")
-def universityapproved():
     email = session['email']
     b = 'Approved'
     cur = mysql.connection.cursor()
@@ -129,7 +125,7 @@ def newedit(university_applied):
         mysql.connection.commit()
         if z > 0:
             flash("updated successfully")
-            return redirect(url_for("universityapplied"))
+            return redirect(url_for("applied"))
         else:
             error = "oops something went wrong"
             return render_template("newedit.html", error=error)
@@ -179,8 +175,8 @@ def sadduniversity():
     return render_template('adduniversity.html',today=today)
 
 
-@app.route('/universityapplied')
-def universityapplied():
+@app.route('/applied')
+def applied():
     email = session['email']
     cur = mysql.connection.cursor()
     r = cur.execute("select * from universityapplied where email=%s", (email,))
