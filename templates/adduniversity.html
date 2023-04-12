@@ -94,19 +94,19 @@
    </div>
    <!-- Main Content -->
    <div class="main">
-     <div class="nav">
+     <div class="pop">
     <form action="/sadduniversity" method="post">
         <h1>Add University</h1>
        <div class="form-container">
-           <label>University Applied :</label>
+           <label style="text-align:left;">University Applied :</label>
            <input type="text" id="universityapplied" name="universityapplied" required >
-           <label>Country :</label>
+           <label style="text-align:left;">Country :</label>
            <input type="text" id="country" name="country" required >
-           <label>Specialization :</label>
+           <label style="text-align:left;">Specialization :</label>
            <input type="text" id="specialization" name="specialization" required >
            <h5>Ensure that the month and year you will enter are equal to or greater than the current month and year to prevent errors.</h5>
           <label for="date-input">Select applied date:</label>
-          <input type="date" id="date-input" name="date" min="{{ today.strftime('%Y-%m-%d') }}" required>
+          <input style="margin-bottom:5px;" type="date" id="date-input" name="date" min="{{ today.strftime('%Y-%m-%d') }}" required>
            <label>Status :</label>
            <select class="input-box" id="status" name="status" required>
               <option value="">Select your status</option>
@@ -115,7 +115,6 @@
               <option value="Rejected">Rejected</option>
            </select><br><br>
            <button type="submit">submit</button>
-
        </div><br>
     </form>
     {% with messages = get_flashed_messages() %}
@@ -130,4 +129,4 @@
     </div>
    </div>
 </body>
-</html>
+</html>l>

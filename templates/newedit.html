@@ -107,10 +107,10 @@
        <a href="chat">chat</a>
 
 <!--      <a href="http://127.0.0.1:5000/notifications">Notifications</a>-->
-      <a href="http://127.0.0.1:5000/applied">Applied</a>
-      <a href="http://127.0.0.1:5000/approved">Approved</a>
-       <a href="http://127.0.0.1:5000/status">Status</a>
-      <a href="http://127.0.0.1:5000/logout">Logout</a>
+      <a href="/applied">Applied</a>
+      <a href="/approved">Approved</a>
+       <a href="/status">Status</a>
+      <a href="/logout">Logout</a>
    </div>
 
 <div class="main">
@@ -120,7 +120,7 @@
            <label>University Applied :</label>
            <input class="login-input" type="text"  id="universityapplied" name="universityapplied" value="{{ re[0]['university_applied'] }}">
            <label>Status :</label>
-           <select class="input-box" id="status" name="status" value="{{re[0]['status']}}">
+           <select class="input-box" id="status" name="status" value="{{re[0]['status']}}" required>
               <option value="">Select your status</option>
               <option value="Applied">Applied</option>
               <option value="Approved">Approved</option>
@@ -128,7 +128,7 @@
            </select><br><br>
 
            <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
-           <a href="http://127.0.0.1:5000/applied">back</a>
+           <a href="/applied">back</a>
         </div><br>
     </form>
 </div>

@@ -15,7 +15,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -118,7 +118,7 @@ def newedit(university_applied):
         cur = mysql.connection.cursor()
         z = cur.execute('UPDATE universityapplied SET university_applied = %s , status = %s  WHERE university_applied = %s',[ universityapplied,status,university_applied])
         mysql.connection.commit()
-        if z > 0:
+        if z >= 0:
             flash("updated successfully")
             return redirect(url_for("applied"))
         else:
@@ -153,7 +153,6 @@ def sadduniversity():
         selected_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
         if selected_date < today - datetime.timedelta(days=1):
             return "Please select a date that is equal to or greater than today."
-
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM universityapplied WHERE id = %s", (id,))
         user = cur.fetchone()
