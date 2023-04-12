@@ -64,10 +64,10 @@ def country():
         if r > 0:
             result = cur.fetchall()
             print(result)
-            return render_template("dbfetch.html", result=result)
+            return render_template("users.html", result=result)
         else:
             error = "No Student was Found"
-            return render_template("dbfetch.html", error=error)
+            return render_template("users.html", error=error)
         cur.close()
     return render_template('country.html')
 
@@ -473,17 +473,17 @@ def adduser():
 def chat():
     return render_template("chat.html")'''
 
-@app.route("/dbfetch")
-def user():
+@app.route("/users")
+def users():
     cur = mysql.connection.cursor()
     r = cur.execute('select * from usertable')
     mysql.connection.commit()
     if r>0:
         re = cur.fetchall()
         print(re)
-        return render_template("dbfetch.html",result=re)
+        return render_template("users.html",result=re)
     cur.close()
-    return render_template("dbfetch.html")
+    return render_template("users.html")
 
 
 @app.route('/intake',methods=['POST','GET'])
@@ -497,10 +497,10 @@ def intake():
         if r>0:
             result = cur.fetchall()
             print(result)
-            return render_template("dbfetch.html", result=result)
+            return render_template("users.html", result=result)
         else:
             error = "No Student was Found"
-            return render_template("dbfetch.html", error=error)
+            return render_template("users.html", error=error)
         cur.close()
     return render_template("intake.html")
 
@@ -518,7 +518,7 @@ def delete(email):
         admin = cur.fetchall()
         print(admin)
         return render_template("admindashboard.html", result=admin)
-    return render_template("dbfetch.html")
+    return render_template("users.html")
 
 @app.route("/update/<string:email>", methods=['GET', 'POST'])
 def update(email):
