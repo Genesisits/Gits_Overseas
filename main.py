@@ -216,7 +216,6 @@ def status():
     return render_template("status.html")
 
 @app.route('/sfetch',methods=['GET','POST'])
-
 def sfetch():
     if request.method == 'POST':
         financials = request.form['financials']
@@ -452,10 +451,6 @@ def addadmin():
 def logout():
     session.clear()
     return redirect(url_for('home'))
-
-
-
-
 @app.route('/validate',methods=['POST'])
 def validate():
     user_otp = request.form['otp']
@@ -465,7 +460,6 @@ def validate():
     else:
         error = "wrong OTP"
         return render_template("send.html", error=error)
-    cur
 
 @app.route("/send")
 def send():
@@ -667,10 +661,6 @@ def download_file(filename):
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
-
-
-
-
 
 if __name__ == "__main__":
     app.run(debug="True")
