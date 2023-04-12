@@ -155,7 +155,7 @@ def sadduniversity():
             return "Please select a date that is equal to or greater than today."
 
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM universityapplied WHERE university_applied = %s", (universityapplied,))
+        cur.execute("SELECT * FROM universityapplied WHERE id = %s", (id,))
         user = cur.fetchone()
         if user:
             flash('university already exists', 'error')
