@@ -178,22 +178,27 @@
           <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
           <label for="dob">Date of Birth:</label>
           <input type="date" id="dob" name="dob" required><br><br>
-        <form action="/upload" method="post">
-          <label>Upload image : </label>
-          <input type="hidden" id="image" name="image">
-           <input type="file" accept="image/*" onchange="uploadImage(this)">
 
- <script>
-  function uploadImage(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        document.querySelector("#image").value = e.target.result.split(",")[1];
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-</script><br><br>
+         <form action="upload.php" method="post">
+        <label>Upload image:</label>
+    <input type="hidden" id="image" name="image">
+    <input type="file" accept="image/*" maxlength="10MB" onchange="uploadImage(this)">
+             
+
+    <script>
+      function uploadImage(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            document.querySelector("#image").value = e.target.result.split(",")[1];
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+    </script><br><br>
+
+
+
 
         <label>Passport No : </label>
     <input class="input-box" type="text" class="login-input" name="passport" placeholder="Passport Number"  required ></br>

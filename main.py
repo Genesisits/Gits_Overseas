@@ -3,6 +3,7 @@ from flask_mail import *
 from flask_mysqldb import MySQL
 from random import *
 from datetime import timedelta
+from MySQLdb import Binary
 import datetime
 import base64
 
@@ -20,6 +21,7 @@ app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=5)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 mysql = MySQL(app)
 
@@ -39,16 +41,10 @@ def homep():
 
 @app.route("/userflash")
 def userflash():
-    if 'email' in session:
-        return render_template("userflash.html")
-    else:
-        return redirect(url_for("login"))
+    return render_template("userflash.html")
 @app.route("/adminflash")
 def adminflash():
-    if 'email' in session:
-        return render_template("adminflash.html")
-    else:
-        return redirect(url_for("login"))
+    return render_template("adminflash.html")
 
 @app.route("/home")
 def home():
@@ -91,19 +87,12 @@ def admindashboard():
         return redirect(url_for("login"))
 @app.route("/about")
 def about():
-    if 'email' in session:
-        return render_template("about.html")
-    else:
-        return redirect(url_for("login"))
+    return render_template("about.html")
 
 
 @app.route("/contact")
 def contact():
-    if 'email' in session:
-        return render_template("contact.html")
-    else:
-        return redirect(url_for("login"))
-
+    return render_template("contact.html")
 
 
 @app.route("/notifications")
@@ -329,42 +318,39 @@ def fpsend():
         return redirect(url_for("login"))
 @app.route('/fpvalidate',methods=['POST'])
 def fpvalidate():
-    if 'email' in session:
-        user_otp = request.form['otp']
-        if otp == int(user_otp):
-            return redirect(url_for("updatepassword"))
-        else:
-            error = "wrong OTP"
-            return render_template("fpsend.html", error=error)
-    return redirect(url_for("login"))
+    user_otp = request.form['otp']
+    if otp == int(user_otp):
+        return redirect(url_for("updatepassword"))
+    else:
+        error = "wrong OTP"
+    return render_template("fpsend.html", error=error)
+
 
 @app.route('/updatepassword',methods=['GET','POST'])
 def updatepassword():
-    if 'email' in session:
-        if request.method == 'POST':
-            newpassword = request.form['newpassword']
-            confirmpassword = request.form['confirmpassword']
-            email = session['email']
-            if newpassword == confirmpassword:
-                cur = mysql.connection.cursor()
-                a = cur.execute('UPDATE usertable SET password = %s WHERE email = %s', [newpassword, email])
-                mysql.connection.commit()
+    if request.method == 'POST':
+        newpassword = request.form['newpassword']
+        confirmpassword = request.form['confirmpassword']
+        email = session['email']
+        if newpassword == confirmpassword:
+            cur = mysql.connection.cursor()
+            a = cur.execute('UPDATE usertable SET password = %s WHERE email = %s', [newpassword, email])
+            mysql.connection.commit()
 
-                if a > 0:
-                    flash("password updated successfully")
-                    session.clear()
-                    return redirect(url_for('home'))
-                else:
-                    error = "oops something went wrong"
-                    return render_template("updatepassword.html", error=error)
-
+            if a > 0:
+                flash("password updated successfully")
+                session.clear()
+                return redirect(url_for('home'))
             else:
-                error = "password and confirm password should be same"
+                error = "oops something went wrong"
                 return render_template("updatepassword.html", error=error)
-            cur.close()
-        return render_template("updatepassword.html")
-    else:
-        return redirect(url_for("login"))
+
+        else:
+            error = "password and confirm password should be same"
+            return render_template("updatepassword.html", error=error)
+        cur.close()
+    return render_template("updatepassword.html")
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -412,6 +398,14 @@ def register():
         return redirect(url_for('userflash'))
 
     return render_template('register.html')
+
+
+
+
+
+
+
+
 @app.route("/admin_register",methods=['GET','POST'])
 def admin_register():
     if 'email' in session:
@@ -531,10 +525,7 @@ def validate():
 
 @app.route("/send")
 def send():
-    if 'email' in session:
-        return render_template("send.html")
-    else:
-        return redirect(url_for("login"))
+    return render_template("send.html")
 @app.route("/adduser")
 def adduser():
     if 'email' in session:
