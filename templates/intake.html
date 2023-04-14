@@ -70,6 +70,18 @@
          font-size: 18px;
          text-align: center;
       }
+      table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
 
    </style>
 </head>
@@ -80,6 +92,8 @@
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="admindashboard">Home</a>
+      <a href="adprofile">Profile</a>
+
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -97,6 +111,77 @@
 
    <!-- Main Content -->
    <div class="main">
+       <form action="intake" method="POST">
+          <h1>Fetch Data from Database Based on Month and Year</h1>
+           <label>country:</label>
+           <input name="country" id ="country" placeholder="enter country" type="text">
+  <label for="selected_month">Select a Month:</label>
+  <select id="selected_month" name="selected_month" required >
+      <option>select month</option>
+    <option value="01">January</option>
+    <option value="02">February</option>
+    <option value="03">March</option>
+    <option value="04">April</option>
+      <option value="05">May</option>
+      <option value="06">June</option>
+      <option value="07">July</option>
+      <option value="08">August</option>
+      <option value="09">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+  </select>
+  <br>
+  <label for="selected_year">Select a Year:</label>
+  <select id="selected_year" name="selected_year" required>
+      <option>select year</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+      <option value="2025">2025</option>
+      <option value="2026">2026</option>
+      <option value="2027">2027</option>
+      <option value="2028">2028</option>
+      <option value="2029">2029</option>
+      <option value="2030">2030</option>
+      <option value="2031">2031</option>
+  </select>
+  <br>
+  <button type="submit">submit</button>
+           </form>
+       <table>
+      <thead>
+        <tr>
+            <th>university_applied</th>
+            <th>country</th>
+            <th>specialization</th>
+            <th>status</th>
+
+            <th>date</th>
+            <th>email</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in result %}
+        <tr>
+          <td>{{ r ['university_applied'] }}</td>
+          <td>{{ r ['country'] }}</td>
+          <td>{{ r ['specialization'] }}</td>
+            <td>{{ r ['status'] }}</td>
+
+            <td>{{ r ['date'] }}</td>
+            <td>{{ r ['email'] }}</td>
+
+
+
+  <!--      <td> <button ><a href= "remove/{{ r['university_applied'] }}" type="submit" >remove</a></button></td>
+        -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
 
 
    </div>

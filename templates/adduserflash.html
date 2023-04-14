@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Admin Dashboard</title>
+   <title>Student Dashboard</title>
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
@@ -60,7 +60,7 @@
       }
 
       .sidenav a:hover {
-         color: #3333ff;
+         color: #53c653;
       }
 
       .main {
@@ -76,29 +76,41 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-       <a href="home" style="float: left;">
+        <a href="home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
-      <a href="admindashboard">Home</a>
-           <a href="adprofile">Profile</a>
+     </a>
+      <a href="home">Home</a>
+      <a href="profile">Profile</a>
       <h1>Genesis Overseas </h1>
 
    </div>
 
 
    <!-- Side Navigation Bar -->
-   <div class="sidenav">
-<!--       <a href="chat">Chat</a>-->
-      <a href="users">Users</a>
-      <a href="intake">Intake</a>
-      <a href="country">Country</a>
-      <a href="adduser">Add User</a>
-      <a href="logout">Logout</a>
+
    </div>
 
    <!-- Main Content -->
-    <div class="main">
-      <h1>Welcome to profile page</h1>
-   </div>
+   <div class="main">
+       <head>
+    <meta charset="UTF-8">
+    <title>new</title>
+</head>
+<body>
+
+<form class = "nav" method="POST">
+</form>
+<a href="adsend">validate</a>
+{% with messages = get_flashed_messages() %}
+         {% if messages %}
+               {% for message in messages %}
+                    <p class = 'suc'><strong>{{ message }}</strong></p>
+               {% endfor %}
+         {% endif %}
+      {% endwith %}
+</body>
+     </div>
 
 </body>
 </html>
+
