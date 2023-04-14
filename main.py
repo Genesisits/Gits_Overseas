@@ -16,7 +16,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -221,7 +221,11 @@ def applied():
             print(re)
             return render_template("applied.html",result=re)
         cur.close()
-    return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+    return render_template("applied.html")
+
+
 
 
 @app.route("/adprofile")

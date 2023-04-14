@@ -93,8 +93,8 @@
         <a href="home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
-      <a href="student">Home</a>
-      <a href="profile">Profile</a>
+      <a href="/student">Home</a>
+      <a href="/profile">Profile</a>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -104,7 +104,8 @@
    <div class="sidenav">
 
 
-       <a href="chat">chat</a>
+       <a href="/chat">Chat</a>
+       <a href="/upload">Upload</a>
 
 <!--      <a href="http://127.0.0.1:5000/notifications">Notifications</a>-->
       <a href="/applied">Applied</a>
@@ -112,7 +113,6 @@
        <a href="/status">Status</a>
       <a href="/logout">Logout</a>
    </div>
-
 <div class="main">
     <form action="/newedit/{{ re[0]['university_applied'] }}" method="POST">
         <h1>Edit Status</h1>
