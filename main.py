@@ -59,7 +59,7 @@ def chat():
     if 'email' in session:
         return render_template('chat.html')
     else:
-        return redirect(url_for("admin_login"))
+        return redirect(url_for("login"))
 
 @app.route("/country",methods= ['GET','POST'])
 def country():
@@ -221,10 +221,9 @@ def applied():
             print(re)
             return render_template("applied.html",result=re)
         cur.close()
+        return render_template("applied.html")
     else:
         return redirect(url_for('login'))
-    return render_template("applied.html")
-
 
 
 
