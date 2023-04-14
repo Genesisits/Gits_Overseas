@@ -107,7 +107,8 @@
        <a href="home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
-      <a href="home">Home</a>
+      <a href="admindashboard">Home</a>
+      <a href="adprofile">Profile</a>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -116,10 +117,10 @@
    <!-- Side Navigation Bar -->
    <div class="sidenav">
 <!--       <a href="chat">Chat</a>-->
-      <a href="users">Users</a>
+      <a href="dbfetch">Users</a>
       <a href="intake">Intake</a>
       <a href="country">Country</a>
-        <a href="register">Add User</a>
+        <a href="adduser">Add User</a>
       <a href="logout">Logout</a>
    </div><br>
 
@@ -231,12 +232,8 @@
             {% endfor %}
 
 </table><br><br>
-
-
-<button class="print-button" onclick="window.print()">Print</button>
+ <button class="print-button" onclick="window.print()">Print</button>
 
    </div>
 </body>
-
-
 </html>

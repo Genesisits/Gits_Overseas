@@ -42,6 +42,10 @@ def homep():
 @app.route("/userflash")
 def userflash():
     return render_template("userflash.html")
+
+@app.route("/adduserflash")
+def adduserflash():
+    return render_template("adduserflash.html")
 @app.route("/adminflash")
 def adminflash():
     return render_template("adminflash.html")
@@ -353,7 +357,6 @@ def updatepassword():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Get form data
         image = request.form['image']
         image_data = base64.b64decode(image)
         image_data = base64.b64encode(image_data)
@@ -364,6 +367,7 @@ def register():
         msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
         msg.body = "THIS IS YOUR OTP" + str(otp)
         mail.send(msg)
+        dob = request.form['dob']
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
         passport = request.form['passport']
@@ -382,11 +386,13 @@ def register():
             flash('Email address already exists', 'error')
             return redirect(url_for('register'))
 
+
         # Insert user data into database
-        cur.execute(
-            "INSERT INTO usertable (fullname, fathername, contact, email, password, passport, country, qualification, location, gender, maritial, reference, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (fullname, fathername, contact, email, password, passport, country, qualification, location, gender,
-             maritial, reference, image_data,))
+        query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password, 
+                passport, country, qualification, location, gender, maritial, reference, image)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)"""
+        values = (fullname, fathername, contact, email,dob, password, passport, country, qualification, location, gender,maritial, reference, image_data)
+        cur.execute(query,values)
         mysql.connection.commit()
         cur.close()
 
@@ -506,25 +512,105 @@ def addadmin():
 def logout():
     session.clear()
     return redirect(url_for('home'))
+
+
 @app.route('/validate',methods=['POST'])
 def validate():
+    email = request.form['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute("SELECT email FROM usertable WHERE email = %s and activation_status = false", (email,))
+    mysql.connection.commit()
+    if r == 0:
+        flash("entered email is not correct")
+        return render_template("send.html")
     user_otp = request.form['otp']
     if otp == int(user_otp):
+        cur = mysql.connection.cursor()
+        cur.execute("update usertable set activation_status = true where email=%s",(email,))
+        mysql.connection.commit()
+        cur.close()
+        flash("Successfully Registered")
         return redirect(url_for("login"))
-
     else:
-        error = "wrong OTP"
-        return render_template("send.html", error=error)
+        flash("wrong OTP")
+        return render_template("send.html")
+
+@app.route('/advalidate',methods=['POST'])
+def advalidate():
+    email = request.form['email']
+    cur = mysql.connection.cursor()
+    r = cur.execute("SELECT email FROM usertable WHERE email = %s and activation_status = false", (email,))
+    mysql.connection.commit()
+    if r == 0:
+        flash("entered email is not correct")
+        return render_template("send.html")
+    user_otp = request.form['otp']
+    if otp == int(user_otp):
+        cur = mysql.connection.cursor()
+        cur.execute("update usertable set activation_status = true where email=%s",(email,))
+        mysql.connection.commit()
+        cur.close()
+        flash("Successfully Registered")
+        return redirect(url_for("admindashboard"))
+    else:
+        flash("wrong OTP")
+        return render_template("adsend.html")
+
+
+
+
+
 
 @app.route("/send")
 def send():
     return render_template("send.html")
-@app.route("/adduser")
+
+@app.route("/adsend")
+def adsend():
+    return render_template("adsend.html")
+
+@app.route("/adduser",methods=['GET', 'POST'])
 def adduser():
-    if 'name' in session:
-        return render_template("adduser.html")
-    else:
-        return redirect(url_for("admin_login"))
+    if request.method == 'POST':
+            # Get form data
+        image = request.form['image']
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
+        fullname = request.form['fullname']
+        fathername = request.form['fathername']
+        contact = request.form['contact']
+        email = request.form['email']
+        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+        msg.body = "THIS IS YOUR OTP" + str(otp)
+        mail.send(msg)
+        dob = request.form['dob']
+        password = request.form['password']
+        confirmpassword = request.form['confirmpassword']
+        passport = request.form['passport']
+        qualification = request.form['qualification']
+        location = request.form['location']
+        country = request.form['country']
+        gender = request.form['gender']
+        maritial = request.form['maritial']
+        reference = request.form['reference']
+
+            # Check if email already exists
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
+        user = cur.fetchone()
+        if user:
+            flash('Email address already exists', 'error')
+            return redirect(url_for('register'))
+
+            # Insert user data into database
+        cur.execute("INSERT INTO usertable (fullname, fathername, contact, email,dob, password, passport, country, qualification, location, gender, maritial, reference, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)",(fullname, fathername, contact, email,dob, password, passport, country, qualification, location, gender,maritial, reference, image_data))
+        mysql.connection.commit()
+        cur.close()
+          # Show success message and redirect
+        flash('Registration successful, check for otp', 'success')
+        return redirect(url_for('adduserflash'))
+
+    return render_template("adduser.html")
 '''@app.route("/chat")
 def chat():
     return render_template("chat.html")'''
@@ -547,24 +633,27 @@ def users():
 
 @app.route('/intake',methods=['POST','GET'])
 def intake():
-    if 'name' in session:
-        if request.method == "POST":
-            country = request.form['country']
-            print(country)
+    if request.method == "POST":
+        country = request.form['country']
+        selected_month = request.form['selected_month']
+        selected_year = request.form['selected_year']
+        if country == 'none':
             cur = mysql.connection.cursor()
-            r = cur.execute("select * from usertable where country = %s", (country,))
+            r = cur.execute("SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s",(selected_month,selected_year))
             mysql.connection.commit()
-            if r > 0:
+        else:
+            cur = mysql.connection.cursor()
+            r = cur.execute("SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s and country = %s",(selected_month,selected_year,country))
+            mysql.connection.commit()
+            if r>0:
                 result = cur.fetchall()
                 print(result)
-                return render_template("users.html", result=result)
+                return render_template("intake.html", result=result)
             else:
                 error = "No Student was Found"
                 return render_template("users.html", error=error)
             cur.close()
-        return render_template("intake.html")
-    else:
-        return redirect(url_for("admin_login"))
+    return render_template("intake.html")
 
 
 @app.route("/delete/<string:email>")
