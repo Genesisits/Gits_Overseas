@@ -16,7 +16,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -59,7 +59,7 @@ def chat():
 
 @app.route("/country",methods= ['GET','POST'])
 def country():
-    if 'email' in session:
+    if 'name' in session:
         if request.method == "POST":
             country = request.form['country']
             print(country)
@@ -81,10 +81,10 @@ def country():
 
 @app.route("/admindashboard")
 def admindashboard():
-    if 'email' in session:
+    if 'name' in session:
         return render_template("admindashboard.html")
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -258,8 +258,8 @@ def status():
     else:
         return redirect(url_for("login"))
 
-@app.route('/sfetch',methods=['GET','POST'])
-def sfetch():
+@app.route('/ssedit',methods=['GET','POST'])
+def ssedit():
     if 'email' in session:
         if request.method == 'POST':
             financials = request.form['financials']
@@ -273,7 +273,7 @@ def sfetch():
             mysql.connection.commit()
             if b > 0:
                 flash("Hey your adding university is success")
-                return render_template('sfetch.html')
+                return redirect(url_for("status"))
             else:
                 flash('ERROR:Given month and year are not greater than current month and year.')
                 return render_template('sfetch.html')
@@ -284,7 +284,6 @@ def sfetch():
 
 @app.route("/forgotpasswordpage",methods=['GET','POST'])
 def forgotpasswordpage():
-    if 'email' in session:
         if request.method == 'POST':
             email = request.form['email']
             cur = mysql.connection.cursor()
@@ -306,8 +305,6 @@ def forgotpasswordpage():
                 return render_template("forgotpasswordpage.html", error=error)
             cur.close()
         return render_template("forgotpasswordpage.html")
-    else:
-        return redirect(url_for("login"))
 
 
 @app.route("/fpsend")
@@ -400,12 +397,6 @@ def register():
     return render_template('register.html')
 
 
-
-
-
-
-
-
 @app.route("/admin_register",methods=['GET','POST'])
 def admin_register():
     if 'email' in session:
@@ -481,7 +472,9 @@ def admin_login():
                 session['name'] = name
                 password1 = result['password']
                 if username1 == name and password1 == password:
+
                     flash("successful logged in")
+
                     return redirect(url_for("admindashboard"))
                 else:
                     error = "oops!something went wrong"
@@ -528,7 +521,7 @@ def send():
     return render_template("send.html")
 @app.route("/adduser")
 def adduser():
-    if 'email' in session:
+    if 'name' in session:
         return render_template("adduser.html")
     else:
         return redirect(url_for("login"))
@@ -538,7 +531,7 @@ def chat():
 
 @app.route("/users")
 def users():
-    if 'email' in session:
+    if 'name' in session:
         cur = mysql.connection.cursor()
         r = cur.execute('select * from usertable')
         mysql.connection.commit()
@@ -554,7 +547,7 @@ def users():
 
 @app.route('/intake',methods=['POST','GET'])
 def intake():
-    if 'email' in session:
+    if 'name' in session:
         if request.method == "POST":
             country = request.form['country']
             print(country)

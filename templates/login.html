@@ -136,10 +136,11 @@
   </head>
   <body>
 
-    <h1 style="text-align:center; color:#0000FF">Login Page</h1>
+<div style="margin-top:120px;">
 {% if error %}
        <p class = "error"><strong>Error:</strong>: {{ error }}</p>
     {% endif %}
+    <h1 style="text-align:center; color:#0000FF">Student Login</h1>
     <form action="" method="POST">
       <label for="username">Email:</label>
       <input type="text" id="username" name="email" required><br><br>
@@ -149,6 +150,7 @@
         <a href="forgotpasswordpage">Forgot password</a>
         
     </form>
+    </div>
   </body>
 </html>
 
