@@ -16,7 +16,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3308
+app.config["MYSQL_PORT"] = 3306
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -55,7 +55,7 @@ def chat():
     if 'email' in session:
         return render_template('chat.html')
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 @app.route("/country",methods= ['GET','POST'])
 def country():
@@ -76,7 +76,7 @@ def country():
             cur.close()
         return render_template('country.html')
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 
 @app.route("/admindashboard")
@@ -100,7 +100,7 @@ def notifications():
     if 'email' in session:
         return render_template("notifications.html")
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 
 
@@ -163,7 +163,7 @@ def adduniversity():
         today = datetime.date.today()
         return render_template('adduniversity.html', today=today)
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 
 @app.route("/sadduniversity",methods=['GET','POST'])
@@ -201,7 +201,7 @@ def sadduniversity():
 
         return render_template('adduniversity.html', today=today)
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 
 @app.route('/applied')
@@ -225,7 +225,7 @@ def adprofile():
     if 'email' in session:
         return render_template("adprofile.html")
     else:
-        return  redirect(url_for("login"))
+        return  redirect(url_for("admin_login"))
 
 
 @app.route("/student")
@@ -239,7 +239,7 @@ def adstudent():
     if 'email' in session:
         return render_template("adstudent.html")
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 @app.route("/status",methods=['GET','POST'])
 def status():
@@ -417,7 +417,7 @@ def admin_register():
 
         return render_template("admin_register.html")
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -492,7 +492,7 @@ def admin_login():
             cur.close()
         return render_template("admin_login.html")
 
-@app.route("/addadmin",methods=['GET','POST'])
+'''@app.route("/addadmin",methods=['GET','POST'])
 def addadmin():
     if request.method == 'POST':
         password = request.form['password']
@@ -500,7 +500,7 @@ def addadmin():
             return redirect(url_for("admin_register"))
         else:
             return "Wrong password"
-    return render_template('addadmin.html')
+    return render_template('addadmin.html')'''
 
 @app.route("/logout")
 def logout():
@@ -524,7 +524,7 @@ def adduser():
     if 'name' in session:
         return render_template("adduser.html")
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 '''@app.route("/chat")
 def chat():
     return render_template("chat.html")'''
@@ -542,7 +542,7 @@ def users():
         cur.close()
         return render_template("users.html")
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 
 @app.route('/intake',methods=['POST','GET'])
@@ -564,7 +564,7 @@ def intake():
             cur.close()
         return render_template("intake.html")
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("admin_login"))
 
 
 @app.route("/delete/<string:email>")
