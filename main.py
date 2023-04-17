@@ -17,7 +17,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -27,9 +27,9 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 mysql = MySQL(app)
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "jayanthkaruparti.CCBPian00101@gmail.com"
+app.config["MAIL_USERNAME"] = "karupartijayanth143@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "ibdrcpjrkdodeuhh"
+app.config["MAIL_PASSWORD"] = "cgcpjwgfangyizud"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -107,8 +107,6 @@ def notifications():
     else:
         return redirect(url_for("admin_login"))
 
-
-
 @app.route("/approved")
 def approved():
     if 'email' in session:
@@ -131,8 +129,6 @@ def approved():
         return render_template("approved.html")
     else:
         return redirect(url_for("login"))
-
-
 
 @app.route("/newedit/<string:university_applied>", methods=['GET','POST'])
 def newedit(university_applied):
@@ -356,13 +352,14 @@ def updatepassword():
         cur.close()
     return render_template("updatepassword.html")
 
+"""
 @app.route('/signup',methods=['GET','POST'])
 def signup():
     today = datetime.date.today()
-    return render_template('register.html')
+    return render_template('register.html')  """
 
 
-'''@app.route('/register', methods=['GET', 'POST'])
+'''@app.route('ter', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         image = request.form['image']
@@ -442,6 +439,9 @@ def register():
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
+        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+        msg.body = "THIS IS YOUR OTP" + str(otp)
+        mail.send(msg)
         dob = request.form['dob']
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
@@ -452,53 +452,44 @@ def register():
         gender = request.form['gender']
         maritial = request.form['maritial']
         reference = request.form['reference']
-
         # Validations
         if not fullname.replace(' ', '').isalpha():
             flash('Full name must contain only alphabet letters and spaces', 'error')
             return redirect(url_for('register'))
-
         if not fathername.replace(' ', '').isalpha():
             flash('Father name must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
-
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             flash('Invalid email address format', 'error')
             return redirect(url_for('register'))
         if len(contact) != 10 or not contact.isdigit():
             flash('Contact must be a 10-digit number', 'error')
             return redirect(url_for('register'))
-
         dob_datetime = datetime.datetime.strptime(dob, '%Y-%m-%d')
         if dob_datetime > datetime.datetime.now() - datetime.timedelta(days=15 * 365):
             flash('Date of birth must be at least 15 years ago', 'error')
             return redirect(url_for('register'))
-
         if password != confirmpassword:
             flash('Passwords do not match', 'error')
             return redirect(url_for('register'))
-        if len(passport) == 8:
-            flash('Passport must contain at least 8 letters or digits', 'error')
+        if len(passport) != 12 or not any(c.isalnum() for c in passport):
+            flash('Passport must contain exactly 12 characters and at least one letter or digit', 'error')
             return redirect(url_for('register'))
         if not country.replace(' ', '').isalpha():
             flash('Country must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
-
         if not location.replace(' ', '').isalpha():
             flash('Location must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
-
-
         # Check if email already exists
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
         user = cur.fetchone()
         if user:
             flash('Email address already exists', 'error')
-            return redirect(url_for('register'))
-
+            return render_template("register.html")
         # Insert user data into database
-        query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password, 
+        query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password,
                 passport, country, qualification, location, gender, maritial, reference, image)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)"""
         values = (
@@ -507,14 +498,10 @@ def register():
         cur.execute(query, values)
         mysql.connection.commit()
         cur.close()
-
         # Show success message and redirect
         flash('Registration successful', 'success')
         return redirect(url_for('userflash'))
-
-
     return render_template('register.html')
-
 
 @app.route("/admin_register",methods=['GET','POST'])
 def admin_register():
@@ -625,7 +612,6 @@ def addadmin():
 def logout():
     session.clear()
     return redirect(url_for('home'))
-
 
 @app.route('/validate',methods=['POST'])
 def validate():

@@ -136,22 +136,22 @@
   </head><br>
   <body>
   <script>
-		function checkEmail() {
-			var email = document.getElementById("email").value;
-			// You can replace this code with your own validation code to check if the email already exists in your database
-			if (email == "example@example.com") {
-				document.getElementById("emailError").innerHTML = "Email already exists";
-				return false;
-			} else {
-				document.getElementById("emailError").innerHTML = "";
-				return true;
-			}
-		}
-	</script>
+      function checkEmail() {
+         var email = document.getElementById("email").value;
+         // You can replace this code with your own validation code to check if the email already exists in your database
+         if (email == "example@example.com") {
+            document.getElementById("emailError").innerHTML = "Email already exists";
+            return false;
+         } else {
+            document.getElementById("emailError").innerHTML = "";
+            return true;
+         }
+      }
+   </script>
 
 
 <div style="margin-top:60px;">
-    <form class = "nav"  method="POST" action="register">
+    <form class = "nav"  method="POST" action="/register">
         <!-- <label>Upload Image</label>
         <input type="file" name="image" />
         <input type = "submit" value="Upload"> <br><br> -->
@@ -166,24 +166,23 @@
       {% endif %}
     {% endwith %}
          <label>Full name: </label>
-    <input class="input-box" type="text" class="login-input" name="fullname" placeholder="Fullname"  required></br>
+    <input class="input-box" type="text" class="login-input" name="fullname" placeholder="Full Name" pattern="[A-Za-z\s]+" title="Please enter a valid full name with only letters."  required></br>
         <label for="password">password:</label>
-     <input type="password" id="password" placeholder="Password" name="password"
-       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-       title="password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one number">
+     <input type="password" id="password" placeholder="Password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+  title="password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one number">
          <label>Confirm Password : </label>
       <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  required></br>
 
         <label>Email : </label>
           <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
-           <label for="date-input">Date of birth:</label>
-          <input style="margin-bottom:5px;" type="date" id="date-input" name="date"  required><br>
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" name="dob"  min="1990-01-01" max="2020-12-31" required><br><br>
 
-         <form action="upload.php" method="post">
+
         <label>Upload image:</label>
     <input type="hidden" id="image" name="image">
     <input type="file" accept="image/*" maxlength="10MB" onchange="uploadImage(this)">
-             
+
 
     <script>
   function uploadImage(input) {
@@ -204,15 +203,17 @@
 </script><br><br>
 
         <label>Passport No : </label>
-    <input class="input-box" type="text" class="login-input" name="passport" placeholder="Passport Number"  required ></br>
+    <input class="input-box" type="text" class="login-input" name="passport" placeholder="Passport Number" pattern="[A-Z]{2}[0-9]{7}" title="Please enter a valid passport number with two uppercase letters followed by seven digits."  required ></br>
       <label>Father name : </label>
-    <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Father Name"  required ></br>
+    <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Father Name" pattern="[A-Za-z\s]+" title="Please enter a valid father name with only letters."  required ></br>
         <label>Contact : </label>
-    <input class="input-box" type="text" class="login-input" name="contact" placeholder="Mobile.No"  required></br>
+    <input class="input-box" type="tel" class="login-input" name="contact" placeholder="Mobile.No" pattern="[0-9]{10}" title="Mobile no. must contain 10 digits only" required></br>
+
+
         <label>Location : </label>
-    <input class="input-box" type="text" class="login-input" name="location" placeholder="Location"  required></br>
+    <input class="input-box" type="text" class="login-input" name="location" placeholder="Location" pattern="[A-Za-z\s]+" title="Please enter a valid location with only letters."  required></br>
         <label>Country Applied for : </label>
-            <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country  Applied for"  required></br>
+            <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country  Applied for" pattern="[A-Za-z\s]+" title="Please enter a valid country with only letters."  required></br>
 
     <label for="gender">Gender :</label>
    <select class="input-box" type="text" id="Gender" name="gender"> required></br>
@@ -224,7 +225,6 @@
     <label for="qualification">Qualification :</label>
    <select class="input-box" id="qualification" name="qualification"> required></br>
        <option value="">Select Your Qualification</option>
-       <option value="Ssc">SSC</option>
        <option value="Undergraduate">Undergraduate</option>
        <option value="Graduate">Graduate</option>
         <option value="Postgraduate">Postgraduate</option>
@@ -244,13 +244,11 @@
    </select> <br> <br>
 
     <input type="submit" name="submit" value="Register" class="register-button button"  required></br>
+         </form>
         </div>
     </div>
     </div>
-    </form>
 
-   </form>
-  </body>
-</html>
+
 </body>
 </html>
