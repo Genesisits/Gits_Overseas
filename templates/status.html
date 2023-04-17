@@ -146,33 +146,35 @@
     <br>
 
 
+{% for r in result %}
+<table>
+  <tr>
+    <th>Sno</th>
+    <th>message</th>
+      <th>status</th>
+    <th>operations</th>
+  </tr>
+  <tr>
+    <th>Financials</th>
+    <td>{{ r['financials'] }}</td>
+      <td>{{ r['status'] }}</td>
+    <td><button><a href="statusupdate/{{ r['university_applied'] }}" type="submit">edit</a></button></td>
+  </tr>
+  <tr>
+    <th>biometric</th>
+    <td>{{ r['biometric'] }}</td>
+      <td>{{ r['status'] }}</td>
+    <td><button><a href="statusupdate/{{ r['university_applied'] }}" type="submit">edit</a></button></td>
+  </tr>
+  <tr>
+    <th>visa</th>
+    <td>{{ r['visa'] }}</td>
+      <td>{{ r['status'] }}</td>
+    <td><button><a href="statusupdate/{{ r['university_applied'] }}" type="submit">edit</a></button></td>
+  </tr>
+</table>
+{% endfor %}
 
- <table style="width:100%">
-    <tr>
-        <th>Financials</th>
-        <th>Biometric</th>
-        <th>Visa</th>
-        <th>Status</th>
-
-
-
-    </tr>
-
-             {% for r in result %}
-    <tr>
-
-        <td> {{ r['financials'] }}</td>
-        <td> {{ r['biometric'] }}</td>
-        <td> {{ r['visa'] }} </td>
-        <td> {{ r['status'] }}</td>
-
-
-
-
-    </tr>
-            {% endfor %}
-
-</table><br><br>
    </div>
 
 </body>
