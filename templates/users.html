@@ -108,7 +108,7 @@
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="admindashboard">Home</a>
-      <a href="adprofile">Profile</a>
+<!--      <a href="adprofile">Profile</a>-->
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -216,7 +216,7 @@
         <td> {{ r['fullname'] }}</td>
         <td> {{ r['fathername'] }}</td>
         <td> {{ r['contact'] }} </td>
-        <td> {{ r['email'] }}</td>
+        <td> <button ><a href= "goto/{{ r['email'] }}" type="submit" >{{ r['email'] }}</a></button></td>
         <td>{{r['DOB']}}</td>
         <td> {{ r['passport'] }}</td>
         <td> {{ r['qualification'] }}</td>
@@ -225,7 +225,7 @@
         <td> {{ r['gender'] }}</td>
         <td> {{ r['maritial'] }}</td>
         <td> {{ r['reference'] }}</td>
-        <td> <button ><a href= "goto/{{ r['email'] }}" type="submit" >view</a></button></td>
+
         <td> <button ><a href= "update/{{ r['email'] }}" type="submit" >Update</a></button></td>
         <td> <button ><a href= "delete/{{ r['email'] }}" type="submit" >Delete</a></button></td>
 
