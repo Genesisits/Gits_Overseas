@@ -2,7 +2,7 @@
 <html>
 <head>
 
-    <title>Student Status(working on it)</title>
+    <title>Student Status</title>
     <style>
     h1 {text-align: center;}
       /* Style for top navigation bar */
@@ -71,6 +71,18 @@
          font-size: 18px;
          text-align: center;
       }
+      table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
 
    </style>
 
@@ -78,11 +90,11 @@
 <body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-        <a href="home" style="float: left;">
+        <a href="/home" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
-      <a href="student">Home</a>
-      <a href="profile">Profile</a>
+      <a href="/student">Home</a>
+      <a href="/profile">Profile</a>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -91,41 +103,36 @@
    <!-- Side Navigation Bar -->
    <div class="sidenav">
 
-       <a href="chat">Chat</a>
-        <a href="upload">Upload</a>
 
-     <!-- <a href="notifications">Notifications</a>-->
-      <a href="applied"> Applied</a>
-      <a href="approved"> Approved</a>
-       <a href="status">Status</a>
-      <a href="logout">Logout</a>
+
+       <a href="/chat">Chat</a>
+
+       <a href="/upload">Upload</a>
+
+<!--<a href="http://127.0.0.1:5000/notifications">Notifications</a>-->
+      <a href="/applied">Applied</a>
+      <a href="/approved">Approved</a>
+       <a href="/status">Status</a>
+      <a href="/logout">Logout</a>
    </div>
+<div class="main">
+    <form action="/newedit/{{ re[0]['university_applied'] }}" method="POST">
+        <h1>Edit Status</h1>
+        <div class="form-container">
+           <label>University Applie :</label>
+           <input class="login-input" type="text"  id="universityapplied" name="universityapplied" value="{{ re[0]['university_applied'] }}">
+           <label>Status :</label>
+           <select class="input-box" id="status" name="status" value="{{re[0]['status']}}" required>
+              <option value="">Select your status</option>
+              <option value="Applied">Applied</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+           </select><br><br>
 
-   <!-- Main Content -->
-   <div class="main"> <br>
-       <form class="form" action ="" method="POST" name="login">
-        <h1 class="login-title">Student Status</h1>
-        Financials <input type="text" class="login-input" name="financials" placeholder="financials" autofocus="true"/>
-
-        Biometric<input type="date" class="login-input" name="biometric" placeholder="biometric" autofocus="true"/>
-
- Message <input type="text" class="login-input" name="message" placeholder="approved/rejected"/>
-        Visa <input type="date" class="login-input" name="visa" placeholder="Password"/>
-
-<label for="month">Status:</label>
-<select id="month" name="status">
-  <option value="approved">approved</option>
-  <option value="rejected">rejected</option>
-    <option value="none">None</option>
-</select> <br><br>
-
-        <input type="submit" value="submit" name="submit" class="submit-button"/>
-
-  </form>
-   </div>
-
-
-
-
+           <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
+           <a href="/applied">back</a>
+        </div><br>
+    </form>
+</div>
 </body>
 </html>

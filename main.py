@@ -27,9 +27,9 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 mysql = MySQL(app)
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "jayanthkaruparti.CCBPian00101@gmail.com"
+app.config["MAIL_USERNAME"] = "karupartijayanth143@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "ibdrcpjrkdodeuhh"
+app.config["MAIL_PASSWORD"] = "cgcpjwgfangyizud"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -98,6 +98,10 @@ def about():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+@app.route("/statusupdate")
+def statusupdate():
+    return render_template("statusupdate.html")
 
 
 @app.route("/notifications")
@@ -442,6 +446,9 @@ def register():
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
+        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+        msg.body = "THIS IS YOUR OTP" + str(otp)
+        mail.send(msg)
         dob = request.form['dob']
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
@@ -477,9 +484,10 @@ def register():
         if password != confirmpassword:
             flash('Passwords do not match', 'error')
             return redirect(url_for('register'))
-        if len(passport) == 8:
-            flash('Passport must contain at least 8 letters or digits', 'error')
+        if len(passport) != 12 or not any(c.isalnum() for c in passport):
+            flash('Passport must contain exactly 12 characters and at least one letter or digit', 'error')
             return redirect(url_for('register'))
+
         if not country.replace(' ', '').isalpha():
             flash('Country must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
@@ -495,7 +503,7 @@ def register():
         user = cur.fetchone()
         if user:
             flash('Email address already exists', 'error')
-            return redirect(url_for('register'))
+            return render_template("register.html")
 
         # Insert user data into database
         query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password, 
