@@ -6,6 +6,7 @@ from datetime import timedelta
 from MySQLdb import Binary
 import datetime
 import base64
+import re
 
 app = Flask(__name__)
 app.secret_key = "abc123"
@@ -16,7 +17,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3308
+app.config["MYSQL_PORT"] = 3306
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -361,7 +362,7 @@ def signup():
     return render_template('register.html')
 
 
-@app.route('/register', methods=['GET', 'POST'])
+'''@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         image = request.form['image']
@@ -424,7 +425,94 @@ def register():
         cur.close()
         # Show success message and redirect
         flash('Registration successful, check for otp', 'success')
-        return render_template("userflash.html")
+
+        return redirect(url_for('userflash'))
+
+    return render_template('register.html')'''
+
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        image = request.form['image']
+        image_data = base64.b64decode(image)
+        image_data = base64.b64encode(image_data)
+        fullname = request.form['fullname']
+        fathername = request.form['fathername']
+        contact = request.form['contact']
+        email = request.form['email']
+        dob = request.form['dob']
+        password = request.form['password']
+        confirmpassword = request.form['confirmpassword']
+        passport = request.form['passport']
+        qualification = request.form['qualification']
+        location = request.form['location']
+        country = request.form['country']
+        gender = request.form['gender']
+        maritial = request.form['maritial']
+        reference = request.form['reference']
+
+        # Validations
+        if not fullname.isalpha():
+            flash('Full name must contain only alphabet letters', 'error')
+            return redirect(url_for('register'))
+
+        if not fathername.isalpha():
+            flash('Father name must contain only alphabet letters', 'error')
+            return redirect(url_for('register'))
+
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            flash('Invalid email address format', 'error')
+            return redirect(url_for('register'))
+        if len(contact) != 10 or not contact.isdigit():
+            flash('Contact must be a 10-digit number', 'error')
+            return redirect(url_for('register'))
+
+        dob_datetime = datetime.datetime.strptime(dob, '%Y-%m-%d')
+        if dob_datetime > datetime.datetime.now() - datetime.timedelta(days=15 * 365):
+            flash('Date of birth must be at least 15 years ago', 'error')
+            return redirect(url_for('register'))
+
+        if password != confirmpassword:
+            flash('Passwords do not match', 'error')
+            return redirect(url_for('register'))
+        if len(passport) < 8:
+            flash('Passport must contain at least 8 letters or digits', 'error')
+            return redirect(url_for('register'))
+        if not country.isalpha():
+            flash('Country must contain only alphabet letters', 'error')
+            return redirect(url_for('register'))
+
+        if not location.isalpha():
+            flash('Location must contain only alphabet letters', 'error')
+            return redirect(url_for('register'))
+
+
+        # Check if email already exists
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
+        user = cur.fetchone()
+        if user:
+            flash('Email address already exists', 'error')
+            return redirect(url_for('register'))
+
+        # Insert user data into database
+        query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password, 
+                passport, country, qualification, location, gender, maritial, reference, image)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)"""
+        values = (
+        fullname, fathername, contact, email, dob, password, passport, country, qualification, location, gender,
+        maritial, reference, image_data)
+        cur.execute(query, values)
+        mysql.connection.commit()
+        cur.close()
+
+        # Show success message and redirect
+        flash('Registration successful', 'success')
+        return redirect(url_for('userflash'))
+
+
     return render_template('register.html')
 
 
@@ -596,46 +684,53 @@ def adsend():
 
 @app.route("/adduser",methods=['GET', 'POST'])
 def adduser():
-    if request.method == 'POST':
+    if 'email' in session:
+        if request.method == 'POST':
             # Get form data
-        image = request.form['image']
-        image_data = base64.b64decode(image)
-        image_data = base64.b64encode(image_data)
-        fullname = request.form['fullname']
-        fathername = request.form['fathername']
-        contact = request.form['contact']
-        email = request.form['email']
-        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
-        msg.body = "THIS IS YOUR OTP" + str(otp)
-        mail.send(msg)
-        dob = request.form['dob']
-        password = request.form['password']
-        confirmpassword = request.form['confirmpassword']
-        passport = request.form['passport']
-        qualification = request.form['qualification']
-        location = request.form['location']
-        country = request.form['country']
-        gender = request.form['gender']
-        maritial = request.form['maritial']
-        reference = request.form['reference']
+            image = request.form['image']
+            image_data = base64.b64decode(image)
+            image_data = base64.b64encode(image_data)
+            fullname = request.form['fullname']
+            fathername = request.form['fathername']
+            contact = request.form['contact']
+            email = request.form['email']
+            msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+            msg.body = "THIS IS YOUR OTP" + str(otp)
+            mail.send(msg)
+            dob = request.form['dob']
+            password = request.form['password']
+            confirmpassword = request.form['confirmpassword']
+            passport = request.form['passport']
+            qualification = request.form['qualification']
+            location = request.form['location']
+            country = request.form['country']
+            gender = request.form['gender']
+            maritial = request.form['maritial']
+            reference = request.form['reference']
 
             # Check if email already exists
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
-        user = cur.fetchone()
-        if user:
-            flash('Email address already exists', 'error')
-            return redirect(url_for('register'))
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
+            user = cur.fetchone()
+            if user:
+                flash('Email address already exists', 'error')
+                return redirect(url_for('register'))
 
-            # Insert user data into database
-        cur.execute("INSERT INTO usertable (fullname, fathername, contact, email,dob, password, passport, country, qualification, location, gender, maritial, reference, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)",(fullname, fathername, contact, email,dob, password, passport, country, qualification, location, gender,maritial, reference, image_data))
-        mysql.connection.commit()
-        cur.close()
-          # Show success message and redirect
-        flash('Registration successful, check for otp', 'success')
-        return redirect(url_for('adduserflash'))
+                # Insert user data into database
+            cur.execute(
+                "INSERT INTO usertable (fullname, fathername, contact, email,dob, password, passport, country, qualification, location, gender, maritial, reference, image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)",
+                (
+                fullname, fathername, contact, email, dob, password, passport, country, qualification, location, gender,
+                maritial, reference, image_data))
+            mysql.connection.commit()
+            cur.close()
+            # Show success message and redirect
+            flash('Registration successful, check for otp', 'success')
+            return redirect(url_for('adduserflash'))
 
-    return render_template("adduser.html")
+        return render_template("adduser.html")
+    else:
+        return redirect(url_for("admin_login"))
 '''@app.route("/chat")
 def chat():
     return render_template("chat.html")'''
@@ -658,28 +753,33 @@ def users():
 
 @app.route('/intake',methods=['POST','GET'])
 def intake():
-    if request.method == "POST":
-        country = request.form['country']
-        selected_month = request.form['selected_month']
-        selected_year = request.form['selected_year']
-        if country == 'none':
-            cur = mysql.connection.cursor()
-            r = cur.execute("SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s",(selected_month,selected_year))
-            mysql.connection.commit()
-        else:
-            cur = mysql.connection.cursor()
-            r = cur.execute("SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s and country = %s",(selected_month,selected_year,country))
-            mysql.connection.commit()
-            if r>0:
-                result = cur.fetchall()
-                print(result)
-                return render_template("intake.html", result=result)
+    if 'email' in session:
+        if request.method == "POST":
+            country = request.form['country']
+            selected_month = request.form['selected_month']
+            selected_year = request.form['selected_year']
+            if country == 'none':
+                cur = mysql.connection.cursor()
+                r = cur.execute("SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s",
+                                (selected_month, selected_year))
+                mysql.connection.commit()
             else:
-                error = "No Student was Found"
-                return render_template("users.html", error=error)
-            cur.close()
-    return render_template("intake.html")
-
+                cur = mysql.connection.cursor()
+                r = cur.execute(
+                    "SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s and country = %s",
+                    (selected_month, selected_year, country))
+                mysql.connection.commit()
+                if r > 0:
+                    result = cur.fetchall()
+                    print(result)
+                    return render_template("intake.html", result=result)
+                else:
+                    error = "No Student was Found"
+                    return render_template("users.html", error=error)
+                cur.close()
+        return render_template("intake.html")
+    else:
+        return redirect(url_for("admin_login"))
 
 @app.route("/delete/<string:email>")
 def delete(email):
@@ -850,6 +950,173 @@ def download_file(filename):
 
 if __name__ == "__main__":
     app.run(debug="True")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

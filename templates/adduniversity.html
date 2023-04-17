@@ -105,7 +105,9 @@
            <label style="text-align:left;">Specialization :</label>
            <input type="text" id="specialization" name="specialization" required >
            <h5>Ensure that the month and year you will enter are equal to or greater than the current month and year to prevent errors.</h5>
-          <label for="date-input">Select your Intake:</label>
+
+          <label for="date-input">Select Your Intake Date:</label>
+
           <input style="margin-bottom:5px;" type="date" id="date-input" name="date" min="{{ today.strftime('%Y-%m-%d') }}" required>
            <label>Status :</label>
            <select class="input-box" id="status" name="status" required>
