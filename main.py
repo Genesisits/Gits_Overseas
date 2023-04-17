@@ -167,7 +167,7 @@ def adduniversity():
         today = datetime.date.today()
         return render_template('adduniversity.html', today=today)
     else:
-        return redirect(url_for("admin_login"))
+        return redirect(url_for("login"))
 
 
 @app.route("/sadduniversity",methods=['GET','POST'])
@@ -355,6 +355,10 @@ def updatepassword():
         cur.close()
     return render_template("updatepassword.html")
 
+@app.route('/signup',methods=['GET','POST'])
+def signup():
+    today = datetime.date.today()
+    return render_template('register.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -364,13 +368,36 @@ def register():
         image_data = base64.b64decode(image)
         image_data = base64.b64encode(image_data)
         fullname = request.form['fullname']
+        fullname = fullname.upper()
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
         msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
         msg.body = "THIS IS YOUR OTP" + str(otp)
         mail.send(msg)
-        dob = request.form['dob']
+        date_i = request.form['date']
+        """
+        date = datetime.datetime.strptime(date_i, '%Y-%m-%d')
+        today = datetime.date.today()
+          selected_date = datetime.datetime.strptime(date, '%Y-%m-%d').date() 
+        years_ago = datetime.timedelta(days=15 * 365)
+        dob = date - years_ago
+        selected_date = dob.strftime(f"%d-%m-%Y")
+        
+        current_date_str = request.form['current_date']
+        current_date = datetime.datetime.strptime(current_date_str, '%Y-%m-%d')
+
+        # Calculate date 15 years ago
+        years_ago = datetime.timedelta(days=15 * 365)  # Assuming 365 days per year
+        dob = current_date - years_ago
+
+        # Generate random day and month
+        day = random.randint(1, 28)  # Assuming all months have 28 days for simplicity
+        month = random.randint(1, 12)
+
+        # Format date of birth as string
+        dob_str = dob.strftime(f"%d-%m-%Y")  # Format as "dd-mm-yyyy" """
+
         password = request.form['password']
         confirmpassword = request.form['confirmpassword']
         passport = request.form['passport']
@@ -380,7 +407,6 @@ def register():
         gender = request.form['gender']
         maritial = request.form['maritial']
         reference = request.form['reference']
-
         # Check if email already exists
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
@@ -388,21 +414,17 @@ def register():
         if user:
             flash('Email address already exists', 'error')
             return redirect(url_for('register'))
-
-
         # Insert user data into database
         query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password, 
                 passport, country, qualification, location, gender, maritial, reference, image)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)"""
-        values = (fullname, fathername, contact, email,dob, password, passport, country, qualification, location, gender,maritial, reference, image_data)
+        values = (fullname, fathername, contact, email,date_i, password, passport, country, qualification, location, gender,maritial, reference, image_data)
         cur.execute(query,values)
         mysql.connection.commit()
         cur.close()
-
         # Show success message and redirect
         flash('Registration successful, check for otp', 'success')
-        return redirect(url_for('userflash'))
-
+        return render_template("userflash.html")
     return render_template('register.html')
 
 
@@ -434,7 +456,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
         cur = mysql.connection.cursor()
-        b = cur.execute('select email,password from usertable where email = %s and password = %s ',(email,password))
+        b = cur.execute('select email,password from usertable where email = %s and password = %s and activation_status = true',(email,password))
         mysql.connection.commit()
         if b > 0:
             result = cur.fetchone()
@@ -687,7 +709,6 @@ def update(email):
         gender = request.form['gender']
         passport = request.form['passport']
         fathername = request.form['fathername']
-        email = request.form['email']
         cur = mysql.connection.cursor()
         a = cur.execute(
             'UPDATE usertable SET fullname = %s ,contact=%s,fathername=%s,gender =%s,location=%s,country=%s,passport=%s,qualification=%s ,maritial=%s where email=%s',
@@ -710,10 +731,10 @@ def studentprofile(email):
     if request.method == "POST":
         fullname = request.form["fullname"]
         contact = request.form["contact"]
-        email = request.form["email"]
         location = request.form['location']
         passport = request.form["passport"]
         fathername = request.form["fathername"]
+        email = session['email']
         cur1 = mysql.connection.cursor()
         r = cur1.execute(
             "update usertable set fullname = %s,contact = %s, location = %s, country = %s,passport = %s,fathername = %s where email = %s",

@@ -151,7 +151,7 @@
 
 
 <div style="margin-top:60px;">
-    <form class = "nav"  method="POST">
+    <form class = "nav"  method="POST" action="register">
         <!-- <label>Upload Image</label>
         <input type="file" name="image" />
         <input type = "submit" value="Upload"> <br><br> -->
@@ -176,8 +176,8 @@
 
         <label>Email : </label>
           <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
-          <label for="dob">Date of Birth:</label>
-          <input type="date" id="dob" name="dob" required><br><br>
+           <label for="date-input">Date of birth:</label>
+          <input style="margin-bottom:5px;" type="date" id="date-input" name="date"  required><br>
 
          <form action="upload.php" method="post">
         <label>Upload image:</label>
@@ -202,17 +202,6 @@
     }
   }
 </script><br><br>
-
-
-
-
-
-
-
-
-
-
-
 
         <label>Passport No : </label>
     <input class="input-box" type="text" class="login-input" name="passport" placeholder="Passport Number"  required ></br>
