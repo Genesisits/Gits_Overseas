@@ -454,11 +454,11 @@ def register():
         reference = request.form['reference']
 
         # Validations
-        if not fullname.isalpha():
-            flash('Full name must contain only alphabet letters', 'error')
+        if not fullname.replace(' ', '').isalpha():
+            flash('Full name must contain only alphabet letters and spaces', 'error')
             return redirect(url_for('register'))
 
-        if not fathername.isalpha():
+        if not fathername.replace(' ', '').isalpha():
             flash('Father name must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
 
@@ -477,14 +477,14 @@ def register():
         if password != confirmpassword:
             flash('Passwords do not match', 'error')
             return redirect(url_for('register'))
-        if len(passport) < 8:
+        if len(passport) == 8:
             flash('Passport must contain at least 8 letters or digits', 'error')
             return redirect(url_for('register'))
-        if not country.isalpha():
+        if not country.replace(' ', '').isalpha():
             flash('Country must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
 
-        if not location.isalpha():
+        if not location.replace(' ', '').isalpha():
             flash('Location must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
 
@@ -684,7 +684,7 @@ def adsend():
 
 @app.route("/adduser",methods=['GET', 'POST'])
 def adduser():
-    if 'email' in session:
+    if 'name' in session:
         if request.method == 'POST':
             # Get form data
             image = request.form['image']
@@ -707,6 +707,40 @@ def adduser():
             gender = request.form['gender']
             maritial = request.form['maritial']
             reference = request.form['reference']
+
+            if not fullname.replace(' ', '').isalpha():
+                flash('Full name must contain only alphabet letters and spaces', 'error')
+                return redirect(url_for('register'))
+
+            if not fathername.replace(' ', '').isalpha():
+                flash('Father name must contain only alphabet letters', 'error')
+                return redirect(url_for('register'))
+
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                flash('Invalid email address format', 'error')
+                return redirect(url_for('register'))
+            if len(contact) != 10 or not contact.isdigit():
+                flash('Contact must be a 10-digit number', 'error')
+                return redirect(url_for('register'))
+
+            dob_datetime = datetime.datetime.strptime(dob, '%Y-%m-%d')
+            if dob_datetime > datetime.datetime.now() - datetime.timedelta(days=15 * 365):
+                flash('Date of birth must be at least 15 years ago', 'error')
+                return redirect(url_for('register'))
+
+            if password != confirmpassword:
+                flash('Passwords do not match', 'error')
+                return redirect(url_for('register'))
+            if len(passport) == 8:
+                flash('Passport must contain at least 8 letters or digits', 'error')
+                return redirect(url_for('register'))
+            if not country.replace(' ', '').isalpha():
+                flash('Country must contain only alphabet letters', 'error')
+                return redirect(url_for('register'))
+
+            if not location.replace(' ', '').isalpha():
+                flash('Location must contain only alphabet letters', 'error')
+                return redirect(url_for('register'))
 
             # Check if email already exists
             cur = mysql.connection.cursor()
@@ -753,7 +787,7 @@ def users():
 
 @app.route('/intake',methods=['POST','GET'])
 def intake():
-    if 'email' in session:
+    if 'name' in session:
         if request.method == "POST":
             country = request.form['country']
             selected_month = request.form['selected_month']
@@ -786,9 +820,12 @@ def delete(email):
     cur = mysql.connection.cursor()
     print(email)
     r = cur.execute("delete from usertable where email = %s", (email,))
+    p = cur.execute("delete from files where email = %s", (email,))
+    s = cur.execute("delete from studentstatus where email = %s", (email,))
+    q = cur.execute("delete from universityapplied where email = %s", (email,))
     mysql.connection.commit()
     print(r)
-    if r>0:
+    if r >= 0 or p >= 0 or s >= 0 or q >= 0:
         flash("Deleted successfully")
         return redirect(url_for("admindashboard"))
         r = cur.execute("select * from usertable")
