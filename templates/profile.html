@@ -123,7 +123,7 @@
         <th>fullname</th>
         <th>fathername</th>
         <th>contact</th>
-        <th>email</th>
+        <th>DOB</th>
         <th>passport</th>
         <th>location</th>
         <th colspan="1" align ="center"> Operations</th>
@@ -136,7 +136,7 @@
         <td> {{ r['fullname'] }}</td>
         <td> {{ r['fathername'] }}</td>
         <td> {{ r['contact'] }} </td>
-        <td> {{ r['email'] }}</td>
+        <td>{{r['DOB']}}</td>
         <td> {{ r['passport'] }}</td>
         <td> {{ r['location'] }}</td>
         <td><button ><a href= "studentprofile/{{ r['email'] }}" type="submit" >Update</a></button></td>

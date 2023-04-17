@@ -153,14 +153,16 @@
     <h1 class ="login-title main-head">student Profile </h1> </br>
          <label>Full name: </label>
         <input  type="text" class="login-input" name="fullname" placeholder="fullname"  value="{{ re[0]['fullname'] }}" required></br>
-        <label>Email : </label>
-    <input  type="text" placeholder="Enter your email" class="login-input" id="email" name="email"  value="{{ re[0]['email'] }}" required><br>
+
         <label>Passport No : </label>
     <input  type="text" class="login-input" name="passport" placeholder="passport number"  value="{{ re[0]['passport'] }}"required ></br>
       <label>Father name : </label>
     <input type="text" class="login-input" name="fathername" placeholder="Fathername"  value="{{ re[0]['fathername'] }}"required ></br>
         <label>Contact : </label>
     <input  type="text" class="login-input" name="contact" placeholder="contact"  value="{{ re[0]['contact'] }}"required></br>
+        <label>Date of Birth:</label>
+          <input class="login-input" type="text"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}"required><br><br>
+
         <label>Location : </label>
     <input  type="text" class="login-input" name="location" placeholder="Location"  value="{{ re[0]['location'] }}"required></br>
 
