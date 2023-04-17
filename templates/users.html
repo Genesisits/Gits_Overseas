@@ -98,7 +98,7 @@
 <style>
       @media print{
       table {
-        width: 150%;
+        width: 250%;
       }
       }
       </style>
@@ -108,7 +108,7 @@
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="admindashboard">Home</a>
-<!--      <a href="adprofile">Profile</a>-->
+      <a href="adprofile">Profile</a>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -139,36 +139,12 @@
 
     </style>
 </head>
-<style>
-  @media print {
-    table th:nth-child(13),
-    table td:nth-child(13){
-      display: none;
-    }
-  }
-</style>
-<style>
-  @media print {
-    table th:nth-child(12),
-    table td:nth-child(12){
-      display: none;
-    }
-  }
-</style>
-<style>
-  @media print {
-    table th:nth-child(14),
-    table td:nth-child(14){
-      display: none;
-    }
-  }
-</style>
 
 <style>
   @media print {
 
   table {
-    font-size: 80%; /* reduce font size */
+    font-size: 40%; /* reduce font size */
   }
 
   td {
@@ -187,6 +163,30 @@
         }
       }
     </style>
+<style>
+  @media print {
+    table th:nth-child(15),
+    table td:nth-child(15){
+      display: none;
+    }
+  }
+</style>
+<style>
+  @media print {
+    table th:nth-child(14),
+    table td:nth-child(14){
+      display: none;
+    }
+  }
+</style>
+<style>
+  @media print {
+    table th:nth-child(13),
+    table td:nth-child(13){
+      display: none;
+    }
+  }
+</style>
 
 
 <body>
@@ -216,7 +216,7 @@
         <td> {{ r['fullname'] }}</td>
         <td> {{ r['fathername'] }}</td>
         <td> {{ r['contact'] }} </td>
-        <td> <button ><a href= "goto/{{ r['email'] }}" type="submit" >{{ r['email'] }}</a></button></td>
+      <td> <button ><a href= "goto/{{ r['email'] }}" type="submit" >{{ r['email'] }}</a></button></td>
         <td>{{r['DOB']}}</td>
         <td> {{ r['passport'] }}</td>
         <td> {{ r['qualification'] }}</td>
@@ -225,7 +225,7 @@
         <td> {{ r['gender'] }}</td>
         <td> {{ r['maritial'] }}</td>
         <td> {{ r['reference'] }}</td>
-
+        <td> <button ><a href= "goto/{{ r['email'] }}" type="submit" >view</a></button></td>
         <td> <button ><a href= "update/{{ r['email'] }}" type="submit" >Update</a></button></td>
         <td> <button ><a href= "delete/{{ r['email'] }}" type="submit" >Delete</a></button></td>
 

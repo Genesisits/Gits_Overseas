@@ -146,33 +146,25 @@
     <br>
 
 
+ <table>
+  <tr>
+    <th>Financials</th>
+    <td>{% for r in result %} {{ r['financials'] }} {% endfor %}</td>
+  </tr>
+  <tr>
+    <th>Biometric</th>
+    <td>{% for r in result %} {{ r['biometric'] }} {% endfor %}</td>
+  </tr>
+  <tr>
+    <th>Visa</th>
+    <td>{% for r in result %} {{ r['visa'] }} {% endfor %}</td>
+  </tr>
+  <tr>
+    <!--<th>Status</th>
+    <td>{% for r in result %} {{ r['status'] }} {% endfor %}</td>-->
+  </tr>
+</table>
 
- <table style="width:100%">
-    <tr>
-        <th>Financials</th>
-        <th>Biometric</th>
-        <th>Visa</th>
-        <th>Status</th>
-
-
-
-    </tr>
-
-             {% for r in result %}
-    <tr>
-
-        <td> {{ r['financials'] }}</td>
-        <td> {{ r['biometric'] }}</td>
-        <td> {{ r['visa'] }} </td>
-        <td> {{ r['status'] }}</td>
-
-
-
-
-    </tr>
-            {% endfor %}
-
-</table><br><br>
    </div>
 
 </body>
