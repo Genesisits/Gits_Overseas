@@ -88,7 +88,7 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-      <a href="home" style="float: left;">
+      <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="admindashboard">Home</a>
@@ -113,7 +113,7 @@
    <div class="main">
        <form action="intake" method="POST">
           <h1>Fetch Data from Database Based on Month and Year</h1>
-           <label>country:</label>
+           <label>Country:</label>
            <input name="country" id ="country" placeholder="enter country" type="text">
   <label for="selected_month">Select a Month:</label>
   <select id="selected_month" name="selected_month" required >
@@ -131,7 +131,7 @@
       <option value="11">November</option>
       <option value="12">December</option>
   </select>
-  <br>
+<!--  <br>-->
   <label for="selected_year">Select a Year:</label>
   <select id="selected_year" name="selected_year" required>
       <option>select year</option>
@@ -146,19 +146,19 @@
       <option value="2030">2030</option>
       <option value="2031">2031</option>
   </select>
-  <br>
+  <br></br>
   <button type="submit">submit</button>
            </form>
        <table>
       <thead>
         <tr>
-            <th>university_applied</th>
-            <th>country</th>
-            <th>specialization</th>
-            <th>status</th>
+            <th>University_Applied</th>
+            <th>Country</th>
+            <th>Specialization</th>
+            <th>Status</th>
 
-            <th>date</th>
-            <th>email</th>
+            <th>Date</th>
+            <th>Email</th>
 
         </tr>
       </thead>

@@ -3,13 +3,11 @@
 <head>
    <title>Admin Dashboard</title>
         <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css')  }}">
-
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
-
-         background-color: #66b3ff;
+         background-color: #66B3FF;
          font-family: roboto;
          overflow: hidden;
          position: fixed;
@@ -19,28 +17,24 @@
          width: 100%;
          z-index: 999;
       }
-
       .topnav img {
          height: 60px;
          padding: 5px;
          float: left;
       }
-
       .topnav a {
          float: right;
          display: block;
-         color: #010a0a;
+         color: #010A0A;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
          font-size: 17px;
       }
-
       .topnav a:hover {
          background-color: #ddd;
          color: black;
       }
-
       /* Style for side navigation bar */
       .sidenav {
          height: 100%;
@@ -54,19 +48,16 @@
          overflow-x: hidden;
          padding-top: 20px;
       }
-
       .sidenav a {
          padding: 6px 8px 6px 16px;
          text-decoration: none;
          font-size: 20px;
-         color: #f0f5f5;
+         color: #F0F5F5;
          display: block;
       }
-
       .sidenav a:hover {
-         color: #3333ff;
+         color: #3333FF;
       }
-
       .main {
          margin-left: 200px;
          margin-top: 70px;
@@ -74,21 +65,30 @@
          font-size: 18px;
          text-align: center;
       }
-
    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Function to show/hide input box based on dropdown selection
+        $(document).ready(function() {
+            $("#dropdown").on("change", function() {
+                if ($(this).val() === "others") {
+                    $("#inputBox").show();
+                } else {
+                    $("#inputBox").hide();
+                }
+            });
+        });
+    </script>
 </head>
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-        <a href="admindashboard" style="float: left;">
+        <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="admindashboard">Home</a>
       <h1>Genesis Overseas </h1>
-
    </div><br>
-
-
    <!-- Side Navigation Bar -->
     <div class="sidenav">
 <!--        <div ><a href="chat">Chat</a>&ndash;&gt;-->
@@ -96,28 +96,24 @@
       <a href="intake">Intake</a>
       <a href="country">Country</a>
       <a href="adduser">Add User</a>
-
       <a href="logout">Logout</a>
    </div>
-
     Main Content -->
    <head>
     <title>Register Page</title>
     <style>
       body {
-        background-color: #f2f2f2;
+        background-color: #F2F2F2;
         font-family: Arial, sans-serif;
       }
-
       form {
-        border: 3px solid #f1f1f1;
+        border: 3px solid #F1F1F1;
         max-width: 500px;
         margin: 0 auto;
         padding: 20px;
         background-color: #fff;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       }
-
       input[type=text], input[type=password] {
         width: 100%;
         padding: 12px 20px;
@@ -126,7 +122,6 @@
         border: 1px solid #ccc;
         box-sizing: border-box;
       }
-
       button[type=submit] {
         background-color: #4CAF50;
         color: #fff;
@@ -135,40 +130,32 @@
         cursor: pointer;
         width: 100%;
       }
-
       button[type=submit]:hover {
         opacity: 0.8;
       }
-
     </style>
   </head><br>
   <body>
-
-
 <div style="margin-top:60px;">
     <form class = "nav"  method="POST">
         <!-- <label>Upload Image</label>
         <input type="file" name="image" />
         <input type = "submit" value="Upload"> <br><br> -->
         <h1 style="text-align:center;color:#0000ff;"> Student Registration Form</h1>
-         <label>Full name: </label>
-    <input class="input-box" type="text" class="login-input" name="fullname" placeholder="fullname"  required></br>
-        <label>Password : </label>
-    <input class="input-box" type="password" class="login-input" name="password" placeholder="Password"  required ></br>
+          <label>Full name: </label>
+    <input class="input-box" type="text" class="login-input" name="fullname" placeholder="Full Name" pattern="[A-Za-z\s]+" title="Please enter a valid full name with only letters."  required></br>
+        <label for="password">password:</label>
+     <input type="password" id="password" placeholder="Password" name="password" pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).+$"
+       title="Password must contain at least one uppercase letter, one special character, and no spaces" required>
          <label>Confirm Password : </label>
-    <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  required></br>
-
+      <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  required></br>
         <label>Email : </label>
-    <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
-      <label for="dob">Date of Birth:</label>
-<input type="date" id="dob" name="dob" required><br><br>
-
-<form action="upload.php" method="post">
+          <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" name="dob"  min="1990-01-01" max="2020-12-31" required><br><br>
         <label>Upload image:</label>
     <input type="hidden" id="image" name="image">
     <input type="file" accept="image/*" maxlength="10MB" onchange="uploadImage(this)">
-
-
     <script>
   function uploadImage(input) {
     if (input.files && input.files[0]) {
@@ -177,7 +164,6 @@
         alert("Image file size should not exceed 1MB");
         return;
       }
-
       var reader = new FileReader();
       reader.onload = function(e) {
         document.querySelector("#image").value = e.target.result.split(",")[1];
@@ -186,55 +172,49 @@
     }
   }
 </script><br><br>
-
-
-
         <label>Passport No : </label>
-    <input class="input-box" type="text" class="login-input" name="passport" placeholder="passport number"  required ></br>
+    <input class="input-box" type="text" class="login-input" name="passport" placeholder="Passport Number" pattern="[A-Za-z]{4}[0-9]{8}" title="First 4 characters should be letters, followed by 8 digits"  required ></br>
       <label>Father name : </label>
-    <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Fathername"  required ></br>
+    <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Father Name" pattern="[A-Za-z\s]+" title="Please enter a valid father name with only letters."  required ></br>
         <label>Contact : </label>
-    <input class="input-box" type="text" class="login-input" name="contact" placeholder="contact"  required></br>
+    <input class="input-box" type="tel" class="login-input" name="contact" placeholder="Mobile.No" pattern="[0-9]{10}" title="Mobile no. must contain 10 digits only" required></br>
         <label>Location : </label>
-    <input class="input-box" type="text" class="login-input" name="location" placeholder="Location"  required></br>
+    <input class="input-box" type="text" class="login-input" name="location" placeholder="Location" pattern="[A-Za-z\s]+" title="Please enter a valid location with only letters."  required></br>
         <label>Country Applied for : </label>
-            <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country  Applied for"  required></br>
-
+            <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country  Applied for" pattern="[A-Za-z\s]+" title="Please enter a valid country with only letters."  required></br>
     <label for="gender">Gender :</label>
-   <select class="input-box" type="text" id="Gender" name="gender">
+   <select class="input-box" type="text" id="Gender" name="gender"> required></br>
        <option value="">Select Your Gender</option>
        <option value="Male">Male</option>
        <option value="Female">Female</option>
        <option value="Others">Others</option>
    </select> <br> <br>
     <label for="qualification">Qualification :</label>
-   <select class="input-box" id="qualification" name="qualification">
+   <select class="input-box" id="qualification" name="qualification"> required></br>
        <option value="">Select Your Qualification</option>
-       <option value="Ssc">SSC</option>
        <option value="Undergraduate">Undergraduate</option>
        <option value="Graduate">Graduate</option>
         <option value="Postgraduate">Postgraduate</option>
    </select> <br> <br>
     <label for="maritial">Maritial :</label>
-   <select class="input-box" id="maritial" name="maritial">
+   <select class="input-box" id="maritial" name="maritial"> required></br>
        <option value="">Select Your maritial status</option>
        <option value="Single">Single</option>
        <option value="Married">Married</option>
    </select> <br> <br>
-    <label for="reference">Reference :</label>
-   <select class="input-box" id="reference" name="reference">
+    <label for="dropdown">Reference :</label>
+   <select class="input-box" id="dropdown" name="reference">
        <option value="">Select your reference</option>
        <option value="Socialmedia">Social Media</option>
        <option value="Friends">Friends</option>
        <option value="others">others</option>
    </select> <br> <br>
-
-    <input type="submit" name="submit" value="adduser" class="register-button button"  required></br>
+   <input type="text" id="inputBox" style="display:none;" placeholder="Enter your choice" pattern="[A-Za-z\s]+" title="Please enter a reference in letters.">
+    <input type="submit" name="submit" value="Add User" class="register-button button"  required></br>
         </div>
     </div>
 </div>
     </form>
-
    </form>
   </body>
 </html>

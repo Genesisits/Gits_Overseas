@@ -8,6 +8,7 @@
       .topnav {
 
          background-color: #66b3ff;
+         font-family: roboto;
          overflow: hidden;
          position: fixed;
          top: 0;
@@ -49,6 +50,7 @@
          background-color: #111;
          overflow-x: hidden;
          padding-top: 20px;
+         font-family: roboto;
       }
 
       .sidenav a {
@@ -76,7 +78,7 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-       <a href="/home" style="float: left;">
+       <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="/student">Home</a>
@@ -150,7 +152,7 @@
       <input type="submit" value="login" name="submit" class="login-button button"> -->
         <form class = "nav" method="POST">
     <div class="card-container">
-    <h1 class ="login-title main-head">student Profile </h1> </br>
+    <h1 class ="login-title main-head">Student Profile </h1> </br>
          <label>Full name: </label>
         <input  type="text" class="login-input" name="fullname" placeholder="fullname"  value="{{ re[0]['fullname'] }}" required></br>
 
