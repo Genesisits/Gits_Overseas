@@ -141,6 +141,7 @@
          }
       }
    </script>
+
 <div style="margin-top:60px;">
     <form class = "nav"  method="POST" action="/register">
         <!-- <label>Upload Image</label>
@@ -167,9 +168,11 @@
           <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
           <label for="dob">Date of Birth:</label>
           <input type="date" id="dob" name="dob"  min="1990-01-01" max="2020-12-31" required><br><br>
+
         <label>Upload image:</label>
     <input type="hidden" id="image" name="image">
     <input type="file" accept="image/*" maxlength="10MB" onchange="uploadImage(this)">
+
     <script>
   function uploadImage(input) {
     if (input.files && input.files[0]) {
@@ -192,10 +195,12 @@
     <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Father Name" pattern="[A-Za-z\s]+" title="Please enter a valid father name with only letters."  required ></br>
         <label>Contact : </label>
     <input class="input-box" type="tel" class="login-input" name="contact" placeholder="Mobile.No" pattern="[0-9]{10}" title="Mobile no. must contain 10 digits only" required></br>
+
         <label>Location : </label>
     <input class="input-box" type="text" class="login-input" name="location" placeholder="Location" pattern="[A-Za-z\s]+" title="Please enter a valid location with only letters."  required></br>
         <label>Country Applied for : </label>
             <input class="input-box" type="text" class="login-input" name="country" placeholder="Enter country  Applied for" pattern="[A-Za-z\s]+" title="Please enter a valid country with only letters."  required></br>
+
     <label for="gender">Gender :</label>
    <select class="input-box" type="text" id="Gender" name="gender"> required></br>
        <option value="">Select Your Gender</option>
@@ -223,12 +228,17 @@
        <option value="Friends">Friends</option>
        <option value="others">others</option>
    </select> <br> <br>
+
    <input type="text" id="inputBox" style="display:none;" placeholder="Enter your choice" pattern="[A-Za-z\s]+" title="Please enter a reference in letters.">
+
+ 
+
     <input type="submit" name="submit" value="Register" class="register-button button"  required></br>
          </form>
         </div>
     </div>
     </div>
+
 </body>
 </html>
 

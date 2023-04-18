@@ -17,7 +17,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -61,6 +61,8 @@ def chat():
         return render_template('chat.html')
     else:
         return redirect(url_for("login"))
+
+
 
 @app.route("/country",methods= ['GET','POST'])
 def country():
@@ -243,6 +245,7 @@ def student():
         return render_template("student.html")
     else:
         return redirect(url_for("login"))
+
 @app.route("/adstudent")
 def adstudent():
     if 'email' in session:
@@ -361,6 +364,7 @@ def updatepassword():
 def signup():
     today = datetime.date.today()
     return render_template('register.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
