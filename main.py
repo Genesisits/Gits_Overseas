@@ -17,7 +17,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -29,7 +29,7 @@ mysql = MySQL(app)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_USERNAME"] = "karupartijayanth143@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "cgcpjwgfangyizud"
+app.config["MAIL_PASSWORD"] = "goccgpsjrupzrkcr"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -61,6 +61,8 @@ def chat():
         return render_template('chat.html')
     else:
         return redirect(url_for("login"))
+
+
 
 @app.route("/country",methods= ['GET','POST'])
 def country():
@@ -246,6 +248,7 @@ def student():
         return render_template("student.html")
     else:
         return redirect(url_for("login"))
+
 @app.route("/adstudent")
 def adstudent():
     if 'email' in session:
@@ -366,76 +369,6 @@ def signup():
     return render_template('register.html')
 
 
-'''@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        image = request.form['image']
-        image_data = base64.b64decode(image)
-        image_data = base64.b64encode(image_data)
-        fullname = request.form['fullname']
-        fullname = fullname.upper()
-        fathername = request.form['fathername']
-        contact = request.form['contact']
-        email = request.form['email']
-        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
-        msg.body = "THIS IS YOUR OTP" + str(otp)
-        mail.send(msg)
-        date_i = request.form['date']
-        """
-        date = datetime.datetime.strptime(date_i, '%Y-%m-%d')
-        today = datetime.date.today()
-          selected_date = datetime.datetime.strptime(date, '%Y-%m-%d').date() 
-        years_ago = datetime.timedelta(days=15 * 365)
-        dob = date - years_ago
-        selected_date = dob.strftime(f"%d-%m-%Y")
-        
-        current_date_str = request.form['current_date']
-        current_date = datetime.datetime.strptime(current_date_str, '%Y-%m-%d')
-
-        # Calculate date 15 years ago
-        years_ago = datetime.timedelta(days=15 * 365)  # Assuming 365 days per year
-        dob = current_date - years_ago
-
-        # Generate random day and month
-        day = random.randint(1, 28)  # Assuming all months have 28 days for simplicity
-        month = random.randint(1, 12)
-
-        # Format date of birth as string
-        dob_str = dob.strftime(f"%d-%m-%Y")  # Format as "dd-mm-yyyy" """
-
-        password = request.form['password']
-        confirmpassword = request.form['confirmpassword']
-        passport = request.form['passport']
-        qualification = request.form['qualification']
-        location = request.form['location']
-        country = request.form['country']
-        gender = request.form['gender']
-        maritial = request.form['maritial']
-        reference = request.form['reference']
-        # Check if email already exists
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
-        user = cur.fetchone()
-        if user:
-            flash('Email address already exists', 'error')
-            return redirect(url_for('register'))
-        # Insert user data into database
-        query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password, 
-                passport, country, qualification, location, gender, maritial, reference, image)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)"""
-        values = (fullname, fathername, contact, email,date_i, password, passport, country, qualification, location, gender,maritial, reference, image_data)
-        cur.execute(query,values)
-        mysql.connection.commit()
-        cur.close()
-        # Show success message and redirect
-        flash('Registration successful, check for otp', 'success')
-
-        return redirect(url_for('userflash'))
-
-    return render_template('register.html')'''
-
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -446,7 +379,7 @@ def register():
         fathername = request.form['fathername']
         contact = request.form['contact']
         email = request.form['email']
-        msg = Message('subject', sender="jayanthkaruparti.CCBPian00101@gmail.com", recipients=[email])
+        msg = Message('subject', sender="karupartijayanth143@gmail.com", recipients=[email])
         msg.body = "THIS IS YOUR OTP" + str(otp)
         mail.send(msg)
         dob = request.form['dob']
@@ -519,8 +452,6 @@ def register():
         # Show success message and redirect
         flash('Registration successful', 'success')
         return redirect(url_for('userflash'))
-
-
     return render_template('register.html')
 
 
