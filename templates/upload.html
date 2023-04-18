@@ -76,7 +76,7 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-       <a href="home" style="float: left;">
+       <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="student">Home</a>
@@ -101,16 +101,37 @@
    </div>
 <div class="main">
 <h1>Upload PDF File</h1>
-	<form method="POST" enctype="multipart/form-data">
-		<label for="file">Upload Your Study Documents(SSC,INTER,DEGREE)</label><br>
-		<input type="file" id="file" name="file" accept=".pdf" required><br><br>
-		<input type="submit" value="Upload">
+   <form method="POST" enctype="multipart/form-data">
+        <label for="file">SSC</label><br>
+      <input type="file" id="file" name="file" accept=".pdf" required>
+      <input type="submit" value="Upload">
         <button ><a href= "/view" type="submit" >View</a></button>
-	</form>
-	{% if filename %}
-		<p>File {{ filename }} uploaded successfully.</p>
-	{% endif %}
+   </form>
+   {% if filename %}
+      <p>File {{ filename }} uploaded successfully.</p>
+   {% endif %}
     </div>
-
+<div class="main">
+     <form method="POST" enctype="multipart/form-data">
+        <label for="file">INTER</label><br>
+      <input type="file" id="file" name="file" accept=".pdf" required>
+      <input type="submit" value="Upload">
+        <button ><a href= "/view" type="submit" >View</a></button>
+   </form>
+   {% if filename %}
+      <p>File {{ filename }} uploaded successfully.</p>
+   {% endif %}
+    </div>
+<div class="main">
+<form method="POST" enctype="multipart/form-data">
+        <label for="file">Degree</label><br>
+      <input type="file" id="file" name="file" accept=".pdf" required>
+      <input type="submit" value="Upload">
+        <button ><a href= "/view" type="submit" >View</a></button>
+   </form>
+   {% if filename %}
+      <p>File {{ filename }} uploaded successfully.</p>
+   {% endif %}
+    </div>
 </body>
 </html>

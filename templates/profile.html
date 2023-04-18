@@ -78,7 +78,7 @@
 <body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-       <a href="home" style="float: left;">
+       <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="student">Home</a>
@@ -120,12 +120,12 @@
 <!-- <img class="profile_img" src="data:image/jpeg;base64,{{ result[0]['image'].decode('ascii') }}" alt="image"  width="200px">  -->
  <table style="width:100%">
     <tr>
-        <th>fullname</th>
-        <th>fathername</th>
-        <th>contact</th>
+        <th>Fullname</th>
+        <th>Fathername</th>
+        <th>Contact</th>
         <th>DOB</th>
-        <th>passport</th>
-        <th>location</th>
+        <th>Passport</th>
+        <th>Location</th>
         <th colspan="1" align ="center"> Operations</th>
     </tr>
              {% for r in result %}

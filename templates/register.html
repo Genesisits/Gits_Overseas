@@ -6,8 +6,7 @@
    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
-
-         background-color: #66b3ff;
+         background-color: #66B3FF;
          font-family: roboto;
          overflow: hidden;
          position: fixed;
@@ -17,28 +16,24 @@
          width: 100%;
          z-index: 999;
       }
-
       .topnav img {
          height: 60px;
          padding: 5px;
          float: left;
       }
-
       .topnav a {
          float: right;
          display: block;
-         color: #ffffff;
+         color: #FFFFFF;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
          font-size: 17px;
       }
-
       .topnav a:hover {
          background-color: #ddd;
          color: black;
       }
-
       /* Style for side navigation bar */
       .sidenav {
          height: 100%;
@@ -51,19 +46,16 @@
          overflow-x: hidden;
          padding-top: 20px;
       }
-
       .sidenav a {
          padding: 6px 8px 6px 16px;
          text-decoration: none;
          font-size: 20px;
-         color: #f0f5f5;
+         color: #F0F5F5;
          display: block;
       }
-
       .sidenav a:hover {
-         color: #3333ff;
+         color: #3333FF;
       }
-
       .main {
          margin-left: 200px;
          margin-top: 70px;
@@ -71,7 +63,6 @@
          font-size: 18px;
          text-align: center;
       }
-
    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -97,32 +88,24 @@
        <a href="about">About us</a>
        <a href="contact">Contact us</a>
       <h1>Genesis Overseas </h1>
-
    </div><br>
-
-
    <!-- Side Navigation Bar -->
-
-
-
     Main Content -->
    <head>
     <title> Student Register Page</title>
     <style>
       body {
-        background-color: #f2f2f2;
+        background-color: #F2F2F2;
         font-family: Arial, sans-serif;
       }
-
       form {
-        border: 3px solid #f1f1f1;
+        border: 3px solid #F1F1F1;
         max-width: 500px;
         margin: 0 auto;
         padding: 20px;
         background-color: #fff;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       }
-
       input[type=text], input[type=password] {
         width: 100%;
         padding: 12px 20px;
@@ -131,7 +114,6 @@
         border: 1px solid #ccc;
         box-sizing: border-box;
       }
-
       button[type=submit] {
         background-color: #4CAF50;
         color: #fff;
@@ -140,11 +122,9 @@
         cursor: pointer;
         width: 100%;
       }
-
       button[type=submit]:hover {
         opacity: 0.8;
       }
-
     </style>
   </head><br>
   <body>
@@ -161,7 +141,6 @@
          }
       }
    </script>
-
 
 <div style="margin-top:60px;">
     <form class = "nav"  method="POST" action="/register">
@@ -185,17 +164,14 @@
        title="Password must contain at least one uppercase letter, one special character, and no spaces" required>
          <label>Confirm Password : </label>
       <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  required></br>
-
         <label>Email : </label>
           <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
           <label for="dob">Date of Birth:</label>
           <input type="date" id="dob" name="dob"  min="1990-01-01" max="2020-12-31" required><br><br>
 
-
         <label>Upload image:</label>
     <input type="hidden" id="image" name="image">
     <input type="file" accept="image/*" maxlength="10MB" onchange="uploadImage(this)">
-
 
     <script>
   function uploadImage(input) {
@@ -205,7 +181,6 @@
         alert("Image file size should not exceed 1MB");
         return;
       }
-
       var reader = new FileReader();
       reader.onload = function(e) {
         document.querySelector("#image").value = e.target.result.split(",")[1];
@@ -214,14 +189,12 @@
     }
   }
 </script><br><br>
-
         <label>Passport No : </label>
     <input class="input-box" type="text" class="login-input" name="passport" placeholder="Passport Number" pattern="[A-Za-z]{4}[0-9]{8}" title="First 4 characters should be letters, followed by 8 digits"  required ></br>
       <label>Father name : </label>
     <input class="input-box" type="text" class="login-input" name="fathername" placeholder="Father Name" pattern="[A-Za-z\s]+" title="Please enter a valid father name with only letters."  required ></br>
         <label>Contact : </label>
     <input class="input-box" type="tel" class="login-input" name="contact" placeholder="Mobile.No" pattern="[0-9]{10}" title="Mobile no. must contain 10 digits only" required></br>
-
 
         <label>Location : </label>
     <input class="input-box" type="text" class="login-input" name="location" placeholder="Location" pattern="[A-Za-z\s]+" title="Please enter a valid location with only letters."  required></br>
@@ -255,13 +228,22 @@
        <option value="Friends">Friends</option>
        <option value="others">others</option>
    </select> <br> <br>
-   <input type="text" id="inputBox" style="display:none;" placeholder="Enter your choice">
+
+   <input type="text" id="inputBox" style="display:none;" placeholder="Enter your choice" pattern="[A-Za-z\s]+" title="Please enter a reference in letters.">
+
+ 
+
     <input type="submit" name="submit" value="Register" class="register-button button"  required></br>
          </form>
         </div>
     </div>
     </div>
 
-
 </body>
 </html>
+
+
+
+
+
+

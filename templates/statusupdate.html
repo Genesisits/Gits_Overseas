@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <title>Student Status</title>
-    <style>
-    h1 {text-align: center;}
+   <title>Admin Dashboard</title>
+   <style>
+   h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
 
@@ -61,7 +60,7 @@
       }
 
       .sidenav a:hover {
-         color: #d580ff;
+         color: #3333ff;
       }
 
       .main {
@@ -71,30 +70,16 @@
          font-size: 18px;
          text-align: center;
       }
-      table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
 
    </style>
-
 </head>
-<body>
+<body/>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-        <a href="/home" style="float: left;">
-             <img src="{{url_for('static', filename='img_1.png' )}}" >
-     </a>
-      <a href="/student">Home</a>
-      <a href="/profile">Profile</a>
+      <a href="/admindashboard">Home</a>
+<!--      <a href="/adprofile">Profile</a>-->
+      <a href="/logout" style="float: left;">
+          <img src="{{url_for('static', filename='img_1.png' )}}" ></a>
       <h1>Genesis Overseas </h1>
 
    </div>
@@ -102,37 +87,41 @@
 
    <!-- Side Navigation Bar -->
    <div class="sidenav">
+      <a href="/chat">Chat</a>
+        <a href="/upload">Upload</a>
 
-
-
-       <a href="/chat">Chat</a>
-
-       <a href="/upload">Upload</a>
-
-<!--<a href="http://127.0.0.1:5000/notifications">Notifications</a>-->
-      <a href="/applied">Applied</a>
-      <a href="/approved">Approved</a>
+     <!-- <a href="notifications">Notifications</a>-->
+      <a href="/applied"> Applied</a>
+      <a href="/approved"> Approved</a>
        <a href="/status">Status</a>
       <a href="/logout">Logout</a>
-   </div>
+   </div><br><br>
 <div class="main">
-    <form action="/newedit/{{ re[0]['university_applied'] }}" method="POST">
-        <h1>Edit Status</h1>
-        <div class="form-container">
-           <label>University Applie :</label>
-           <input class="login-input" type="text"  id="universityapplied" name="universityapplied" value="{{ re[0]['university_applied'] }}">
-           <label>Status :</label>
-           <select class="input-box" id="status" name="status" value="{{re[0]['status']}}" required>
-              <option value="">Select your status</option>
-              <option value="Applied">Applied</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-           </select><br><br>
+<div class="background" >
+    <form  action = "/statusupdate/{{ re[0]['email'] }} " method='POST'>
 
-           <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
-           <a href="/applied">back</a>
-        </div><br>
-    </form>
-</div>
-</body>
+    <div class="container">
+    <h1 class="heading"> Student Status update </h1>
+
+       <label>Financials: </label>
+            <input class="login-input" type="text" class="login-input" name="financials" placeholder="financials" value="{{ re[0]['financials'] }}"> <br></br>
+       <label>Biometric: </label>
+            <input class="login-input" type="date" class="login-input" name="biometric" placeholder="contact" value="{{ re[0]['biometric'] }}"> <br></br>
+        <label>Visa: </label>
+            <input class="login-input" type="date" class="login-input" name="visa" placeholder="select country" value="{{ re[0]['visa'] }}"> <br></br>
+    <label for="status">status :</label>
+   <select class="input-box" id="status" name="status">
+       <option value="">Select</option>
+       <option value="approved">approved</option>
+       <option value="rejected">rejected</option>
+<!--       <option value="others">others </option>-->
+   </select> <br> <br>
+        <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
+    {% if error %}
+       <p class = "error"><strong>Error:</strong>: {{ error }}</p>
+    {% endif %}
+    </div>
+        </div>
+ </form>
+ </body>
 </html>

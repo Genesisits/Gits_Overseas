@@ -78,7 +78,7 @@
 <body>
 <!-- Top Navigation Bar -->
    <div class="topnav">
-        <a href="home" style="float: left;">
+        <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
       <a href="student">Home</a>
@@ -109,14 +109,14 @@
 
         Biometric<input type="date" class="login-input" name="biometric" placeholder="biometric" autofocus="true"/>
 
- Message <input type="text" class="login-input" name="message" placeholder="approved/rejected"/>
+
         Visa <input type="date" class="login-input" name="visa" placeholder="Password"/>
 
 <label for="month">Status:</label>
 <select id="month" name="status">
-  <option value="approved">approved</option>
-  <option value="rejected">rejected</option>
-    <option value="none">None</option>
+  <option value="approved">applied</option>
+<!--  <option value="rejected">rejected</option>-->
+<!--    <option value="none">None</option>-->
 </select> <br><br>
 
         <input type="submit" value="submit" name="submit" class="submit-button"/>
