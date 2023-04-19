@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>User Deactivation</title>
+  </head>
+  <body>
+    <h1>User Deactivation</h1>
+    <form action="{{ url_for('deactivate', email=email) }}" method="post">
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+      <br><br>
+      <input type="submit" value="Deactivate">
+    </form>
+  </body>
+</html>

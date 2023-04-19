@@ -258,6 +258,7 @@ def adstudent():
 def status():
     if 'email' in session:
         email = session['email']
+        today=datetime.date.today()
         cur = mysql.connection.cursor()
         r = cur.execute("select * from studentstatus where email=%s", (email,))
         print(r)
@@ -267,7 +268,7 @@ def status():
             print(re)
             return render_template("status.html", result=re)
         cur.close()
-        return render_template("status.html")
+        return render_template("status.html",today=today)
     else:
         return redirect(url_for("login"))
 
@@ -278,11 +279,13 @@ def ssedit():
             financials = request.form['financials']
             biometric = request.form['biometric']
             visa = request.form['visa']
-            status = request.form['status']
+            financialstatus = request.form['financialstatus']
+            biometricstatus = request.form['biometricstatus']
+            visastatus = request.form['visastatus']
             email = session['email']
             cur = mysql.connection.cursor()
-            b = cur.execute("INSERT into studentstatus(financials,biometric,visa,status,email) values(%s,%s,%s,%s,%s)",
-                            (financials, biometric, visa, status, email,))
+            b = cur.execute("INSERT into studentstatus(financials,biometric,visa,financialstatus,biometricstatus,visastatus,email) values(%s,%s,%s,%s,%s,%s,%s)",
+                            (financials, biometric, visa, financialstatus,biometricstatus,visastatus,email,))
             mysql.connection.commit()
             if b > 0:
                 flash("Hey your adding university is success")
@@ -318,6 +321,21 @@ def forgotpasswordpage():
                 return render_template("forgotpasswordpage.html", error=error)
             cur.close()
         return render_template("forgotpasswordpage.html")
+
+@app.route('/resend_otp', methods=['GET', 'POST'])
+def resend_otp():
+    if request.method == 'POST':
+        email = request.form['email']
+        cur = mysql.connection.cursor()
+        r = cur.execute("SELECT email FROM usertable WHERE email = %s", (email,))
+        mysql.connection.commit()
+        if r>0:
+            msg = Message('subject', sender="karupartijayanth143@gmail.com", recipients=[email])
+            msg.body = "THIS IS YOUR OTP " + str(otp)
+            mail.send(msg)
+            return redirect(url_for('send'))
+        cur.close()
+    return render_template('resend_otp.html')
 
 
 @app.route("/fpsend")
@@ -563,10 +581,6 @@ def validate():
     else:
         flash("wrong OTP")
         return render_template("send.html")
-
-
-
-
 @app.route('/advalidate',methods=['POST'])
 def advalidate():
     email = request.form['email']
@@ -821,6 +835,29 @@ def studentprofile(email):
     re = cur2.fetchall()
     print(re)
     return render_template("studentprofile.html",re=re)
+
+@app.route('/deactivate/<string:email>',methods=['GET','POST'])
+def deactivate():
+    if request.method == "POST":
+        email = request.form['email']
+        cur = mysql.connection.cursor()
+        r = cur.execute("SELECT email FROM usertable WHERE email = %s and activation_status = true", (email,))
+        mysql.connection.commit()
+        if r == 0:
+            flash("entered email is not correct")
+            return render_template("send.html")
+        user_otp = request.form['otp']
+        if otp == int(user_otp):
+            cur = mysql.connection.cursor()
+            cur.execute("update usertable set activation_status = false where email=%s",(email,))
+            mysql.connection.commit()
+            cur.close()
+            flash("deactivate successful")
+            return redirect(url_for("users"))
+        else:
+            return render_template("users.html")
+    else:
+        return render_template("users.html")
 
 @app.route('/profile')
 def profile():

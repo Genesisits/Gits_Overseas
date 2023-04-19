@@ -157,7 +157,7 @@
         <label>Contact : </label>
     <input  type="text" class="login-input" name="contact" placeholder="contact"  value="{{ re[0]['contact'] }}" pattern="[0-9]{10}" title="Mobile no. must contain 10 digits only" required></br>
         <label>Date of Birth:</label>
-          <input class="login-input" type="text"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}"  min="1990-01-01" max="2020-12-31" required><br><br>
+          <input class="login-input" type="date"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}"  min="1990-01-01" max="2004-12-31" required><br><br>
 
         <label>Location : </label>
     <input  type="text" class="login-input" name="location" placeholder="Location"  value="{{ re[0]['location'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid location with only letters." required></br>
