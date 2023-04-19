@@ -103,23 +103,31 @@
 
    <!-- Main Content -->
    <div class="main"> <br>
-       <form class="form" action ="" method="POST" name="login">
+       <form class="form" action ="/ssedit" method="POST" name="login">
         <h1 class="login-title">Student Status</h1>
-        Financials <input type="text" class="login-input" name="financials" placeholder="financials" autofocus="true"/>
+        Financials <input type="text" class="login-input" name="financials" placeholder="financials" autofocus="true" pattern="[A-Za-z\s]+" title="Please enter a valid details with only letters."/>
+           <label for="month">financialStatus:</label>
+            <select id="month" name="financialstatus">
+             <option value="approved">applied</option>
+
+              </select> <br><br>
 
         Biometric<input type="date" class="login-input" name="biometric" placeholder="biometric" autofocus="true"/>
+           <label for="month">biometricStatus:</label>
+            <select id="month" name="biometricstatus">
+             <option value="approved">applied</option>
+
+              </select> <br><br>
 
 
         Visa <input type="date" class="login-input" name="visa" placeholder="Password"/>
+           <label for="month">visaStatus:</label>
+            <select id="month" name="visastatus">
+             <option value="approved">applied</option>
 
-<label for="month">Status:</label>
-<select id="month" name="status">
-  <option value="approved">applied</option>
-<!--  <option value="rejected">rejected</option>-->
-<!--    <option value="none">None</option>-->
-</select> <br><br>
+              </select> <br><br>
 
-        <input type="submit" value="submit" name="submit" class="submit-button"/>
+        <input type="submit" value="submit" name="submit" class="submit-button"/><br>
 
   </form>
    </div>

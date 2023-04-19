@@ -163,11 +163,12 @@
      <input type="password" id="password" placeholder="Password" name="password" pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).+$"
        title="Password must contain at least one uppercase letter, one special character, and no spaces" required>
          <label>Confirm Password : </label>
-      <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  required></br>
+      <input class="input-box" type="password" class="login-input" name="confirmpassword" placeholder="Confirmpassword"  pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).+$"
+       title="Password must contain at least one uppercase letter, one special character, and no spaces" required></br>
         <label>Email : </label>
           <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
           <label for="dob">Date of Birth:</label>
-          <input type="date" id="dob" name="dob"  min="1990-01-01" max="2020-12-31" required><br><br>
+          <input type="date" id="dob" name="dob"  min="1990-01-01" max="2004-12-31" required><br><br>
 
         <label>Upload image:</label>
     <input type="hidden" id="image" name="image">

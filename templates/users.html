@@ -149,16 +149,24 @@
 </style>
 <style>
   @media print {
-    table th:nth-child(12),
-    table td:nth-child(12){
+    table th:nth-child(14),
+    table td:nth-child(14){
       display: none;
     }
   }
 </style>
 <style>
   @media print {
-    table th:nth-child(14),
-    table td:nth-child(14){
+    table th:nth-child(15),
+    table td:nth-child(15){
+      display: none;
+    }
+  }
+</style>
+<style>
+  @media print {
+    table th:nth-child(16),
+    table td:nth-child(16){
       display: none;
     }
   }
@@ -168,7 +176,7 @@
   @media print {
 
   table {
-    font-size: 40%; /* reduce font size */
+    font-size: 30%; /* reduce font size */
   }
 
   td {
@@ -225,6 +233,7 @@
         <td> {{ r['gender'] }}</td>
         <td> {{ r['maritial'] }}</td>
         <td> {{ r['reference'] }}</td>
+         <td> <button ><a href= "deactivate/{{ r['email'] }}" type="submit" >deactivate</a></button></td>
 
         <td> <button ><a href= "update/{{ r['email'] }}" type="submit" >Update</a></button></td>
         <td> <button ><a href= "delete/{{ r['email'] }}" type="submit" >Delete</a></button></td>

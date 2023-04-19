@@ -117,10 +117,10 @@
        <label>Gender: </label>
           <input class="login-input" type="text" class="login-input" name="gender" placeholder="gender" value="{{ re[0]['gender'] }}"  pattern="[A-Za-z]+" title="Please enter a valid gender with only letters."><br></br>
 
-         <label>Date of Birth:</label>
-          <input class="login-input" type="text"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}" min="1990-01-01" max="2020-12-31"required><br><br>
+<label>Date of Birth:</label>
+          <input class="login-input" type="date"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}"  min="1990-01-01" max="2004-12-31" required><br><br>
 
-       <label>Fathername: </label>
+        <label>Fathername: </label>
           <input class="login-input" type="text" class="login-input" name="fathername" placeholder="fathername"  value="{{ re[0]['fathername'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid father name with only letters."><br></br>
 
     <input type="submit" name="submit" value="submit" class="login-button button"  required></br>

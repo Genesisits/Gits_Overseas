@@ -82,47 +82,17 @@
       <img href="home" src="{{url_for('static', filename='img_1.png')}}"/>
       <h1>Genesis Overseas </h1>
 
-   </div><br>
-
-
-   <!-- Side Navigation Bar -
-   </div>
-
-   <!-Main Content -->
+   </div><br></html>br>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>OTP VALIDATION</title>
+    <title>Resend OTP</title>
 </head>
 <body>
-<div style="margin-top:60px;">
-{% if error %}
-       <p class = "error"><strong>Error:</strong>: {{ error }}</p>
-    {% endif %}
-<form action="/validate" method="POST">
-  <h1>OTP</h1> <br>
-    <div>
-        <h4>note:enter the same email address which you have entered in the registration form</h4>
-        <label>Email : </label>
-        <input class="input-box "type="text" placeholder="Enter your email" class="login-input" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="{{ email }}" required><br><br>
-        Enter OTP:<input type="text" name="otp">
-        <input type="submit" value="submit">
-        <a href="/resend_otp">Resend OTP</a>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flash-messages">
-                {% for message in messages %}
-                    <li class="flash-message">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-    </div>
+<form method = "POST" >
+  <h1>Resend otp</h1>
+  <input name="email" placeholder="email">
+  <button type="submit" value="Resend">Submit</button>
 </form>
-</div>
-</body>
-
-
-
-
 </body>
 </html>
