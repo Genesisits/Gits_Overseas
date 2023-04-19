@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Student Dashboard</title>
+   <title>Admin Dashboard</title>
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
-
-         background-color: #66b3ff;
+         background-color: #66B3FF;
+         font-family: roboto;
          overflow: hidden;
          position: fixed;
          top: 0;
@@ -16,28 +16,24 @@
          width: 100%;
          z-index: 999;
       }
-
       .topnav img {
          height: 60px;
          padding: 5px;
          float: left;
       }
-
       .topnav a {
          float: right;
          display: block;
-         color: #010a0a;
+         color: #010A0A;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
          font-size: 17px;
       }
-
       .topnav a:hover {
          background-color: #ddd;
          color: black;
       }
-
       /* Style for side navigation bar */
       .sidenav {
          height: 100%;
@@ -47,22 +43,20 @@
          top: 50px;
          left: 0;
          background-color: #111;
+         font-family: roboto;
          overflow-x: hidden;
          padding-top: 20px;
       }
-
       .sidenav a {
          padding: 6px 8px 6px 16px;
          text-decoration: none;
          font-size: 20px;
-         color: #f0f5f5;
+         color: #F0F5F5;
          display: block;
       }
-
       .sidenav a:hover {
-         color: #53c653;
+         color: #3333FF;
       }
-
       .main {
          margin-left: 200px;
          margin-top: 70px;
@@ -70,7 +64,6 @@
          font-size: 18px;
          text-align: center;
       }
-
    </style>
 </head>
 <body/>
@@ -79,32 +72,50 @@
        <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
-      <a href="student">Home</a>
-      <a href="profile">Profile</a>
+      <a href="admindashboard">Home</a>
+
       <h1>Genesis Overseas </h1>
-
    </div>
-
-
    <!-- Side Navigation Bar -->
    <div class="sidenav">
-
-    <a href="schatingroom">Chat</a>
-       <a href="upload">Upload</a>
-
-      <!--<a href="notifications">Notifications</a>-->
-      <a href="applied"> Applied</a>
-      <a href="approved"> Approved</a>
-      <a href="status">Status</a>
-
+   <a href="chatingroom ">Chat</a>
+      <a href="users">Users</a>
+      <a href="intake">Intake</a>
+      <a href="country">Country</a>
+      <a href="adduser">Add User</a>
       <a href="logout">Logout</a>
    </div>
+<html>
+<head>
+    <title>All Users</title>
+</head>
+<body>
+<div class="main">
+    <h1>All Users</h1>
+    <form action="/chatingroom" method="post">
+        <table>
+            <thead>
+                <tr>
 
-   <!-- Main Content -->
-   <div class="main">
-      <h1>Welcome to your Student Dashboard</h1>
-      <p>Here you can access all your academic information, including your grades, course schedules, and other important resources. Use the links in the side navigation bar to navigate the dashboard and access the different features available to you. If you have any questions or issues, please contact your academic advisor or the IT helpdesk for assistance.</p>
-   </div>
+                    <th>Email</th>
+                    <th>Start Chat</th>
+                </tr>
+            </thead>
+            <tbody>
 
+               {% for r in result %}
+                    <tr>
+
+                        <td> {{ r['email'] }} </td>
+                        <td>
+                            <input type="radio" name="receiver" value="{{r['email']}}">
+                            <input type="submit" value="Start Chat">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    </div>
 </body>
 </html>

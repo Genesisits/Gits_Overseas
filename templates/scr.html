@@ -8,6 +8,7 @@
       .topnav {
 
          background-color: #66b3ff;
+         font-family: roboto;
          overflow: hidden;
          position: fixed;
          top: 0;
@@ -47,6 +48,7 @@
          top: 50px;
          left: 0;
          background-color: #111;
+         font-family: roboto;
          overflow-x: hidden;
          padding-top: 20px;
       }
@@ -98,13 +100,37 @@
       <a href="status">Status</a>
 
       <a href="logout">Logout</a>
-   </div>
+   </div><br><br>
 
-   <!-- Main Content -->
-   <div class="main">
-      <h1>Welcome to your Student Dashboard</h1>
-      <p>Here you can access all your academic information, including your grades, course schedules, and other important resources. Use the links in the side navigation bar to navigate the dashboard and access the different features available to you. If you have any questions or issues, please contact your academic advisor or the IT helpdesk for assistance.</p>
-   </div>
+<head>
+    <title>All Users</title>
+</head>
+<body>
+<div class="main" >
+    <h1>All Users</h1>
+    <form action="/schatingroom" method="post">
+        <table style="float:center;">
+            <thead>
+                <tr>
 
+                    <th>NAME</th>
+                    <th>Start Chat</th>
+                </tr>
+            </thead>
+            <tbody>
+               {% for r in result %}
+                    <tr>
+
+                        <td> {{ r['name'] }} </td>
+                        <td>
+                            <input type="radio" name="receiver" value="{{r['name']}}">
+                            <input type="submit" value="Start Chat">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    </div>
 </body>
 </html>

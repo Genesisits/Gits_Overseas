@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Admin Dashboard</title>
+   <title>Student Dashboard</title>
    <style>
    h1 {text-align: center;}
       /* Style for top navigation bar */
       .topnav {
-         background-color: #66B3FF;
+
+         background-color: #66b3ff;
          font-family: roboto;
          overflow: hidden;
          position: fixed;
@@ -16,24 +17,28 @@
          width: 100%;
          z-index: 999;
       }
+
       .topnav img {
          height: 60px;
          padding: 5px;
          float: left;
       }
+
       .topnav a {
          float: right;
          display: block;
-         color: #010A0A;
+         color: #010a0a;
          text-align: center;
          padding: 14px 16px;
          text-decoration: none;
          font-size: 17px;
       }
+
       .topnav a:hover {
          background-color: #ddd;
          color: black;
       }
+
       /* Style for side navigation bar */
       .sidenav {
          height: 100%;
@@ -46,17 +51,21 @@
          font-family: roboto;
          overflow-x: hidden;
          padding-top: 20px;
+         font-family: roboto;
       }
+
       .sidenav a {
          padding: 6px 8px 6px 16px;
          text-decoration: none;
          font-size: 20px;
-         color: #F0F5F5;
+         color: #f0f5f5;
          display: block;
       }
+
       .sidenav a:hover {
-         color: #3333FF;
+         color: #53c653;
       }
+
       .main {
          margin-left: 200px;
          margin-top: 70px;
@@ -64,6 +73,7 @@
          font-size: 18px;
          text-align: center;
       }
+
    </style>
 </head>
 <body/>
@@ -72,20 +82,26 @@
        <a href="/logout" style="float: left;">
              <img src="{{url_for('static', filename='img_1.png' )}}" >
      </a>
-      <a href="admindashboard">Home</a>
-
+      <a href="student">Home</a>
+      <a href="profile">Profile</a>
       <h1>Genesis Overseas </h1>
+
    </div>
+
+
    <!-- Side Navigation Bar -->
    <div class="sidenav">
-   <a href="chatingroom ">Chat</a>
-      <a href="users">Users</a>
-      <a href="intake">Intake</a>
-      <a href="country">Country</a>
-      <a href="adduser">Add User</a>
+
+    <a href="schatingroom">Chat</a>
+       <a href="upload">Upload</a>
+
+      <!--<a href="notifications">Notifications</a>-->
+      <a href="applied"> Applied</a>
+      <a href="approved"> Approved</a>
+      <a href="status">Status</a>
+
       <a href="logout">Logout</a>
    </div>
-
     <title>Chat Application</title>
     <style>
     body {
@@ -179,15 +195,12 @@ input[type=submit]:hover {
 .delete-btn:hover {
     color: #f00;
 }
-
-
-
     </style>
 
 </head>
 <body>
-<div class="main" style="margin-top:20px;">
-   <div id="chat-container">
+
+   <div id="chat-container" style="margin-top:25px;">
    <h2 style="text-align: center;">Chat Application</h2>
     <div class="messages-container">
         {% for message in messages[::-1] %}
@@ -198,16 +211,14 @@ input[type=submit]:hover {
         {% endfor %}
     </div>
 
-    <form method="POST" action="/send_message?receiver={{ receiver }}" method="post">
+    <form method="POST" action="/ssend_message?receiver={{ receiver }}" method="post">
         <div class="input-container">
             <input type="text" name="sender" value="{{ sender }}" placeholder="Sender name">
             <input type="hidden" name="receiver" value="{{ receiver }}">
             <textarea name="message" placeholder="Your message"></textarea>
             <input type="submit" value="Send">
         </div>
-
     </form>
-   </div>
 </div>
 
 </body>

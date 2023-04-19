@@ -55,14 +55,6 @@ def adminflash():
 def home():
     return render_template('overseas.html')
 
-@app.route("/chat")
-def chat():
-    if 'email' in session:
-        return render_template('chat.html')
-    else:
-        return redirect(url_for("login"))
-
-
 
 @app.route("/country",methods= ['GET','POST'])
 def country():
@@ -952,6 +944,136 @@ def download_file(filename):
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
+@app.route('/chatingroom', methods=['GET', 'POST'])
+def chatingroom():
+    if request.method == 'POST':
+        # Get receiver from form
+        receiver = request.form['receiver']
+        session['receiver'] = receiver
+        print(receiver)
+        # Redirect to chat page with sender and receiver info
+        return redirect(url_for('chat', sender=session['name'], receiver=session['receiver']))
+    else:
+        # Retrieve all rows from the "users" table
+        cur = mysql.connection.cursor()
+        r = cur.execute('select * from usertable')
+
+        if r > 0:
+            re = cur.fetchall()
+            print(re)
+            return render_template("cr.html", result=re)
+        cur.close()
+        return render_template("cr.html")
+
+@app.route('/schatingroom', methods=['GET', 'POST'])
+def schatingroom():
+    if request.method == 'POST':
+        # Get receiver from form
+        receiver = request.form['receiver']
+        session['receiver'] = receiver
+        print(receiver)
+        # Redirect to chat page with sender and receiver info
+        return redirect(url_for('schat', sender=session['email'], receiver=session['receiver']))
+    else:
+        # Retrieve all rows from the "users" table
+        cur = mysql.connection.cursor()
+        r = cur.execute('select * from admintable')
+
+        if r > 0:
+            re = cur.fetchall()
+            print(re)
+            return render_template("scr.html", result=re)
+        cur.close()
+        return render_template("scr.html")
+
+@app.route("/chat")
+def chat():
+    # Get sender and receiver from request arguments
+    receiver = request.args.get('receiver', '')
+    print(receiver)
+
+    # Get the sender from the session
+    if 'name' in session:
+        sender = session['name']
+        print(sender)
+
+    # Retrieve unread messages between sender and receiver from database
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "SELECT * FROM messages WHERE (sender = %s AND receiver = %s ) OR (sender = %s AND receiver = %s ) ",
+        (sender, receiver, receiver, sender))
+    messages = cur.fetchall()
+
+    # Mark unread messages as read
+    cur.execute("UPDATE messages SET is_read = 1 WHERE sender = %s AND receiver = %s AND is_read = 0",
+                (receiver, sender))
+    mysql.connection.commit()
+
+    cur.close()
+
+    # Render the chat page with the messages and sender/receiver info
+    return render_template('chat.html', messages=messages, sender=sender, receiver=receiver)
+
+@app.route("/schat")
+def schat():
+    # Get sender and receiver from request arguments
+    receiver = request.args.get('receiver', '')
+    print(receiver)
+    # Get the sender from the session
+    if 'email' in session:
+        sender = session['email']
+        print(sender)
+
+
+    # Retrieve messages between sender and receiver from database
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM messages WHERE (sender = %s AND receiver = %s) OR (sender = %s AND receiver = %s) ",
+                (sender, receiver, receiver, sender))
+    messages = cur.fetchall()
+    cur.close()
+
+    ''' # Mark messages as read
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE messages SET is_read = 1 WHERE sender = %s AND receiver = %s", (receiver, sender))
+    mysql.connection.commit()
+    cur.close()'''
+
+    # Render the chat page with the messages and sender/receiver info
+    return render_template('schat.html', messages=messages, sender=sender, receiver=receiver)
+
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    # Get message data from form
+    global sender
+    if 'name' in session:
+        sender = session['name']
+    receiver = request.args.get('receiver', '')
+    message = request.form['message']
+
+    # Save message to database
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO messages (sender, receiver, message) VALUES (%s, %s, %s)", (sender, receiver, message))
+    mysql.connection.commit()
+    cur.close()
+
+    return redirect('/chat?receiver=' + receiver)
+
+@app.route('/ssend_message', methods=['POST'])
+def ssend_message():
+    # Get message data from form
+    global sender
+    if 'email' in session:
+        sender = session['email']
+    receiver = request.args.get('receiver', '')
+    message = request.form['message']
+
+    # Save message to database
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO messages (sender, receiver, message) VALUES (%s, %s, %s)", (sender, receiver, message))
+    mysql.connection.commit()
+    cur.close()
+
+    return redirect('/schat?receiver=' + receiver)
 
 if __name__ == "__main__":
     app.run(debug="True")
