@@ -102,20 +102,54 @@
 
     <div class="container">
     <h1 class="heading"> Student Status update </h1>
+        <div class="main">
+    <form action="/newedit/{{ re[0]['university_applied'] }}" method="POST">
+<!--        <h1>Edit Status</h1>-->
+        <div class="form-container">
+           <label>Financials :</label>
+           <input class="login-input" type="text"  id="financials" name="financials" value="{{ re[0]['financials'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid details with only letters.">
+           <label>FinancialStatus :</label>
+           <select class="input-box" id="financialstatus" name="financialstatus" value="{{re[0]['financialstatus']}}" required>
+              <option value="">Select your status</option>
+              <option value="Applied">Applied</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+           </select><br><br>
 
-       <label>Financials: </label>
-            <input class="login-input" type="text" class="login-input" name="financials" placeholder="financials" value="{{ re[0]['financials'] }}"> <br></br>
-       <label>Biometric: </label>
-            <input class="login-input" type="date" class="login-input" name="biometric" placeholder="contact" value="{{ re[0]['biometric'] }}"> <br></br>
-        <label>Visa: </label>
-            <input class="login-input" type="date" class="login-input" name="visa" placeholder="select country" value="{{ re[0]['visa'] }}"> <br></br>
-    <label for="status">status :</label>
-   <select class="input-box" id="status" name="status">
-       <option value="">Select</option>
-       <option value="approved">approved</option>
-       <option value="rejected">rejected</option>
-<!--       <option value="others">others </option>-->
-   </select> <br> <br>
+           <label>Biometric :</label>
+           <input class="login-input" type="date"  id="biometric" name="biometric" value="{{ re[0]['biometric'] }}">
+           <label>Biometric Status :</label>
+           <select class="input-box" id="biometricstatus" name="biometricstatus" value="{{re[0]['biometricstatus']}}" required>
+              <option value="">Select your status</option>
+              <option value="Applied">Applied</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+           </select><br><br>
+
+           <label>Visa :</label>
+           <input class="login-input" type="date"  id="universityapplied" name="visa" value="{{ re[0]['visa'] }}">
+           <label>Visa Status :</label>
+           <select class="input-box" id="status" name="visastatus" value="{{re[0]['visastatus']}}" required>
+              <option value="">Select your status</option>
+              <option value="Applied">Applied</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+           </select><br><br>
+
+
+<!--       <label>Financials: </label>-->
+<!--            <input class="login-input" type="text" class="login-input" name="financials" placeholder="financials" value="{{ re[0]['financials'] }}"> <br></br>-->
+<!--       <label>Biometric: </label>-->
+<!--            <input class="login-input" type="date" class="login-input" name="biometric" placeholder="contact" value="{{ re[0]['biometric'] }}"> <br></br>-->
+<!--        <label>Visa: </label>-->
+<!--            <input class="login-input" type="date" class="login-input" name="visa" placeholder="select country" value="{{ re[0]['visa'] }}"> <br></br>-->
+<!--    <label for="status">status :</label>-->
+<!--   <select class="input-box" id="status" name="status">-->
+<!--       <option value="">Select</option>-->
+<!--       <option value="approved">approved</option>-->
+<!--       <option value="rejected">rejected</option>-->
+<!--&lt;!&ndash;       <option value="others">others </option>&ndash;&gt;-->
+<!--   </select> <br> <br>-->
         <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
     {% if error %}
        <p class = "error"><strong>Error:</strong>: {{ error }}</p>

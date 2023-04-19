@@ -150,27 +150,27 @@
 <table>
   <tr>
     <th>Sno</th>
-    <th>Message</th>
+    <th>Message/Date</th>
       <th>Status</th>
     <th>Operations</th>
   </tr>
   <tr>
     <th>Financials</th>
     <td>{{ r['financials'] }}</td>
-      <td>{{ r['status'] }}</td>
-<!--    <td><button><a href="statusupdate/{{ r['email'] }}" type="submit">edit</a></button></td>-->
+      <td>{{ r['financialstatus'] }}</td>
+   <td><button><a href="statusupdate/{{ r['email'] }}" type="submit">edit</a></button></td>
   </tr>
   <tr>
     <th>Biometric</th>
     <td>{{ r['biometric'] }}</td>
-      <td>{{ r['status'] }}</td>
+      <td>{{ r['biometricstatus'] }}</td>
    <td><button><a href="statusupdate/{{ r['email'] }}" type="submit">edit</a></button></td>
   </tr>
   <tr>
     <th>Visa</th>
     <td>{{ r['visa'] }}</td>
-      <td>{{ r['status'] }}</td>
-<!--<td><button><a href="statusupdate/{{ r['email'] }}" type="submit">edit</a></button></td>-->
+      <td>{{ r['visastatus'] }}</td>
+<td><button><a href="statusupdate/{{ r['email'] }}" type="submit">edit</a></button></td>
   </tr>
 </table>
 {% endfor %}
