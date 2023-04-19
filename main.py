@@ -17,7 +17,7 @@ app.secret_key = "abc123"
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3308
+app.config["MYSQL_PORT"] = 3306
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -119,7 +119,7 @@ def approved():
         b = 'Approved'
         cur = mysql.connection.cursor()
         r = cur.execute(
-            'SELECT university_applied,country,specialization,date FROM universityapplied where email=%s and status=%s',
+            'SELECT university_applied,country,specialization,year,month FROM universityapplied where email=%s and status=%s',
             (email, b,))
         print(r)
         mysql.connection.commit()
@@ -183,11 +183,12 @@ def sadduniversity():
             specialization = request.form['specialization']
             status = request.form['status']
             email = session['email']
-            date = request.form['date']
+            year = request.form['year']
+            month = request.form['month']
             today = datetime.date.today()
-            selected_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+            '''selected_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
             if selected_date < today - datetime.timedelta(days=1):
-                return "Please select a date that is equal to or greater than today."
+                return "Please select a date that is equal to or greater than today."'''
             cur = mysql.connection.cursor()
             cur.execute("SELECT * FROM universityapplied WHERE id = %s", (id,))
             user = cur.fetchone()
@@ -195,12 +196,12 @@ def sadduniversity():
                 flash('university already exists', 'error')
                 return redirect(url_for('adduniversity'))
             b = cur.execute(
-                "insert into universityapplied(university_applied,country,specialization,status,email,date) values(%s,%s,%s,%s,%s,%s)",
-                (universityapplied, country, specialization, status, email, date,))
+                "insert into universityapplied(university_applied,country,specialization,status,email,year,month) values(%s,%s,%s,%s,%s,%s,%s)",
+                (universityapplied, country, specialization, status, email,year,month))
             mysql.connection.commit()
             if b > 0:
                 flash("Hey your adding university is success")
-                return render_template('adduniversity.html', today=today)
+                return render_template('applied.html')
             else:
                 flash('ERROR:Given month and year are not greater than current month and year.')
                 return render_template('adduniversity.html')
@@ -536,16 +537,6 @@ def admin_login():
             cur.close()
         return render_template("admin_login.html")
 
-'''@app.route("/addadmin",methods=['GET','POST'])
-def addadmin():
-    if request.method == 'POST':
-        password = request.form['password']
-        if password == 'admin':
-            return redirect(url_for("admin_register"))
-        else:
-            return "Wrong password"
-    return render_template('addadmin.html')'''
-
 @app.route("/logout")
 def logout():
     session.clear()
@@ -573,11 +564,14 @@ def validate():
         flash("wrong OTP")
         return render_template("send.html")
 
+
+
+
 @app.route('/advalidate',methods=['POST'])
 def advalidate():
     email = request.form['email']
     cur = mysql.connection.cursor()
-    r = cur.execute("SELECT email FROM usertable WHERE email = %s and activation_status = false", (email,))
+    r = cur.execute("SELECT email FROM usertable WHERE email = %s and activation_status = 0 ", (email,))
     mysql.connection.commit()
     if r == 0:
         flash("entered email is not correct")
@@ -594,26 +588,24 @@ def advalidate():
         flash("wrong OTP")
         return render_template("adsend.html")
 
-
-
-
-
-
 @app.route("/send")
 def send():
     return render_template("send.html")
 
 @app.route("/statusupdate/<string:email>",methods=['GET','POST'])
 def statusupdate(email):
-    if request.method=="POST":
+    if request.method =="POST":
         financials = request.form['financials']
         biometric = request.form['biometric']
         visa = request.form['visa']
-        status = request.form['status']
+        financialstatus = request.form['financialstatus']
+        biometricstatus = request.form['biometricstatus']
+        visastatus = request.form['visastatus']
+
         cur = mysql.connection.cursor()
         a = cur.execute(
-            'UPDATE studentstatus SET financials = %s ,biometric=%s,visa=%s,status =%s where email=%s',
-            [financials, biometric, visa, status, email, ])
+            'UPDATE studentstatus SET financials = %s ,biometric=%s,visa=%s,financialstatus =%s ,biometricstatus =%s ,visastatus =%s where email=%s',
+            [financials, biometric, visa, financialstatus,biometricstatus,visastatus, email, ])
         mysql.connection.commit()
         if a >= 0:
             flash("updated successfully")
@@ -707,9 +699,6 @@ def adduser():
     else:
         return redirect(url_for("admin_login"))
 
-'''@app.route("/chat")
-def chat():
-    return render_template("chat.html")'''
 
 @app.route("/users")
 def users():
@@ -736,13 +725,13 @@ def intake():
             selected_year = request.form['selected_year']
             if country == 'none':
                 cur = mysql.connection.cursor()
-                r = cur.execute("SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s",
+                r = cur.execute("SELECT * FROM universityapplied WHERE MONTH() = %s and YEAR() = %s",
                                 (selected_month, selected_year))
                 mysql.connection.commit()
             else:
                 cur = mysql.connection.cursor()
                 r = cur.execute(
-                    "SELECT * FROM universityapplied WHERE MONTH(date) = %s and YEAR(date) = %s and country = %s",
+                    "SELECT * FROM universityapplied WHERE MONTH = %s and YEAR= %s and country = %s",
                     (selected_month, selected_year, country))
                 mysql.connection.commit()
                 if r > 0:

@@ -101,27 +101,27 @@
     <h1 class="heading"> Update Student Details </h1>
 
        <label>Fullname: </label>
-            <input class="login-input" type="text" class="login-input" name="fullname" placeholder="fullname" value="{{ re[0]['fullname'] }}"> <br></br>
+            <input class="login-input" type="text" class="login-input" name="fullname" placeholder="fullname" value="{{ re[0]['fullname'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid full name with only letters."> <br></br>
        <label>Contact: </label>
-            <input class="login-input" type="text" class="login-input" name="contact" placeholder="contact" value="{{ re[0]['contact'] }}"> <br></br>
+            <input class="login-input" type="text" class="login-input" name="contact" placeholder="contact" value="{{ re[0]['contact'] }}"  pattern="[0-9]{10}" title="Mobile no. must contain 10 digits only"> <br></br>
         <label>Country: </label>
-            <input class="login-input" type="text" class="login-input" name="country" placeholder="select country" value="{{ re[0]['country'] }}"> <br></br>
+            <input class="login-input" type="text" class="login-input" name="country" placeholder="select country" value="{{ re[0]['country'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid country with only letters." > <br></br>
      <label>Passport No: </label>
-            <input class="login-input" type="text" class="login-input" name="passport" placeholder="passport no" value="{{ re[0]['passport'] }}"><br> </br>
+            <input class="login-input" type="text" class="login-input" name="passport" placeholder="passport no" value="{{ re[0]['passport'] }}" pattern="[A-Za-z]{4}[0-9]{8}" title="First 4 characters should be letters, followed by 8 digits"><br> </br>
      <label>Qualification: </label>
-            <input class="login-input" type="text" class="login-input" name="qualification" placeholder="qualification" value="{{ re[0]['qualification'] }}"> <br></br>
+            <input class="login-input" type="text" class="login-input" name="qualification" placeholder="qualification" value="{{ re[0]['qualification'] }}"  pattern="[A-Za-z\s]+" title="Please enter a valid qualification with only letters."> <br></br>
      <label>Location: </label>
-            <input class="login-input" type="text" class="login-input" name="location" placeholder="location" value="{{ re[0]['location'] }}"><br></br>
+            <input class="login-input" type="text" class="login-input" name="location" placeholder="location" value="{{ re[0]['location'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid location with only letters."><br></br>
         <label>Maritial: </label>
-            <input class="login-input" type="text" class="login-input" name="maritial" placeholder="maritial"value="{{ re[0]['maritial'] }}"> <br></br>
+            <input class="login-input" type="text" class="login-input" name="maritial" placeholder="maritial"value="{{ re[0]['maritial'] }}"  pattern="[A-Za-z]+" title="Please enter a valid marital status with only letters."> <br></br>
        <label>Gender: </label>
-          <input class="login-input" type="text" class="login-input" name="gender" placeholder="gender" value="{{ re[0]['gender'] }}"><br></br>
+          <input class="login-input" type="text" class="login-input" name="gender" placeholder="gender" value="{{ re[0]['gender'] }}"  pattern="[A-Za-z]+" title="Please enter a valid gender with only letters."><br></br>
 
          <label>Date of Birth:</label>
-          <input class="login-input" type="text"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}"required><br><br>
+          <input class="login-input" type="text"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}" min="1990-01-01" max="2020-12-31"required><br><br>
 
        <label>Fathername: </label>
-          <input class="login-input" type="text" class="login-input" name="fathername" placeholder="fathername"  value="{{ re[0]['fathername'] }}"><br></br>
+          <input class="login-input" type="text" class="login-input" name="fathername" placeholder="fathername"  value="{{ re[0]['fathername'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid father name with only letters."><br></br>
 
     <input type="submit" name="submit" value="submit" class="login-button button"  required></br>
     {% if error %}

@@ -144,37 +144,31 @@
 <div class="background" >
     <form  action = "/studentprofile/{{ re[0]['email'] }} " method='POST'>
 <body>
-   <!-- <form action="" method="POST">
-      <label for="username">Email:</label>
-      <input type="text" id="username" name="email" required><br><br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required><br><br>
-      <input type="submit" value="login" name="submit" class="login-button button"> -->
         <form class = "nav" method="POST">
     <div class="card-container">
     <h1 class ="login-title main-head">Student Profile </h1> </br>
          <label>Full name: </label>
-        <input  type="text" class="login-input" name="fullname" placeholder="fullname"  value="{{ re[0]['fullname'] }}" required></br>
+        <input  type="text" class="login-input" name="fullname" placeholder="fullname"  value="{{ re[0]['fullname'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid full name with only letters." required></br>
 
         <label>Passport No : </label>
-    <input  type="text" class="login-input" name="passport" placeholder="passport number"  value="{{ re[0]['passport'] }}"required ></br>
+    <input  type="text" class="login-input" name="passport" placeholder="passport number"  value="{{ re[0]['passport'] }}"  pattern="[A-Za-z]{4}[0-9]{8}" title="First 4 characters should be letters, followed by 8 digits" required ></br>
       <label>Father name : </label>
-    <input type="text" class="login-input" name="fathername" placeholder="Fathername"  value="{{ re[0]['fathername'] }}"required ></br>
+    <input type="text" class="login-input" name="fathername" placeholder="Fathername"  value="{{ re[0]['fathername'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid father name with only letters."required ></br>
         <label>Contact : </label>
-    <input  type="text" class="login-input" name="contact" placeholder="contact"  value="{{ re[0]['contact'] }}"required></br>
+    <input  type="text" class="login-input" name="contact" placeholder="contact"  value="{{ re[0]['contact'] }}" pattern="[0-9]{10}" title="Mobile no. must contain 10 digits only" required></br>
         <label>Date of Birth:</label>
-          <input class="login-input" type="text"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}"required><br><br>
+          <input class="login-input" type="text"  class="login-input" name="DOB" placeholder="DOB" value="{{re[0]['DOB']}}"  min="1990-01-01" max="2020-12-31" required><br><br>
 
         <label>Location : </label>
-    <input  type="text" class="login-input" name="location" placeholder="Location"  value="{{ re[0]['location'] }}"required></br>
+    <input  type="text" class="login-input" name="location" placeholder="Location"  value="{{ re[0]['location'] }}" pattern="[A-Za-z\s]+" title="Please enter a valid location with only letters." required></br>
 
     <input type="submit" name="submit" value="update" class="update-button button"  required></br>
         {% if error %}
        <p class = "error"><strong>Error:</strong>: {{ error }}</p>
     {% endif %}
         </div>
+</div>
    </div>
-  </div>
-</form>
+ </form>
 </body>
 </html>

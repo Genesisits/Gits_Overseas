@@ -114,10 +114,10 @@
        <form action="intake" method="POST">
           <h1>Fetch Data from Database Based on Month and Year</h1>
            <label>Country:</label>
-           <input name="country" id ="country" placeholder="enter country" type="text">
+           <input name="country" id ="country" placeholder="Enter Country"  type="text" pattern="[A-Za-z\s]+" title="Please enter a valid country name with only letters.">
   <label for="selected_month">Select a Month:</label>
   <select id="selected_month" name="selected_month" required >
-      <option>select month</option>
+      <option>Select Month</option>
     <option value="01">January</option>
     <option value="02">February</option>
     <option value="03">March</option>
@@ -134,7 +134,7 @@
 <!--  <br>-->
   <label for="selected_year">Select a Year:</label>
   <select id="selected_year" name="selected_year" required>
-      <option>select year</option>
+      <option>Select Year</option>
     <option value="2022">2022</option>
     <option value="2023">2023</option>
     <option value="2024">2024</option>
@@ -157,7 +157,8 @@
             <th>Specialization</th>
             <th>Status</th>
 
-            <th>Date</th>
+            <th>year</th>
+             <th>month</th>
             <th>Email</th>
 
         </tr>
@@ -170,13 +171,13 @@
           <td>{{ r ['specialization'] }}</td>
             <td>{{ r ['status'] }}</td>
 
-            <td>{{ r ['date'] }}</td>
+            <td>{{ r ['year'] }}</td>
+              <td>{{ r ['month'] }}</td>
             <td>{{ r ['email'] }}</td>
 
 
 
-  <!--      <td> <button ><a href= "remove/{{ r['university_applied'] }}" type="submit" >remove</a></button></td>
-        -->
+
         </tr>
         {% endfor %}
       </tbody>
