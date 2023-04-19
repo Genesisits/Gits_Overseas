@@ -11,13 +11,12 @@ import re
 app = Flask(__name__)
 app.secret_key = "abc123"
 
-app = Flask(__name__)
-app.secret_key = "abc123"
+
 
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -965,26 +964,6 @@ def chatingroom():
         cur.close()
         return render_template("cr.html")
 
-@app.route('/schatingroom', methods=['GET', 'POST'])
-def schatingroom():
-    if request.method == 'POST':
-        # Get receiver from form
-        receiver = request.form['receiver']
-        session['receiver'] = receiver
-        print(receiver)
-        # Redirect to chat page with sender and receiver info
-        return redirect(url_for('schat', sender=session['email'], receiver=session['receiver']))
-    else:
-        # Retrieve all rows from the "users" table
-        cur = mysql.connection.cursor()
-        r = cur.execute('select * from admintable')
-
-        if r > 0:
-            re = cur.fetchall()
-            print(re)
-            return render_template("scr.html", result=re)
-        cur.close()
-        return render_template("scr.html")
 
 @app.route("/chat")
 def chat():
@@ -1017,7 +996,7 @@ def chat():
 @app.route("/schat")
 def schat():
     # Get sender and receiver from request arguments
-    receiver = request.args.get('receiver', '')
+    receiver = request.form.get('receiver', 'genesis')
     print(receiver)
     # Get the sender from the session
     if 'email' in session:
