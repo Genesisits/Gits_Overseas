@@ -7,7 +7,7 @@ from MySQLdb import Binary
 import datetime
 import base64
 import re
-
+import variables
 app = Flask(__name__)
 app.secret_key = "abc123"
 
@@ -28,7 +28,7 @@ mysql = MySQL(app)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_USERNAME"] = "karupartijayanth143@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "goccgpsjrupzrkcr"
+app.config["MAIL_PASSWORD"] = "uddshkvkebdcslkz"
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -64,6 +64,7 @@ def country():
             cur = mysql.connection.cursor()
             r = cur.execute("select * from usertable where country = %s", (country,))
             mysql.connection.commit()
+            cur.close()
             if r > 0:
                 result = cur.fetchall()
                 print(result)
@@ -71,7 +72,7 @@ def country():
             else:
                 error = "No Student was Found"
                 return render_template("users.html", error=error)
-            cur.close()
+
         return render_template('country.html')
     else:
         return redirect(url_for("admin_login"))
@@ -828,27 +829,15 @@ def studentprofile(email):
     return render_template("studentprofile.html",re=re)
 
 @app.route('/deactivate/<string:email>',methods=['GET','POST'])
-def deactivate():
-    if request.method == "POST":
-        email = request.form['email']
-        cur = mysql.connection.cursor()
-        r = cur.execute("SELECT email FROM usertable WHERE email = %s and activation_status = true", (email,))
-        mysql.connection.commit()
-        if r == 0:
-            flash("entered email is not correct")
-            return render_template("send.html")
-        user_otp = request.form['otp']
-        if otp == int(user_otp):
-            cur = mysql.connection.cursor()
-            cur.execute("update usertable set activation_status = false where email=%s",(email,))
-            mysql.connection.commit()
-            cur.close()
-            flash("deactivate successful")
-            return redirect(url_for("users"))
-        else:
-            return render_template("users.html")
-    else:
+def deactivate(email):
+    cur = mysql.connection.cursor()
+    r = cur.execute("update usertable set activation_status = false where email=%s",(email,))
+    mysql.connection.commit()
+    if r > 0:
+        flash("user deactivated successfully")
         return render_template("users.html")
+    return render_template("users.html")
+
 
 @app.route('/profile')
 def profile():
