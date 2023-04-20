@@ -26,9 +26,11 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 mysql = MySQL(app)
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "karupartijayanth143@gmail.com"
+app.config["MAIL_USERNAME"] = "saicharansuraram@gmail.com"
 app.config["MAIL_PORT"] = 465
-app.config["MAIL_PASSWORD"] = "uddshkvkebdcslkz"
+
+app.config["MAIL_PASSWORD"] = "yyyqnjihdlsdqzey"
+
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -376,7 +378,6 @@ def signup():
     today = datetime.date.today()
     return render_template('register.html')
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -429,13 +430,17 @@ def register():
         if not location.replace(' ', '').isalpha():
             flash('Location must contain only alphabet letters', 'error')
             return redirect(url_for('register'))
-        # Check if email already exists
+            # Check if email already exists
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM usertable WHERE email = %s", (email,))
         user = cur.fetchone()
         if user:
-            flash('Email address already exists', 'error')
-            return render_template("register.html")
+                flash('Email address already exists', 'error')
+                return render_template("register.html", fullname=fullname, fathername=fathername, contact=contact,
+                                       email=email, dob=dob, passport=passport, qualification=qualification,
+                                       location=location, country=country, gender=gender, maritial=maritial,
+                                       reference=reference)
+
         # Insert user data into database
         query = """INSERT INTO usertable (fullname, fathername, contact, email,dob, password,
                 passport, country, qualification, location, gender, maritial, reference, image)
@@ -831,12 +836,14 @@ def studentprofile(email):
 @app.route('/deactivate/<string:email>',methods=['GET','POST'])
 def deactivate(email):
     cur = mysql.connection.cursor()
+
     r = cur.execute("update usertable set activation_status = false where email=%s",(email,))
     mysql.connection.commit()
     if r > 0:
         flash("user deactivated successfully")
         return render_template("users.html")
     return render_template("users.html")
+
 
 
 @app.route('/profile')
