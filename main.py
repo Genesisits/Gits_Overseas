@@ -7,30 +7,40 @@ from MySQLdb import Binary
 import datetime
 import base64
 import re
-import variables
+import configparser
+
 app = Flask(__name__)
 app.secret_key = "abc123"
 
 
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+host = config.get('database','host')
+user = config.get('database','user')
+port = config.get('database','port')
+db = config.get('database','db')
+server = config.get('mail','server')
+username = config.get('mail','username')
+mailport = config.get('mail','mailport')
+password = config.get('mail','password')
 
 app.secret_key="keyvalue"
-app.config["MYSQL_HOST"] = "localhost"
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3308
+app.config["MYSQL_HOST"] = host
+app.config["MYSQL_USER"] = user
+app.config["MYSQL_PORT"] = int(port)
 app.config["MYSQL_PASSWORD"] = ""
-app.config["MYSQL_DB"]="project"
+app.config["MYSQL_DB"] = db
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=5)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 mysql = MySQL(app)
 
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_USERNAME"] = "saicharansuraram@gmail.com"
-app.config["MAIL_PORT"] = 465
-
-app.config["MAIL_PASSWORD"] = "yyyqnjihdlsdqzey"
-
+app.config["MAIL_SERVER"] = server
+app.config["MAIL_USERNAME"] = username
+app.config["MAIL_PORT"] = int(mailport)
+app.config["MAIL_PASSWORD"] = password
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
