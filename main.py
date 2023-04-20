@@ -7,17 +7,16 @@ from MySQLdb import Binary
 import datetime
 import base64
 import re
-
+import variables
 app = Flask(__name__)
 app.secret_key = "abc123"
 
-app = Flask(__name__)
-app.secret_key = "abc123"
+
 
 app.secret_key="keyvalue"
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PORT"] = 3306
+app.config["MYSQL_PORT"] = 3308
 app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"]="project"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
@@ -29,7 +28,9 @@ mysql = MySQL(app)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_USERNAME"] = "saicharansuraram@gmail.com"
 app.config["MAIL_PORT"] = 465
+
 app.config["MAIL_PASSWORD"] = "yyyqnjihdlsdqzey"
+
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USE_TLS"] = False
 mail = Mail(app)
@@ -65,6 +66,7 @@ def country():
             cur = mysql.connection.cursor()
             r = cur.execute("select * from usertable where country = %s", (country,))
             mysql.connection.commit()
+            cur.close()
             if r > 0:
                 result = cur.fetchall()
                 print(result)
@@ -72,7 +74,7 @@ def country():
             else:
                 error = "No Student was Found"
                 return render_template("users.html", error=error)
-            cur.close()
+
         return render_template('country.html')
     else:
         return redirect(url_for("admin_login"))
@@ -834,12 +836,15 @@ def studentprofile(email):
 @app.route('/deactivate/<string:email>',methods=['GET','POST'])
 def deactivate(email):
     cur = mysql.connection.cursor()
-    r = cur.execute("update usertable set activation_status = false where email=%s", (email,))
+
+    r = cur.execute("update usertable set activation_status = false where email=%s",(email,))
     mysql.connection.commit()
     if r > 0:
-        flash("entered email is not correct")
+        flash("user deactivated successfully")
         return render_template("users.html")
     return render_template("users.html")
+
+
 
 @app.route('/profile')
 def profile():
@@ -955,26 +960,6 @@ def chatingroom():
         cur.close()
         return render_template("cr.html")
 
-@app.route('/schatingroom', methods=['GET', 'POST'])
-def schatingroom():
-    if request.method == 'POST':
-        # Get receiver from form
-        receiver = request.form['receiver']
-        session['receiver'] = receiver
-        print(receiver)
-        # Redirect to chat page with sender and receiver info
-        return redirect(url_for('schat', sender=session['email'], receiver=session['receiver']))
-    else:
-        # Retrieve all rows from the "users" table
-        cur = mysql.connection.cursor()
-        r = cur.execute('select * from admintable')
-
-        if r > 0:
-            re = cur.fetchall()
-            print(re)
-            return render_template("scr.html", result=re)
-        cur.close()
-        return render_template("scr.html")
 
 @app.route("/chat")
 def chat():
@@ -1007,7 +992,7 @@ def chat():
 @app.route("/schat")
 def schat():
     # Get sender and receiver from request arguments
-    receiver = request.args.get('receiver', '')
+    receiver = request.form.get('receiver', 'genesis')
     print(receiver)
     # Get the sender from the session
     if 'email' in session:
